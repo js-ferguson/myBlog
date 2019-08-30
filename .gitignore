@@ -1,3 +1,6 @@
 env
 __pycache__
 .vscode
+static/sass
+static/css/materialize.css.map
+.sass-cache
