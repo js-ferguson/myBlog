@@ -5,6 +5,9 @@ body {
   background-image: url(../images/sprinkles/sprinkles.png);
   background-repeat: repeat; }
 
+.blog-card {
+  margin-top: 50px; }
+
 .post-frame {
   width: 70%;
   background-color: #fafafa;
@@ -40,5 +43,16 @@ aside {
     margin: 10px 15px 7px;
     display: inline-block;
     font-weight: 600; }
+  aside .aside-card {
+    margin: 7px;
+    width: 100%;
+    display: block; }
+
+.form-card {
+  background-color: white;
+  border-radius: 5px;
+  margin: auto;
+  margin-top: 100px;
+  width: 80%; }
 
 /*# sourceMappingURL=style.css.map */

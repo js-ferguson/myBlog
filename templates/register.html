@@ -7,7 +7,7 @@
         </form>
     </div> -->
 
-<div class="row">
+<div class="row form-card">
     <form method="POST" action="" class="col s12">
         {{ form.hidden_tag() }}
         <!-- //adds cross site request forgery token (CSRF token) -->
@@ -16,23 +16,28 @@
                 {{ form.username.label() }}
                 {{ form.username()}}
             </div>
+        </div>
+
+        <div class="row">
             <div class="input-field col s6">
                 {{ form.email.label() }}
                 {{ form.email() }}
             </div>
         </div>
+
         <div class="row">
             <div class="input-field col s6">
                 {{ form.password.label() }}
                 {{ form.password() }}
             </div>
         </div>
-        <div class="row">
+        <div class="row">        
             <div class="input-field col s6">
                 {{ form.confirm_password.label() }}
                 {{ form.confirm_password() }}
             </div>
         </div>
+
         <div class="row">
             <div class="input-field col s6">
                 {{ form.submit(class="btn")}}
