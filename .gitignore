@@ -4,3 +4,4 @@ __pycache__
 static/sass
 static/css/materialize.css.map
 .sass-cache
+static/css/style.css.map

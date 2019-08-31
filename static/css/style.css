@@ -1,0 +1,44 @@
+.brand-logo {
+  margin-left: 15px; }
+
+body {
+  background-image: url(../images/sprinkles/sprinkles.png);
+  background-repeat: repeat; }
+
+.post-frame {
+  width: 70%;
+  background-color: #fafafa;
+  margin: auto;
+  margin-top: 50px;
+  border-radius: 5px; }
+  .post-frame .posts {
+    margin: 20px 0 20px; }
+    .post-frame .posts span {
+      font-weight: 600; }
+  .post-frame .post-date {
+    text-align: right;
+    float: right;
+    font-size: .7em;
+    margin-top: 7px; }
+
+.pane {
+  width: 70%;
+  margin: auto;
+  margin-top: 100px; }
+  .pane strong {
+    font-size: 18px;
+    font-weight: 600; }
+
+aside {
+  background-color: #fafafa;
+  width: 80%;
+  margin: auto;
+  display: flex;
+  border-radius: 5px;
+  margin: 50px 0 20px; }
+  aside .aside-heading {
+    margin: 10px 15px 7px;
+    display: inline-block;
+    font-weight: 600; }
+
+/*# sourceMappingURL=style.css.map */
