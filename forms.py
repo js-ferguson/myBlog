@@ -23,3 +23,12 @@ class LoginForm(FlaskForm):
                              validators=[DataRequired(), Length(min=6, max=20)])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
+
+
+class NewPostForm(FlaskForm):
+
+    title = StringField('Title',
+                        validators=[DataRequired(), Length(min=1, max=50)])
+    content = StringField('Content',
+                        validators=[DataRequired(), Length(min=1, max=1000)])
+    submit = SubmitField('Save Post')
