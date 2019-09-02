@@ -1,1 +1,3 @@
-https://flask.palletsprojects.com/en/1.0.x/patterns/wtforms/
+# myBlog
+
+The name is terribly generic. I had better come up with something better for the project name...

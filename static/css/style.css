@@ -53,6 +53,14 @@ aside {
   border-radius: 5px;
   margin: auto;
   margin-top: 100px;
-  width: 80%; }
+  width: 80%;
+  padding: 20px; }
+  .form-card .join-legend {
+    padding: 10px; }
+
+.subtext {
+  margin: auto;
+  margin-top: 15px;
+  width: 75%; }
 
 /*# sourceMappingURL=style.css.map */
