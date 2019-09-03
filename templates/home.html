@@ -35,16 +35,28 @@
     <div class="col s7 post-frame z-depth-2">        
 
         {% for post in posts %} 
-            <div class="posts">
-               <span class="post-title">{{ post.title }}</span>
-               <span class="post-date">{{ post.date_posted }}</span>
+        <ul class="collapsible">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">subdirectory_arrow_right</i>{{ post.title }}</div>
+                <div class="collapsible-body"><span>{{ post.content }}</span></div>
+            </li>
+        </ul>
+        
+        
+        
+        
+         <!--  <div class="posts">
+             <span class="post-title">{{ post.title }}</span>
+            <span class="post-date">{{ post.date_posted }}</span>
                
             </div>
             <hr>
-            <p>{{ post.content }}</p>            
+            <p>{{ post.content }}</p> -->    
         {% endfor %} 
 
     </div>
 </div>
 
+
 {% endblock content %}
+
