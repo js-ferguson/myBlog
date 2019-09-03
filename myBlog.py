@@ -16,12 +16,18 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html', posts=mongo.db.posts.find()) #post=mongo is used as an argument here to pass the content of posts into the template so we can access the posts variable
+    if 'username' in session:
+        user = session['username']
+        flash(f'You are logged in as {user}', 'info')
+
+    # post=mongo is used as an argument here to pass the content of posts into the template so we can access the posts variable
+    return render_template('home.html', posts=mongo.db.posts.find())
 
 
 @app.route("/about")
 def about():
     return render_template('about.html')
+
 
 @app.route("/portfolio")
 def portfolio():
@@ -34,19 +40,19 @@ def register():
     if form.validate_on_submit():
         users = mongo.db.users
         existing_user = users.find_one({'username': request.form['username']})
-        
+
         if existing_user is None:
-            hashpass = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
-            users.insert({'username': request.form['username'], 'password' : hashpass, 'email': request.form['email']})
+            hashpass = bcrypt.hashpw(
+                request.form['password'].encode('utf-8'), bcrypt.gensalt())
+            users.insert(
+                {'username': request.form['username'], 'password': hashpass, 'email': request.form['email']})
             session['username'] = request.form['username']
             flash(f'Account created for {form.username.data}!', 'info')
-            return redirect(url_for('login'))
-        
+            return redirect(url_for('home'))
+
         flash(f'Username already taken', 'info')
         return redirect(url_for('register'))
 
-        
-        
     return render_template('register.html', form=form)
 
 
@@ -54,25 +60,35 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        if form.email.data == "admin@myBlog.com" and form.password.data == 'password':
-            flash(f'{form.email.data}, you have been logged in!', 'info')
-            return redirect(url_for('home'))
-        else:
-            flash('Login Unsuccessful. Please check username and password', 'danger')
+        users = mongo.db.users
+        login_user = users.find_one({'username': request.form['username']})
+
+        if login_user:
+            if bcrypt.hashpw(request.form['password'].encode('utf-8'), login_user['password'].encode('utf-8')) == login_user['password'].encode('utf-8'):
+                session['username'] = request.form['username']
+                return redirect(url_for('home'))
+
+        return 'Invalid username/password combination!'
     return render_template('login.html', form=form)
+
+@app.route("/logout", methods=['GET', 'POST'])
+def logout():
+    session.pop('username', None)
+    flash('You have been logged out', 'info')
+    return redirect(url_for('home'))
 
 
 @app.route("/new_post")
 def new_post():
     form = NewPostForm()
-    #if form.validate_on_submit():
+    # if form.validate_on_submit():
     return render_template('new_post.html', form=form, posts=mongo.db.posts.find())
 
 
 @app.route("/insert_post", methods=['POST'])
 def insert_post():
     posts = mongo.db.posts
-    #posts.insert_one(request.form.to_dict())    
+    # posts.insert_one(request.form.to_dict())
 
     new_doc = {'title': request.form.get('title'), 'tags': [], 'content': request.form.get('content'),
                'date_posted': "", "images": []}
@@ -81,10 +97,9 @@ def insert_post():
         print("")
         print("Document inserted")
     except:
-        print("Error accessing the database")    
-    
-    return redirect(url_for('home'))
+        print("Error accessing the database")
 
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
