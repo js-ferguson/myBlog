@@ -1,8 +1,9 @@
 import os
-from flask import Flask, render_template, url_for, flash, redirect, request
+from flask import Flask, render_template, url_for, flash, redirect, request, session
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from forms import RegistrationForm, LoginForm, NewPostForm
+import bcrypt
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '1f67b3678156205853ddc3ef59abafed'
@@ -31,8 +32,21 @@ def portfolio():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        flash(f'Account created for {form.username.data}!', 'info')
-        return redirect(url_for('home'))
+        users = mongo.db.users
+        existing_user = users.find_one({'username': request.form['username']})
+        
+        if existing_user is None:
+            hashpass = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
+            users.insert({'username': request.form['username'], 'password' : hashpass, 'email': request.form['email']})
+            session['username'] = request.form['username']
+            flash(f'Account created for {form.username.data}!', 'info')
+            return redirect(url_for('login'))
+        
+        flash(f'Username already taken', 'info')
+        return redirect(url_for('register'))
+
+        
+        
     return render_template('register.html', form=form)
 
 
