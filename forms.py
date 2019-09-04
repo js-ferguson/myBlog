@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-import myBlog
+
+
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username',
@@ -41,6 +42,6 @@ class NewPostForm(FlaskForm):
 
     title = StringField('Title',
                         validators=[DataRequired(), Length(min=1, max=50)])
-    content = StringField('Content',
+    content = TextAreaField('Content', 
                         validators=[DataRequired(), Length(min=1, max=1000)])
     submit = SubmitField('Save Post')

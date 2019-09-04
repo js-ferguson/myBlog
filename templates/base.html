@@ -19,7 +19,7 @@
 
     <nav> <!-- materialize nav -->
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Code blog</a>
+            <a href="{{ url_for('home') }}" class="brand-logo">Code blog</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="{{ url_for('home') }}">Home</a></li>
             <li><a href="{{ url_for('about') }}">About</a></li>
@@ -50,5 +50,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <script type="text/javascript" src="static/js/bin/materialize.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.fixed-action-btn').floatingActionButton();
+        });   
+    </script>
+
 </body>
 </html>
