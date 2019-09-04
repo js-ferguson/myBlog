@@ -15,7 +15,7 @@ class RegistrationForm(FlaskForm):
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Sign Up')
 
-    def validate_username(self, username):
+    '''def validate_username(self, username):
         users = mongo.db.users
         existing_user = users.find_one({'username': request.form['username']})
         if existing_user:
@@ -25,7 +25,7 @@ class RegistrationForm(FlaskForm):
         users = mongo.db.users
         existing_user = users.find_one({'email': request.form['email']})
         if existing_user:
-            raise ValidationError('That email address is already in use.')
+            raise ValidationError('That email address is already in use.')'''
     
 
 class LoginForm(FlaskForm):
@@ -40,8 +40,8 @@ class LoginForm(FlaskForm):
 
 class NewPostForm(FlaskForm):
 
-    title = StringField('Title',
-                        validators=[DataRequired(), Length(min=1, max=50)])
+    title = TextAreaField('Title',
+                        validators=[DataRequired(), Length(max=50)])
     content = TextAreaField('Content', 
                         validators=[DataRequired(), Length(min=1, max=1000)])
     submit = SubmitField('Save Post')

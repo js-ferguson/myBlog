@@ -1,3 +1,6 @@
+.container {
+  width: 85%; }
+
 .brand-logo {
   margin-left: 15px; }
 
@@ -10,12 +13,17 @@ body {
 
 .post-frame {
   width: 70%;
-  background-color: #fafafa;
+  background-color: transparent;
   margin: auto;
   margin-top: 50px;
   border-radius: 5px; }
   .post-frame .posts {
-    margin: 20px 0 20px; }
+    margin: 20px 0 20px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+    max-height: 250px;
+    overflow: hidden; }
     .post-frame .posts span {
       font-weight: 600; }
   .post-frame .post-date {
@@ -50,7 +58,7 @@ aside {
 
 .fixed-action-btn {
   top: 336px;
-  right: 162px; }
+  right: 7.5%; }
 
 .form-card {
   background-color: white;
@@ -70,11 +78,14 @@ aside {
 .new-post-title-label {
   margin-left: 10px; }
 
-#title {
-  height: 2rem;
+.new-post-title {
+  height: 3rem;
+  width: 100%;
+  margin: auto;
   background-color: white;
   border-radius: 5px;
-  padding: 10px; }
+  padding: 10px;
+  resize: none; }
 
 .new-post-body-label {
   margin-left: 10px; }
@@ -86,5 +97,12 @@ aside {
   border-radius: 5px;
   padding: 10px;
   resize: none; }
+
+.single-post-frame {
+  width: 70%;
+  background-color: white;
+  margin: auto;
+  margin-top: 50px;
+  border-radius: 5px; }
 
 /*# sourceMappingURL=style.css.map */
