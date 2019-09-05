@@ -1,0 +1,147 @@
+$container-width: 85%;
+
+.container {
+    width: $container-width;
+}
+
+.brand-logo {
+    margin-left: 15px;
+}
+
+body {
+    background-image: url(../images/sprinkles/sprinkles.png);
+    background-repeat: repeat;
+}
+
+// ------------------------------------------ Posts ----------------------------------------- //
+
+.blog-card {
+    margin-top: 50px;
+}
+
+.post-frame {
+    width: 70%;
+    background-color: transparent;
+    margin: auto;
+    margin-top: 50px;
+    border-radius: 5px;
+
+    .posts {
+        margin: 20px 0 20px;
+        padding: 15px;
+        background-color: white;
+        border-radius: 5px;
+        max-height: 250px;
+        overflow: hidden;
+        
+        span {
+            font-weight: 600;
+        }
+    }    
+
+    .post-date {
+        text-align: right;
+        float: right;
+        font-size: .7em;
+        margin-top: 7px;
+    }
+}
+
+.pane {
+    width: 70%;
+    margin: auto;
+    margin-top: 100px;
+
+    strong {
+        font-size: 18px;
+        font-weight: 600;
+    }
+}
+
+aside {
+    background-color: #fafafa;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    border-radius: 5px;
+    margin: 50px 0 20px;
+
+    .aside-heading {
+        margin: 10px 15px 7px;
+        display: inline-block;
+        font-weight: 600;
+    }
+
+    .aside-card {
+        margin: 7px;
+        width: 100%;
+        display: block;
+        
+    }
+}
+
+.fixed-action-btn {
+    top: 336px;
+    right: (100 - $container-width) / 2;
+
+}
+
+// ----------------------------- Register ----------------- //
+
+.form-card {
+    background-color: white;
+    border-radius: 5px;
+    margin: auto;
+    margin-top: 100px;
+    width: 80%;
+    padding: 20px;
+
+    .join-legend {
+        padding: 10px
+    }
+}
+
+.subtext {
+    margin: auto;
+    margin-top: 15px;
+    width: 75%;
+}
+
+
+
+// ----------------------------- New Post ----------------- //
+
+.new-post-title-label {
+    margin-left: 10px;
+}
+
+.new-post-title {
+    height: 3rem;
+    width: 100%;
+    margin: auto;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+}
+
+.new-post-body-label {
+    margin-left: 10px;
+}
+
+.new-post-body {
+    width: 100%;
+    height: 30rem;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+}
+
+.single-post-frame {
+    width: 70%;
+    background-color: white;
+    margin: auto;
+    margin-top: 50px;
+    border-radius: 5px;
+}
