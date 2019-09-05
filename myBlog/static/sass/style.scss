@@ -17,44 +17,50 @@ body {
 
 .blog-card {
     margin-top: 50px;
-}
 
-.post-frame {
-    width: 70%;
-    background-color: transparent;
-    margin: auto;
-    margin-top: 50px;
-    border-radius: 5px;
-
-    .posts {
-        margin: 20px 0 20px;
-        padding: 15px;
-        background-color: white;
-        border-radius: 5px;
-        max-height: 250px;
-        overflow: hidden;
-        
-        span {
+    .pane {
+        width: 70%;
+        margin: auto;
+        margin-top: 100px;
+    
+        strong {
+            font-size: 18px;
             font-weight: 600;
         }
-    }    
-
-    .post-date {
-        text-align: right;
-        float: right;
-        font-size: .7em;
-        margin-top: 7px;
     }
-}
 
-.pane {
-    width: 70%;
-    margin: auto;
-    margin-top: 100px;
+    .post-frame {
+        width: 70%;
+        background-color: transparent;
+        margin: auto;
+        margin-top: 50px;
+        border-radius: 5px;
+    
+        .posts {
+            margin: 20px 0 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            max-height: 250px;
+            overflow: hidden;
+            
+            span {
+                font-weight: 600;
+            }
+        }    
+    
+        .post-date {
+            text-align: right;
+            float: right;
+            font-size: .7em;
+            margin-top: 7px;
+        }
+    }
 
-    strong {
-        font-size: 18px;
-        font-weight: 600;
+    #fab-one {
+        top: 93px;
+        right: (100 - $container-width) / 2;
+    
     }
 }
 
@@ -80,10 +86,11 @@ aside {
     }
 }
 
-.fixed-action-btn {
-    top: 93px;
-    right: (100 - $container-width) / 2;
 
+
+.project-action-btn {
+    top: 300px;
+    right: 40%;
 }
 
 // ----------------------------- Register ----------------- //

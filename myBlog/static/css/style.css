@@ -10,35 +10,36 @@ body {
 
 .blog-card {
   margin-top: 50px; }
-
-.post-frame {
-  width: 70%;
-  background-color: transparent;
-  margin: auto;
-  margin-top: 50px;
-  border-radius: 5px; }
-  .post-frame .posts {
-    margin: 20px 0 20px;
-    padding: 15px;
-    background-color: white;
-    border-radius: 5px;
-    max-height: 250px;
-    overflow: hidden; }
-    .post-frame .posts span {
+  .blog-card .pane {
+    width: 70%;
+    margin: auto;
+    margin-top: 100px; }
+    .blog-card .pane strong {
+      font-size: 18px;
       font-weight: 600; }
-  .post-frame .post-date {
-    text-align: right;
-    float: right;
-    font-size: .7em;
-    margin-top: 7px; }
-
-.pane {
-  width: 70%;
-  margin: auto;
-  margin-top: 100px; }
-  .pane strong {
-    font-size: 18px;
-    font-weight: 600; }
+  .blog-card .post-frame {
+    width: 70%;
+    background-color: transparent;
+    margin: auto;
+    margin-top: 50px;
+    border-radius: 5px; }
+    .blog-card .post-frame .posts {
+      margin: 20px 0 20px;
+      padding: 15px;
+      background-color: white;
+      border-radius: 5px;
+      max-height: 250px;
+      overflow: hidden; }
+      .blog-card .post-frame .posts span {
+        font-weight: 600; }
+    .blog-card .post-frame .post-date {
+      text-align: right;
+      float: right;
+      font-size: .7em;
+      margin-top: 7px; }
+  .blog-card #fab-one {
+    top: 93px;
+    right: 7.5%; }
 
 aside {
   background-color: #fafafa;
@@ -56,9 +57,9 @@ aside {
     width: 100%;
     display: block; }
 
-.fixed-action-btn {
-  top: 93px;
-  right: 7.5%; }
+.project-action-btn {
+  top: 300px;
+  right: 40%; }
 
 .form-card {
   background-color: white;
