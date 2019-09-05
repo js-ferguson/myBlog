@@ -15,6 +15,8 @@ https://realpython.com/python-modules-packages/
 login stuff
 creating our own usermixin
 https://stackoverflow.com/questions/54992412/flask-login-usermixin-class-with-a-mongodb
+https://boh717.github.io/post/flask-login-and-mongodb/
+https://flask-login.readthedocs.io/en/latest/
 
 Beautiful is better than ugly.
 Explicit is better than implicit.

@@ -48,7 +48,6 @@ def login():
     if form.validate_on_submit():
         users = mongo.db.users
         user = users.find_one({'email': form.email.data})
-        #userpass = mongo.db.users.find_one({'email': form.email.data}, {'password': 1, '_id': 0})
         if user and bcrypt.check_password_hash(user['password'], form.password.data):
             user_obj = User(username=user['username'])
             login_user(user_obj)
