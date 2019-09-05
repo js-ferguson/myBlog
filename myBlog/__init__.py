@@ -5,7 +5,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '1f67b3678156205853ddc3ef59abafed'
+app.config['SECRET_KEY'] = os.environ.get('NOFOLIO_SECRET_KEY')
 app.config["MONGO_URI"] = os.environ.get('MONGO_MYBLOG_URI')
 app.config["MONGO_DBNAME"] = 'myBlog'
 
