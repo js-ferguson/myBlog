@@ -88,6 +88,8 @@ def insert_post():
 
     return redirect(url_for('home'))
 
-@app.route("/single_post/<_id>")
-def single_post():
-    return render_template('single_post.html')
+@app.route("/view_post")
+def view_post():
+    return render_template('view_post.html')
+
+
