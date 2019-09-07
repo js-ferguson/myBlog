@@ -9,12 +9,12 @@
 
         <aside class="z-depth-2">
             <div class="aside-card">
-                <strong>Current project</strong> 
+                <strong>Current project</strong>
                 <p>My current project is making a personal blog for myself.
-                    The purpose of this project is fullfill assment criteria for my 
-                    course of study and to eventually serve as a professional 
-                    development blog, portfolio and CV 
-                </p> 
+                    The purpose of this project is fullfill assment criteria for my
+                    course of study and to eventually serve as a professional
+                    development blog, portfolio and CV
+                </p>
                 <ul>
                     <li><strong>Tech stack</strong></li>
                     <p>I might just make a note here that the techstack should be populated with tags</p>
@@ -27,26 +27,76 @@
                     <li>#MaterializeCSS</li>
                     <li>#SASS</li>
                     <li>#HTML5</li>
-                </ul>         
+                </ul>
             </div>
+            {% if current_user.is_authenticated %}
+            <div class="fixed-action-btn direction-bottom" id="fab-two">
+                <!-- <a href="{{ url_for('new_post') }}" class="btn-floating btn-large red z-depth-2"> -->
+                <a href="#modal1" class="btn-floating btn-large red z-depth-2 modal-trigger" >
+                    <i class="large material-icons">mode_edit</i>
+                </a>
+                <div id="modal1" class="modal">
+                    <div class="modal-content">
+                        <h4>Edit Current Project</h4>                              
+                    </div>
+                    <form method="POST" action="" class="form">            
+                            {{ form.hidden_tag() }} <!-- //adds cross site request forgery token (CSRF token) -->                        
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    {{ form.title.label() }}
+                                    {% if form.title.errors %}
+                                        {{ form.title(class="is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for errors in form.title.errors %}
+                                                <span> {{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.title() }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    {{ form.description.label() }}
+                                    {% if form.description.errors %}
+                                        {{ form.description(class="is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for errors in form.description.errors %}
+                                                <span> {{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.description() }}
+                                    {% endif %}
+                                </div>
+                            </div>        
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    {{ form.submit(class="btn modal-close")}}
+                                </div>
+                            </div>
+                        </form>
+                
+                </div> 
+            </div>
+            {% endif %}
         </aside>
-
-        
     </div>
 
-    <div class="col s7 post-frame">        
+    <div class="col s7 post-frame">
 
-        {% for post in posts %} 
-            <div class="posts z-depth-2">
-                <div class="post-card">
-                    <span class="post-title">{{ post.title }}</span>
-                    <span class="post-date">{{ post.date_posted }}</span>
-                    <hr>
-                </div>
-                   <p>{{ post.content }}</p>          
-            </div>            
-                        
-        {% endfor %} 
+        {% for post in posts %}
+        <div class="posts z-depth-2">
+            <div class="post-card">
+                <span class="post-title">{{ post.title }}</span>
+                <span class="post-date">{{ post.date_posted }}</span>
+                <hr>
+            </div>
+            <p>{{ post.content }}</p>
+        </div>
+
+        {% endfor %}
 
     </div>
     {% if current_user.is_authenticated %}
@@ -55,8 +105,8 @@
             <i class="large material-icons">mode_edit</i>
         </a>
     </div>
-    
+
     {% endif %}
 </div>
-
+<script type="text/javascript" src="../static/js/edit_project.js"></script>
 {% endblock content %}

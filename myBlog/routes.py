@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request
 from myBlog import app, mongo, bcrypt
 from bson.objectid import ObjectId
-from myBlog.forms import RegistrationForm, LoginForm, NewPostForm
+from myBlog.forms import RegistrationForm, LoginForm, NewPostForm, AccountUpdateForm, EditProject
 from myBlog.login import User
 from flask_login import current_user, login_user, logout_user, login_required
 
@@ -9,11 +9,8 @@ from flask_login import current_user, login_user, logout_user, login_required
 @app.route("/")
 @app.route("/home")
 def home():
-    #if User.is_authenticated:
-     #   flash(f'You are logged in as {User.username}', 'info')
-
-    # post=mongo is used as an argument here to pass the content of posts into the template so we can access the posts variable
-    return render_template('home.html', posts=mongo.db.posts.find())
+    form = EditProject()
+    return render_template('home.html', posts=mongo.db.posts.find(), form=form)
 
 
 @app.route("/about")
@@ -34,7 +31,8 @@ def register():
     if form.validate_on_submit():
         users = mongo.db.users
         hashpass = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        users.insert({'username': form.username.data, 'password': hashpass, 'email': form.email.data})
+        new_user = {'username': form.username.data, 'password': hashpass, 'email': form.email.data}
+        users.insert(new_user)
         flash('Your account has been created. Log in to continue', 'info')
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
@@ -93,3 +91,8 @@ def view_post():
     return render_template('view_post.html')
 
 
+@app.route("/account", methods=['POST', 'GET'])
+@login_required
+def account():
+    form = AccountUpdateForm()
+    return render_template('account.html', form=form)

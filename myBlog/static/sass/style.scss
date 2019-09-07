@@ -8,6 +8,17 @@ $container-width: 85%;
     margin-left: 15px;
 }
 
+#home {
+    font-weight: 600;
+}
+
+#current_username {
+    
+   // margin-left: 160px;
+   font-weight: 600;
+   
+}
+
 body {
     background-image: url(../images/sprinkles/sprinkles.png);
     background-repeat: repeat;
@@ -59,10 +70,11 @@ body {
 
     #fab-one {
         top: 93px;
-        right: (100 - $container-width) / 2;
-    
+        right: (100 - $container-width) / 2;    
     }
 }
+
+// ------------------------------------- project --------------------------------- //
 
 aside {
     background-color: #fafafa;
@@ -84,13 +96,34 @@ aside {
         display: block;
         
     }
+
+    #fab-two {
+        top: 725px;
+        left: 435px;    
+    }
 }
-
-
 
 .project-action-btn {
     top: 300px;
     right: 40%;
+}
+
+// ----------------------------------------- Project Modal ------------------------------------ //
+
+.modal-content {
+    border: none;
+    background-color: #1b5e20;
+    color: #fafafa;
+    border-radius: 0;
+}
+
+#description {
+    height: 200px;
+}
+
+.form {
+    width: 80%;
+    margin: auto;
 }
 
 // ----------------------------- Register ----------------- //
@@ -102,10 +135,6 @@ aside {
     margin-top: 100px;
     width: 80%;
     padding: 20px;
-
-    .join-legend {
-        padding: 10px
-    }
 }
 
 .subtext {

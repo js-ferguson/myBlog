@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<div class="row form-card z-depth-2">
+    
+    <form method="POST" action="" class="col s8">            
+        {{ form.hidden_tag() }} <!-- //adds cross site request forgery token (CSRF token) -->
+
+        <h4><legend class="join-legend">Account Manager</legend></h4>
+        <h6>Update details for {{ current_user.username }}</h6>
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form.username.label() }}
+                {% if form.username.errors %}
+                    {{ form.username(class="is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for errors in form.username.errors %}
+                            <span> {{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.username() }}
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form.email.label() }}
+                {% if form.email.errors %}
+                    {{ form.email(class="is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for errors in form.email.errors %}
+                            <span> {{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.email() }}
+                {% endif %}
+            </div>
+        </div>        
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form.submit(class="btn")}}
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

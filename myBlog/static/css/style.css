@@ -4,6 +4,12 @@
 .brand-logo {
   margin-left: 15px; }
 
+#home {
+  font-weight: 600; }
+
+#current_username {
+  font-weight: 600; }
+
 body {
   background-image: url(../images/sprinkles/sprinkles.png);
   background-repeat: repeat; }
@@ -56,10 +62,26 @@ aside {
     margin: 7px;
     width: 100%;
     display: block; }
+  aside #fab-two {
+    top: 725px;
+    left: 435px; }
 
 .project-action-btn {
   top: 300px;
   right: 40%; }
+
+.modal-content {
+  border: none;
+  background-color: #1b5e20;
+  color: #fafafa;
+  border-radius: 0; }
+
+#description {
+  height: 200px; }
+
+.form {
+  width: 80%;
+  margin: auto; }
 
 .form-card {
   background-color: white;
@@ -68,8 +90,6 @@ aside {
   margin-top: 100px;
   width: 80%;
   padding: 20px; }
-  .form-card .join-legend {
-    padding: 10px; }
 
 .subtext {
   margin: auto;
