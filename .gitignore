@@ -3,6 +3,6 @@ __pycache__
 .vscode
 static/sass
 static/css/materialize.css.map
-.sass-cache
+static/.sass-cache
 static/css/style.css.map
 features_todo.md

@@ -20,14 +20,12 @@ class RegistrationForm(FlaskForm):
         users = mongo.db.users
         existing_user = users.find_one({'username': username.data})
         if existing_user:
-            flash(f'The username {username.data} is already taken', 'danger')
             raise ValidationError('That username is already taken.')
 
     def validate_email(self, email):
         users = mongo.db.users
         existing_user = users.find_one({'email': email.data})
         if existing_user:
-            flash(f'The email {email.data} is already in use.', 'danger')
             raise ValidationError('That email address is already in use.')
 
 
