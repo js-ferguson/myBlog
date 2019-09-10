@@ -1,7 +1,8 @@
 from flask import render_template, url_for, flash, redirect, request
+from datetime import datetime
 from myBlog import app, mongo, bcrypt
 from bson.objectid import ObjectId
-from myBlog.forms import RegistrationForm, LoginForm, NewPostForm, AccountUpdateForm, EditProject
+from myBlog.forms import RegistrationForm, LoginForm, NewPostForm, AccountUpdateForm, EditProject, PostReplyForm
 from myBlog.login import User
 from flask_login import current_user, login_user, logout_user, login_required
 
@@ -76,7 +77,7 @@ def insert_post():
     # posts.insert_one(request.form.to_dict())
 
     new_doc = {'title': request.form.get('title'), 'tags': [], 'content': request.form.get('content'),
-               'date_posted': "", "images": []}
+               'date_posted': datetime.utcnow(), "images": []}
     try:
         posts.insert_one(new_doc)
         print("")
@@ -89,6 +90,17 @@ def insert_post():
 @app.route("/view_post")
 def view_post():
     return render_template('view_post.html')
+
+
+@login_required
+@app.route("/post/reply", methods=['GET', 'POST'])
+def post_reply():
+    form = PostReplyForm()
+    if form.validate_on_submit():
+        flash('Your reply has been successfuly posted', 'info')
+        return redirect(url_for('view_post'))
+    return render_template('post_reply.html', form=form)
+
 
 
 @app.route("/account", methods=['POST', 'GET'])

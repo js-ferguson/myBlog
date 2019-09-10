@@ -77,3 +77,9 @@ class EditProject(FlaskForm):
     description = TextAreaField('Description', validators=[
                             DataRequired(), Length(min=1, max=1000)])
     submit = SubmitField('Save Project')
+
+
+class PostReplyForm(FlaskForm):
+    title = StringField('Title (Optional)')
+    content = TextAreaField('Content', validators=[DataRequired()])
+    submit = SubmitField('Reply')

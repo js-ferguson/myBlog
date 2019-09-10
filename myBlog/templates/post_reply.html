@@ -1,21 +1,21 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
 
-<h3>New Post</h3>
+<h3>New Post Reply</h3>
 <div class="row">
     <form action="{{ url_for('insert_post') }}" method="POST" class="col s12">
         <div class="form-group">
             <div class="input-field col s12">
                 {{ form.title.label(class="new-post-title-label") }}
                 {% if form.title.errors %}
-                {{ form.title(class="z-depth-2 is-invalid new-post-title") }}
+                {{ form.title(class="new-post-title z-depth-2 is-invalid") }}
                 <div class="invalid-feedback">
                     {% for error in form.title.errors %}
                     <span>{{ error }}</span>
                     {% endfor %}
                 </div>
                 {% else %}
-                {{ form.title(class="z-depth-2 new-post-title") }}
+                {{ form.title(class="new-post-title z-depth-2") }}
                 {% endif %}
             </div>
         </div>

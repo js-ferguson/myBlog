@@ -90,7 +90,9 @@
         <div class="posts z-depth-2">
             <div class="post-card">
                 <span class="post-title">{{ post.title }}</span>
-                <span class="post-date">{{ post.date_posted }}</span>
+                {% if post.date_posted %}
+                <span class="post-date">{{ post.date_posted.strftime("%d %b %Y") }}</span>
+                {% endif %}
                 <hr>
             </div>
             <p>{{ post.content }}</p>
