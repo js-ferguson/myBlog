@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="row blog-card">
-    <div class="col s5 pane">
+<div class="row blog-frame">
+    <div class="col s5 left-pane">
         <strong class="strong-text">Development Blog - James Ferguson</strong>
 
         <p><a href="{{ url_for('about') }}">About me</a></p>
@@ -32,59 +32,61 @@
             {% if current_user.is_authenticated %}
             <div class="fixed-action-btn direction-bottom" id="fab-two">
                 <!-- <a href="{{ url_for('new_post') }}" class="btn-floating btn-large red z-depth-2"> -->
-                <a href="#modal1" class="btn-floating btn-large red z-depth-2 modal-trigger" >
+                <a href="#modal1" class="btn-floating btn-large red z-depth-2 modal-trigger">
                     <i class="large material-icons">mode_edit</i>
                 </a>
                 <div id="modal1" class="modal">
                     <div class="modal-content">
-                        <h4>Edit Current Project</h4>                              
+                        <h4>Edit Current Project</h4>
                     </div>
-                    <form method="POST" action="" class="form">            
-                            {{ form.hidden_tag() }} <!-- //adds cross site request forgery token (CSRF token) -->                        
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    {{ form.title.label() }}
-                                    {% if form.title.errors %}
-                                        {{ form.title(class="is-invalid") }}
-                                        <div class="invalid-feedback">
-                                            {% for errors in form.title.errors %}
-                                                <span> {{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        {{ form.title() }}
-                                    {% endif %}
+                    <form method="POST" action="" class="form">
+                        {{ form.hidden_tag() }}
+                        <!-- //adds cross site request forgery token (CSRF token) -->
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ form.title.label() }}
+                                {% if form.title.errors %}
+                                {{ form.title(class="is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for errors in form.title.errors %}
+                                    <span> {{ error }}</span>
+                                    {% endfor %}
                                 </div>
+                                {% else %}
+                                {{ form.title() }}
+                                {% endif %}
                             </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    {{ form.description.label() }}
-                                    {% if form.description.errors %}
-                                        {{ form.description(class="is-invalid") }}
-                                        <div class="invalid-feedback">
-                                            {% for errors in form.description.errors %}
-                                                <span> {{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        {{ form.description() }}
-                                    {% endif %}
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ form.description.label() }}
+                                {% if form.description.errors %}
+                                {{ form.description(class="is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for errors in form.description.errors %}
+                                    <span> {{ error }}</span>
+                                    {% endfor %}
                                 </div>
-                            </div>        
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    {{ form.submit(class="btn modal-close")}}
-                                </div>
+                                {% else %}
+                                {{ form.description() }}
+                                {% endif %}
                             </div>
-                        </form>
-                
-                </div> 
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ form.submit(class="btn modal-close")}}
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
             </div>
             {% endif %}
         </aside>
+
     </div>
 
-    <div class="col s7 post-frame">
+    <div class="col s7 right-frame">
 
         {% for post in posts %}
         <div class="posts z-depth-2">
@@ -99,16 +101,18 @@
         </div>
 
         {% endfor %}
+        {% if current_user.is_authenticated %}
+        <div class="fixed-action-btn direction-bottom" id="fab-one">
+            <a href="{{ url_for('new_post') }}" class="btn-floating btn-large red z-depth-2">
+                <i class="large material-icons">mode_edit</i>
+            </a>
+        </div>
+
+        {% endif %}
 
     </div>
-    {% if current_user.is_authenticated %}
-    <div class="fixed-action-btn direction-bottom" id="fab-one">
-        <a href="{{ url_for('new_post') }}" class="btn-floating btn-large red z-depth-2">
-            <i class="large material-icons">mode_edit</i>
-        </a>
-    </div>
 
-    {% endif %}
 </div>
+
 <script type="text/javascript" src="../static/js/edit_project.js"></script>
 {% endblock content %}

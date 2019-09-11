@@ -14,61 +14,60 @@ body {
   background-image: url(../images/sprinkles/sprinkles.png);
   background-repeat: repeat; }
 
-.blog-card {
+.blog-frame {
   margin-top: 50px; }
-  .blog-card .pane {
+  .blog-frame .left-pane {
     width: 70%;
     margin: auto;
     margin-top: 100px; }
-    .blog-card .pane strong {
+    .blog-frame .left-pane strong {
       font-size: 18px;
       font-weight: 600; }
-  .blog-card .post-frame {
+    .blog-frame .left-pane aside {
+      background-color: #fafafa;
+      width: 80%;
+      margin: auto;
+      display: flex;
+      border-radius: 5px;
+      margin: 50px 0 20px;
+      position: relative; }
+      .blog-frame .left-pane aside .aside-heading {
+        margin: 10px 15px 7px;
+        display: inline-block;
+        font-weight: 600; }
+      .blog-frame .left-pane aside .aside-card {
+        margin: 7px;
+        width: 100%;
+        display: block; }
+      .blog-frame .left-pane aside #fab-two {
+        position: relative;
+        top: -25px;
+        left: 25px; }
+  .blog-frame .right-frame {
     width: 70%;
     background-color: transparent;
     margin: auto;
     margin-top: 50px;
-    border-radius: 5px; }
-    .blog-card .post-frame .posts {
+    border-radius: 5px;
+    position: relative; }
+    .blog-frame .right-frame .posts {
       margin: 20px 0 20px;
       padding: 15px;
       background-color: white;
       border-radius: 5px;
       max-height: 250px;
       overflow: hidden; }
-      .blog-card .post-frame .posts span {
+      .blog-frame .right-frame .posts span {
         font-weight: 600; }
-    .blog-card .post-frame .post-date {
+    .blog-frame .right-frame .post-date {
       text-align: right;
       float: right;
       font-size: .7em;
       margin-top: 7px; }
-  .blog-card #fab-one {
-    top: 93px;
-    right: 7.5%; }
-
-aside {
-  background-color: #fafafa;
-  width: 80%;
-  margin: auto;
-  display: flex;
-  border-radius: 5px;
-  margin: 50px 0 20px; }
-  aside .aside-heading {
-    margin: 10px 15px 7px;
-    display: inline-block;
-    font-weight: 600; }
-  aside .aside-card {
-    margin: 7px;
-    width: 100%;
-    display: block; }
-  aside #fab-two {
-    top: 725px;
-    left: 435px; }
-
-.project-action-btn {
-  top: 300px;
-  right: 40%; }
+    .blog-frame .right-frame #fab-one {
+      position: absolute;
+      top: -5px;
+      right: -15px; }
 
 .modal-content {
   border: none;

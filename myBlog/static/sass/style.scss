@@ -13,10 +13,10 @@ $container-width: 85%;
 }
 
 #current_username {
-    
-   // margin-left: 160px;
-   font-weight: 600;
-   
+
+    // margin-left: 160px;
+    font-weight: 600;
+
 }
 
 body {
@@ -26,27 +26,59 @@ body {
 
 // ------------------------------------------ Posts ----------------------------------------- //
 
-.blog-card {
+.blog-frame {
     margin-top: 50px;
 
-    .pane {
+    .left-pane {
         width: 70%;
         margin: auto;
         margin-top: 100px;
-    
+
         strong {
             font-size: 18px;
             font-weight: 600;
         }
+
+        // ------------------------------------- project --------------------------------- //
+
+        aside {
+            background-color: #fafafa;
+            width: 80%;
+            margin: auto;
+            display: flex;
+            border-radius: 5px;
+            margin: 50px 0 20px;
+            position: relative;
+
+            .aside-heading {
+                margin: 10px 15px 7px;
+                display: inline-block;
+                font-weight: 600;
+            }
+
+            .aside-card {
+                margin: 7px;
+                width: 100%;
+                display: block;
+
+            }
+
+            #fab-two {
+                position: relative;
+                top: -25px;
+                left: 25px;
+            }
+        }
     }
 
-    .post-frame {
+    .right-frame {
         width: 70%;
         background-color: transparent;
         margin: auto;
         margin-top: 50px;
         border-radius: 5px;
-    
+        position: relative;
+
         .posts {
             margin: 20px 0 20px;
             padding: 15px;
@@ -54,58 +86,25 @@ body {
             border-radius: 5px;
             max-height: 250px;
             overflow: hidden;
-            
+
             span {
                 font-weight: 600;
             }
-        }    
-    
+        }
+
         .post-date {
             text-align: right;
             float: right;
             font-size: .7em;
             margin-top: 7px;
         }
-    }
 
-    #fab-one {
-        top: 93px;
-        right: (100 - $container-width) / 2;    
-    }
-}
-
-// ------------------------------------- project --------------------------------- //
-
-aside {
-    background-color: #fafafa;
-    width: 80%;
-    margin: auto;
-    display: flex;
-    border-radius: 5px;
-    margin: 50px 0 20px;
-
-    .aside-heading {
-        margin: 10px 15px 7px;
-        display: inline-block;
-        font-weight: 600;
-    }
-
-    .aside-card {
-        margin: 7px;
-        width: 100%;
-        display: block;
-        
-    }
-
-    #fab-two {
-        top: 725px;
-        left: 435px;    
-    }
-}
-
-.project-action-btn {
-    top: 300px;
-    right: 40%;
+        #fab-one {
+            position: absolute;
+            top: -5px;
+            right: -15px;
+        }
+    }    
 }
 
 // ----------------------------------------- Project Modal ------------------------------------ //
