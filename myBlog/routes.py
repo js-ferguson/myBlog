@@ -11,7 +11,9 @@ from flask_login import current_user, login_user, logout_user, login_required
 @app.route("/home")
 def home():
     form = EditProject()
-    return render_template('home.html', posts=mongo.db.posts.find().sort("_id", -1), form=form)
+    posts = mongo.db.posts.find().sort("_id", -1)
+    admin_user = mongo.db.users.find_one( {'$and': [ {'username': current_user.get_id() }, {'admin': True} ] } )
+    return render_template('home.html', posts = posts, form = form, admin_user = admin_user)
 
 
 @app.route("/about")

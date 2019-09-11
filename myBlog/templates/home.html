@@ -17,6 +17,7 @@
                 </p>
                 <ul>
                     <li><strong>Tech stack</strong></li>
+                   
                     <p>I might just make a note here that the techstack should be populated with tags</p>
                     <li>#MongoDB</li>
                     <li>#Flask</li>
@@ -29,7 +30,7 @@
                     <li>#HTML5</li>
                 </ul>
             </div>
-            {% if current_user.is_authenticated %}
+            {% if current_user.is_authenticated and admin_user.admin %}
             <div class="fixed-action-btn direction-bottom" id="fab-two">
                 <!-- <a href="{{ url_for('new_post') }}" class="btn-floating btn-large red z-depth-2"> -->
                 <a href="#modal1" class="btn-floating btn-large red z-depth-2 modal-trigger">
@@ -101,7 +102,7 @@
         </div>
 
         {% endfor %}
-        {% if current_user.is_authenticated %}
+        {% if current_user.is_authenticated and admin_user.admin %}
         <div class="fixed-action-btn direction-bottom" id="fab-one">
             <a href="{{ url_for('new_post') }}" class="btn-floating btn-large red z-depth-2">
                 <i class="large material-icons">add</i>
