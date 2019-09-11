@@ -87,9 +87,10 @@ def insert_post():
 
     return redirect(url_for('home'))
 
-@app.route("/view_post")
-def view_post():
-    return render_template('view_post.html')
+@app.route("/post/<post_id>")
+def post(post_id):
+    post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
+    return render_template('view_post.html', post=post)
 
 
 @login_required
