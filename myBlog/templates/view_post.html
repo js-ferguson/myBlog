@@ -2,21 +2,31 @@
 {% block content %}
 
 <div class="post-view z-depth-2">
-    
+
     <div class="col s12 post-heading">
         <div class="post-title">{{ post.title }}</div>
+        {% if post.date_posted %}
         <div class="date">{{ post.date_posted.strftime("%d %b %Y") }}</div>
+        {% endif %}
         <hr>
     </div>
     <div class="col s12 post-content">
         <div class="col s12">
-            {{post.content}}
+            {{ post.content }}
         </div>
     </div>
 
+</div>
+
+
+<div>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('edit_post', post_id=post._id) }}">Update</a>
+    <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal"
+        data-target="#deleteModal">Delete</button>
+</div>
 
 
 
 
 
-    {% endblock content %}
+{% endblock content %}

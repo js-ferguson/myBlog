@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, abort
 from datetime import datetime
 from myBlog import app, mongo, bcrypt
 from bson.objectid import ObjectId
@@ -76,9 +76,11 @@ def new_post():
 @app.route("/insert_post", methods=['POST'])
 def insert_post():
     posts = mongo.db.posts
+    author = mongo.db.users.find_one( { 'username': current_user.get_id() } )
+    post_author = author['_id']
     # posts.insert_one(request.form.to_dict())
 
-    new_doc = {'title': request.form.get('title'), 'tags': [], 'content': request.form.get('content'),
+    new_doc = {'title': request.form.get('title'),'post_author': post_author, 'tags': [], 'content': request.form.get('content'),
                'date_posted': datetime.utcnow(), "images": []}
     try:
         posts.insert_one(new_doc)
@@ -92,9 +94,40 @@ def insert_post():
 @app.route("/post/<post_id>")
 def post(post_id):
     post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
+    #post_id_string = str(post['_id'])
     return render_template('view_post.html', post=post)
 
 
+@app.route("/post/<post_id>/edit", methods=['GET', 'POST'])
+@login_required
+def edit_post(post_id):    
+    post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
+    author = mongo.db.users.find_one( { 'username': current_user.get_id() } )
+    if post['post_author'] != author['_id']:
+        abort(403)
+    form = NewPostForm()
+    if request.method == 'GET':
+        form.title.data = post['title']
+        form.content.data = post['content']
+        return render_template('edit_post.html', form=form, post=post)
+    
+    elif request.method == 'POST':
+        content = request.form.get("content")
+        title = request.form.get("title")
+        print(content)
+        #try:
+        posts = mongo.db.posts 
+        posts.find_one_and_update(
+            {"_id" : ObjectId(post_id)},
+            {"$set":
+                {"title": title, "content": content}
+            },upsert=True
+        )
+        flash('Your blog post has been updated', 'info')
+    return redirect(url_for('home'))
+        
+    
+#
 @login_required
 @app.route("/post/reply", methods=['GET', 'POST'])
 def post_reply():
