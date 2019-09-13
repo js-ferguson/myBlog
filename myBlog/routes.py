@@ -93,9 +93,10 @@ def insert_post():
 
 @app.route("/post/<post_id>")
 def post(post_id):
+    form=NewPostForm()
     post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
     #post_id_string = str(post['_id'])
-    return render_template('view_post.html', post=post)
+    return render_template('view_post.html', post=post, form=form)
 
 
 @app.route("/post/<post_id>/edit", methods=['GET', 'POST'])
@@ -109,7 +110,7 @@ def edit_post(post_id):
     if request.method == 'GET':
         form.title.data = post['title']
         form.content.data = post['content']
-        return render_template('edit_post.html', form=form, post=post)
+        return render_template('edit_post.html', form=form, post=post, admin_user=admin_user)
     
     elif request.method == 'POST':
         content = request.form.get("content")
@@ -127,15 +128,14 @@ def edit_post(post_id):
     return redirect(url_for('home'))
         
     
-#
 @login_required
-@app.route("/post/reply", methods=['GET', 'POST'])
-def post_reply():
-    form = PostReplyForm()
-    if form.validate_on_submit():
-        flash('Your reply has been successfuly posted', 'info')
-        return redirect(url_for('view_post'))
-    return render_template('post_reply.html', form=form)
+@app.route("/post/<post_id>/comment", methods=['GET', 'POST'])
+def comment(post_id):
+    
+
+
+    return redirect(url_for('post'))
+
 
 
 

@@ -4,6 +4,10 @@ $container-width: 85%;
     width: $container-width;
 }
 
+.nav-wrapper {
+    background-color: #404040;
+}
+
 .brand-logo {
     margin-left: 15px;
 }
@@ -188,10 +192,18 @@ body {
     border-radius: 5px;
     padding: 5px;
     margin-top: 120px;
+    position: relative;
 
     .post-heading {
         padding-top: 15px;
         height: 60px;
+    }
+
+    #edit_post_fab {
+        position: absolute;
+        top: 12px;
+        left: 115px;
+
     }
 
     .post-title {    
@@ -210,6 +222,7 @@ body {
         font-size: 1em;            
     }
 
+
     div hr {
         margin: 20px 0 15px 0;
     }
@@ -217,5 +230,70 @@ body {
     .post-content {
         margin: 55px 0 35px 0;
     }
+
+    // ------------------------------------ Edit Post --------------------------------- //
+
+    .save-post-button {
+        
+        float: left;
+        
+    }
+    
+    .delete-post-button {
+        
+        float: right;
+    }
 }
 
+
+// ------------------------------------ Comment Section --------------------------- //
+
+.collapsible {    
+    border: 0;
+}
+
+.collapsible-header {
+    background-color: transparent;    
+    border: 0;
+}
+
+.collapsible-body {
+    border: 0;
+}
+
+.comment-title-label {
+    margin-left: 10px;
+}
+
+.comment-title {
+    height: 3rem;
+    width: 100%;
+    margin: auto;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+}
+
+.comment-body-label {
+    margin-left: 10px;
+}
+
+
+.single-post-frame {
+    width: 70%;
+    background-color: white;
+    margin: auto;
+    margin-top: 50px;
+    border-radius: 5px;
+}
+
+
+.comment-body {
+    width: 100%;
+    height: 10rem;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+}

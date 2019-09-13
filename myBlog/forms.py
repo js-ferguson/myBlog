@@ -44,6 +44,7 @@ class NewPostForm(FlaskForm):
     content = TextAreaField('Content', validators=[
                             DataRequired(), Length(min=1, max=1000)])
     submit = SubmitField('Save Post')
+    delete = SubmitField('Delete Post')
 
 
 class AccountUpdateForm(FlaskForm):
@@ -80,6 +81,11 @@ class EditProject(FlaskForm):
 
 
 class PostReplyForm(FlaskForm):
-    title = StringField('Title (Optional)')
+    title = StringField('Comment Title (Optional)')
     content = TextAreaField('Content', validators=[DataRequired()])
-    submit = SubmitField('Reply')
+    submit = SubmitField('Post Comment')
+
+class NewCommentForm(FlaskForm):
+    title = StringField('Comment Title (Optional)')
+    content = TextAreaField('Content', validators=[DataRequired()])
+    submit = SubmitField('Post Comment')
