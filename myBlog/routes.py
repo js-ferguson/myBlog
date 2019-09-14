@@ -2,18 +2,22 @@ from flask import render_template, url_for, flash, redirect, request, abort
 from datetime import datetime
 from myBlog import app, mongo, bcrypt
 from bson.objectid import ObjectId
-from myBlog.forms import RegistrationForm, LoginForm, NewPostForm, AccountUpdateForm, EditProject, PostReplyForm
+from myBlog.forms import RegistrationForm, LoginForm, NewPostForm, AccountUpdateForm, EditProject, PostReplyForm, NewCommentForm
 from myBlog.login import User
 from flask_login import current_user, login_user, logout_user, login_required
 
+
+def admin_user():
+    admin_user = mongo.db.users.find_one( {'$and': [ {'username': current_user.get_id() }, {'admin': True} ] } )
+    return admin_user
 
 @app.route("/")
 @app.route("/home")
 def home():
     form = EditProject()
     posts = mongo.db.posts.find().sort("_id", -1)
-    admin_user = mongo.db.users.find_one( {'$and': [ {'username': current_user.get_id() }, {'admin': True} ] } )
-    return render_template('home.html', posts = posts, form = form, admin_user = admin_user)
+    #admin_user = mongo.db.users.find_one( {'$and': [ {'username': current_user.get_id() }, {'admin': True} ] } )
+    return render_template('home.html', posts = posts, form = form, admin_user = admin_user())
 
 
 @app.route("/about")
@@ -64,7 +68,6 @@ def logout():
     return redirect(url_for('home'))
 
 
-
 @app.route("/new_post")
 @login_required
 def new_post():
@@ -93,10 +96,21 @@ def insert_post():
 
 @app.route("/post/<post_id>")
 def post(post_id):
-    form=NewPostForm()
+    form=NewCommentForm()
+    comments = mongo.db.comment.find().sort("_id", -1)
     post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
-    #post_id_string = str(post['_id'])
-    return render_template('view_post.html', post=post, form=form)
+    return render_template('view_post.html', post=post, form=form, admin_user=admin_user(), comments=comments)
+
+     
+@app.route("/post/<post_id>", methods=['POST'])
+def insert_comment(post_id):  
+    comments = mongo.db.comment
+    author = mongo.db.users.find_one( {"username": current_user.get_id() } )
+    new_doc = {'user': author['_id'],'post_id': ObjectId(post_id), 'title': request.form.get('title'), 'content': request.form.get('content'),
+            'date_posted': datetime.utcnow()}               
+    comments.insert_one(new_doc)
+    flash('Your comment was successfully posted', 'info')
+    return redirect(url_for('post', post_id=post_id))
 
 
 @app.route("/post/<post_id>/edit", methods=['GET', 'POST'])
@@ -128,14 +142,6 @@ def edit_post(post_id):
     return redirect(url_for('home'))
         
     
-@login_required
-@app.route("/post/<post_id>/comment", methods=['GET', 'POST'])
-def comment(post_id):
-    
-
-
-    return redirect(url_for('post'))
-
 
 
 
