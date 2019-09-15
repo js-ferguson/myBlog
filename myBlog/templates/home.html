@@ -6,6 +6,7 @@
         <strong class="strong-text">Development Blog - James Ferguson</strong>
 
         <p><a href="{{ url_for('about') }}">About me</a></p>
+        
 
         <aside class="z-depth-2">
             <div class="aside-card">
@@ -93,6 +94,7 @@
         <div class="posts z-depth-2">
             <div class="post-card">
                 <span class="post-title"><a href="{{ url_for('post', post_id=post._id) }}">{{ post.title }}</a></span>
+                | {{ post.comment_count }} replies
                 {% if post.date_posted %}
                 <span class="post-date">{{ post.date_posted.strftime("%d %b %Y") }}</span>
                 {% endif %}
@@ -100,7 +102,6 @@
             </div>
             <p>{{ post.content }}</p>
         </div>
-
         {% endfor %}
         {% if current_user.is_authenticated and admin_user.admin %}
         <div class="fixed-action-btn direction-bottom" id="fab-one">

@@ -87,12 +87,15 @@
         </div>
     </li>
 </ul>
-
-{% for comment in comments %}
-<h4>{{ comment.title }}</h4>
-<p>{{ comment.content }}</p>
-{% endfor %}
-
+{% if has_comments != 0 %}
+<div class="comment-wrapper z-depth-2">  
+    {% for comment in comments %}
+    <h5>{{ comment.title }}</h5>
+    <p>{{ comment.content }}</p>
+    <hr>
+    {% endfor %}
+</div>
+{% endif %}
 
 
 

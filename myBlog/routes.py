@@ -8,16 +8,33 @@ from flask_login import current_user, login_user, logout_user, login_required
 
 
 def admin_user():
-    admin_user = mongo.db.users.find_one( {'$and': [ {'username': current_user.get_id() }, {'admin': True} ] } )
+    admin_user = mongo.db.users.find_one(
+        {'$and': [{'username': current_user.get_id()}, {'admin': True}]})
     return admin_user
+
+
+def posts_with_comment_count():
+    pipeline = [
+        {"$lookup": {
+            "from": "comment",
+            "localField": "_id",
+            "foreignField": "post_id",
+            "as": "comment_count"
+        }},
+        {"$addFields": {
+            "comment_count": {"$size": "$comment_count"}
+        }},
+        {"$sort": {"_id": -1}}
+    ]
+    posts = list(mongo.db.posts.aggregate(pipeline))
+    return posts
+
 
 @app.route("/")
 @app.route("/home")
 def home():
     form = EditProject()
-    posts = mongo.db.posts.find().sort("_id", -1)
-    #admin_user = mongo.db.users.find_one( {'$and': [ {'username': current_user.get_id() }, {'admin': True} ] } )
-    return render_template('home.html', posts = posts, form = form, admin_user = admin_user())
+    return render_template('home.html', posts=posts_with_comment_count(), form=form, admin_user=admin_user())
 
 
 @app.route("/about")
@@ -37,8 +54,10 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         users = mongo.db.users
-        hashpass = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        new_user = {'username': form.username.data, 'password': hashpass, 'email': form.email.data}
+        hashpass = bcrypt.generate_password_hash(
+            form.password.data).decode('utf-8')
+        new_user = {'username': form.username.data,
+                    'password': hashpass, 'email': form.email.data}
         users.insert(new_user)
         flash('Your account has been created. Log in to continue', 'info')
         return redirect(url_for('login'))
@@ -59,8 +78,9 @@ def login():
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
-            flash('Login was unsuccessful, wrong email/password', 'danger')        
+            flash('Login was unsuccessful, wrong email/password', 'danger')
     return render_template('login.html', form=form)
+
 
 @app.route("/logout")
 def logout():
@@ -79,11 +99,12 @@ def new_post():
 @app.route("/insert_post", methods=['POST'])
 def insert_post():
     posts = mongo.db.posts
-    author = mongo.db.users.find_one( { 'username': current_user.get_id() } )
+    author = mongo.db.users.find_one({'username': current_user.get_id()})
     post_author = author['_id']
     # posts.insert_one(request.form.to_dict())
 
-    new_doc = {'title': request.form.get('title'),'post_author': post_author, 'tags': [], 'content': request.form.get('content'),
+    new_doc = {'title': request.form.get('title'), 'post_author': post_author,
+               'tags': [], 'content': request.form.get('content'),
                'date_posted': datetime.utcnow(), "images": []}
     try:
         posts.insert_one(new_doc)
@@ -94,20 +115,27 @@ def insert_post():
 
     return redirect(url_for('home'))
 
+
 @app.route("/post/<post_id>")
 def post(post_id):
-    form=NewCommentForm()
-    comments = mongo.db.comment.find().sort("_id", -1)
+    form = NewCommentForm()
+    has_comments = mongo.db.comment.count({'post_id': ObjectId(post_id)})
+    comments = mongo.db.comment.find(
+        {'post_id': ObjectId(post_id)}).sort("_id", -1)
     post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
-    return render_template('view_post.html', post=post, form=form, admin_user=admin_user(), comments=comments)
 
-     
+    return render_template('view_post.html', post=post, form=form, admin_user=admin_user(),
+                           comments=comments, has_comments=has_comments)
+
+
 @app.route("/post/<post_id>", methods=['POST'])
-def insert_comment(post_id):  
+@login_required
+def insert_comment(post_id):
     comments = mongo.db.comment
-    author = mongo.db.users.find_one( {"username": current_user.get_id() } )
-    new_doc = {'user': author['_id'],'post_id': ObjectId(post_id), 'title': request.form.get('title'), 'content': request.form.get('content'),
-            'date_posted': datetime.utcnow()}               
+    author = mongo.db.users.find_one({"username": current_user.get_id()})
+    new_doc = {'user': author['_id'], 'post_id': ObjectId(post_id), 'title': request.form.get('title'),
+               'content': request.form.get('content'),
+               'date_posted': datetime.utcnow()}
     comments.insert_one(new_doc)
     flash('Your comment was successfully posted', 'info')
     return redirect(url_for('post', post_id=post_id))
@@ -115,9 +143,9 @@ def insert_comment(post_id):
 
 @app.route("/post/<post_id>/edit", methods=['GET', 'POST'])
 @login_required
-def edit_post(post_id):    
+def edit_post(post_id):
     post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
-    author = mongo.db.users.find_one( { 'username': current_user.get_id() } )
+    author = mongo.db.users.find_one({'username': current_user.get_id()})
     if post['post_author'] != author['_id']:
         abort(403)
     form = NewPostForm()
@@ -125,24 +153,21 @@ def edit_post(post_id):
         form.title.data = post['title']
         form.content.data = post['content']
         return render_template('edit_post.html', form=form, post=post, admin_user=admin_user)
-    
+
     elif request.method == 'POST':
         content = request.form.get("content")
         title = request.form.get("title")
         print(content)
-        #try:
-        posts = mongo.db.posts 
+        # try:
+        posts = mongo.db.posts
         posts.find_one_and_update(
-            {"_id" : ObjectId(post_id)},
+            {"_id": ObjectId(post_id)},
             {"$set":
                 {"title": title, "content": content}
-            },upsert=True
+             }, upsert=True
         )
         flash('Your blog post has been updated', 'info')
     return redirect(url_for('home'))
-        
-    
-
 
 
 @app.route("/account", methods=['POST', 'GET'])
