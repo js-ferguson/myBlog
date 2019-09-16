@@ -88,5 +88,5 @@ class PostReplyForm(FlaskForm):
 
 class NewCommentForm(FlaskForm):
     title = StringField('Comment Title (Optional)')
-    content = TextAreaField('Content', validators=[DataRequired()])
+    content = TextAreaField('Comment', validators=[DataRequired()])
     submit = SubmitField('Post Comment')

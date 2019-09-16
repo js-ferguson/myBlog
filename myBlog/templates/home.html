@@ -3,11 +3,13 @@
 
 <div class="row blog-frame">
     <div class="col s5 left-pane">
-        <h4 class="strong-text">Development Blog</h4>
-        <strong>James Ferguson - Full-stack developer</strong>
+        <div class="dark-bg z-depth-2">
+            <h4 class="strong-text">Development Blog</h4>
+            <strong>James Ferguson - Full-stack developer</strong>
+        </div>
 
         <!-- <p><a href="{{ url_for('about') }}">About me</a></p> -->
-        
+
 
         <aside class="z-depth-2">
             <div class="aside-card">
@@ -15,10 +17,10 @@
                 <p>{{ project.desc }}</p>
                 <ul>
                     <li><strong>Tech stack</strong></li>
-                    
+
                     <li>{{ tags }}</li>
-                    
-                   
+
+
                 </ul>
             </div>
             {% if current_user.is_authenticated and admin_user.admin %}
@@ -65,20 +67,20 @@
                             </div>
                         </div>
                         <div class="row">
-                                <div class="input-field col s12">
-                                    {{ form.tags.label() }}
-                                    {% if form.tags.errors %}
-                                    {{ form.tags(class="is-invalid") }}
-                                    <div class="invalid-feedback">
-                                        {% for errors in form.tags.errors %}
-                                        <span> {{ error }}</span>
-                                        {% endfor %}
-                                    </div>
-                                    {% else %}
-                                    {{ form.tags() }}
-                                    {% endif %}
+                            <div class="input-field col s12">
+                                {{ form.tags.label() }}
+                                {% if form.tags.errors %}
+                                {{ form.tags(class="is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for errors in form.tags.errors %}
+                                    <span> {{ error }}</span>
+                                    {% endfor %}
                                 </div>
+                                {% else %}
+                                {{ form.tags() }}
+                                {% endif %}
                             </div>
+                        </div>
 
                         <div class="row">
                             <div class="input-field col s12">

@@ -23,6 +23,14 @@ body {
     width: 70%;
     margin: auto;
     margin-top: 100px; }
+    .blog-frame .left-pane .dark-bg {
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      width: 80%; }
+      .blog-frame .left-pane .dark-bg h4 {
+        margin-top: 5px; }
     .blog-frame .left-pane strong {
       font-size: 18px;
       font-weight: 600; }
@@ -34,6 +42,8 @@ body {
       border-radius: 5px;
       margin: 50px 0 20px;
       position: relative; }
+      .blog-frame .left-pane aside p {
+        margin-top: 10px; }
       .blog-frame .left-pane aside .aside-heading {
         margin: 10px 15px 7px;
         display: inline-block;
@@ -41,7 +51,8 @@ body {
       .blog-frame .left-pane aside .aside-card {
         margin: 7px;
         width: 100%;
-        display: block; }
+        display: block;
+        padding: 5px; }
       .blog-frame .left-pane aside #fab-two {
         position: relative;
         top: -25px;
@@ -143,6 +154,8 @@ body {
     font-weight: 500;
     font-size: 2em;
     display: inline-block; }
+    .post-view .post-title a {
+      text-decoration: none; }
   .post-view .date {
     margin-top: 15px;
     padding-top: 5px;
