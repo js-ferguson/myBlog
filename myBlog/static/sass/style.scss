@@ -299,6 +299,29 @@ body {
     background-color: white;
     border-radius: 5px;
     width: 80%;
-    margin: auto;
+    margin-top: 15px;
     padding: 15px;
+
+    h5 {
+        
+        margin: 15px 0 10px 0;
+    }
+
+    h6 {
+        font-weight: 600;
+    }
+
+    hr {
+        margin: 7px;
+    }
+
+    span {
+        
+        font-weight: 600;
+    }
+
+    .date-small {
+        float: right;
+        font-size: .9em;
+    }
 }

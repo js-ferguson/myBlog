@@ -122,12 +122,17 @@ def insert_post():
 def post(post_id):
     form = NewCommentForm()
     has_comments = mongo.db.comment.count({'post_id': ObjectId(post_id)})
+    #comment_username = get_comment_username()
     comments = mongo.db.comment.find(
         {'post_id': ObjectId(post_id)}).sort("_id", -1)
     post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
 
+    def get_comment_username(user_id):
+        user = mongo.db.users.find_one({'_id': ObjectId(user_id)})
+        return user['username']
+
     return render_template('view_post.html', post=post, form=form, admin_user=admin_user(),
-                           comments=comments, has_comments=has_comments)
+                           comments=comments, has_comments=has_comments, get_comment_username=get_comment_username )
 
 @app.route("/home/update_project", methods=['POST'])
 @login_required

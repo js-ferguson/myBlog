@@ -88,13 +88,17 @@
     </li>
 </ul>
 {% if has_comments != 0 %}
-<div class="comment-wrapper z-depth-2">  
-    {% for comment in comments %}
-    <h5>{{ comment.title }}</h5>
-    <p>{{ comment.content }}</p>
+{% for comment in comments %}
+<div class="comment-wrapper z-depth-2">     
+    <span>{{ get_comment_username(comment.user) }}</span>
+    {% if post.date_posted %}
+        <div class="date-small">{{ comment.date_posted.strftime("%d %b %Y") }}</div>
+    {% endif %}
     <hr>
-    {% endfor %}
+    <h5>{{ comment.title }}</h5>
+    <p>{{ comment.content }}</p>   
 </div>
+{% endfor %}
 {% endif %}
 
 

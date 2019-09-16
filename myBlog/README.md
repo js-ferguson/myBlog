@@ -12,9 +12,9 @@ Formatting is lost when post are retrieved from the db. why?
 
 * ability to make a post sticky so it stays at the top of the post feed
 
-* Wire up the project modal to the db
-
 * Do something with the about page... or get rid of it.
+
+* Post replies should show the username of the user who commented
 
 * Sub link to get an email about each new post
 

@@ -206,7 +206,18 @@ body {
   background-color: white;
   border-radius: 5px;
   width: 80%;
-  margin: auto;
+  margin-top: 15px;
   padding: 15px; }
+  .comment-wrapper h5 {
+    margin: 15px 0 10px 0; }
+  .comment-wrapper h6 {
+    font-weight: 600; }
+  .comment-wrapper hr {
+    margin: 7px; }
+  .comment-wrapper span {
+    font-weight: 600; }
+  .comment-wrapper .date-small {
+    float: right;
+    font-size: .9em; }
 
 /*# sourceMappingURL=style.css.map */
