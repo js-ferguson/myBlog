@@ -11,25 +11,14 @@
 
         <aside class="z-depth-2">
             <div class="aside-card">
-                <strong>Current project</strong>
-                <p>My current project is making a personal blog for myself.
-                    The purpose of this project is fullfill assessment criteria for my
-                    course of study and to eventually serve as a professional
-                    development blog, portfolio and CV
-                </p>
+                <strong>{{ project.project_name }}</strong>
+                <p>{{ project.desc }}</p>
                 <ul>
                     <li><strong>Tech stack</strong></li>
+                    
+                    <li>{{ tags }}</li>
+                    
                    
-                    <p>I might just make a note here that the techstack should be populated with tags</p>
-                    <li>#MongoDB</li>
-                    <li>#Flask</li>
-                    <li>#python</li>
-                    <li>#Javascript</li>
-                    <li>#jQuery</li>
-                    <li>#Bootstrap</li>
-                    <li>#MaterializeCSS</li>
-                    <li>#SASS</li>
-                    <li>#HTML5</li>
                 </ul>
             </div>
             {% if current_user.is_authenticated and admin_user.admin %}
@@ -42,7 +31,7 @@
                     <div class="modal-content">
                         <h4>Edit Current Project</h4>
                     </div>
-                    <form method="POST" action="" class="form">
+                    <form method="POST" action="{{url_for('update_project')}}" class="form">
                         {{ form.hidden_tag() }}
                         <!-- //adds cross site request forgery token (CSRF token) -->
                         <div class="row">
@@ -75,6 +64,22 @@
                                 {% endif %}
                             </div>
                         </div>
+                        <div class="row">
+                                <div class="input-field col s12">
+                                    {{ form.tags.label() }}
+                                    {% if form.tags.errors %}
+                                    {{ form.tags(class="is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for errors in form.tags.errors %}
+                                        <span> {{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ form.tags() }}
+                                    {% endif %}
+                                </div>
+                            </div>
+
                         <div class="row">
                             <div class="input-field col s12">
                                 {{ form.submit(class="btn modal-close")}}

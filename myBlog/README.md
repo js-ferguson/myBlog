@@ -36,8 +36,6 @@ Formatting is lost when post are retrieved from the db. why?
 
 * make nav links should be coloured differently if you are currently on that page.
 
-* if a post has replies, display number of replies on it's card in the post feed. 
-
 * add an admin page where admins can make other users admins
 
  --- notes ---

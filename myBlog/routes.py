@@ -2,7 +2,7 @@ from flask import render_template, url_for, flash, redirect, request, abort
 from datetime import datetime
 from myBlog import app, mongo, bcrypt
 from bson.objectid import ObjectId
-from myBlog.forms import RegistrationForm, LoginForm, NewPostForm, AccountUpdateForm, EditProject, PostReplyForm, NewCommentForm
+from myBlog.forms import RegistrationForm, LoginForm, NewPostForm, AccountUpdateForm, EditProject, PostReplyForm, NewCommentForm, EditProject
 from myBlog.login import User
 from flask_login import current_user, login_user, logout_user, login_required
 
@@ -34,7 +34,9 @@ def posts_with_comment_count():
 @app.route("/home")
 def home():
     form = EditProject()
-    return render_template('home.html', posts=posts_with_comment_count(), form=form, admin_user=admin_user())
+    project = mongo.db.current_project.find_one({'current_project': 'current_project'})
+    tags = " ".join(project['tech_tags'])
+    return render_template('home.html', posts=posts_with_comment_count(), form=form, admin_user=admin_user(), project=project, tags=tags)
 
 
 @app.route("/about")
@@ -126,6 +128,20 @@ def post(post_id):
 
     return render_template('view_post.html', post=post, form=form, admin_user=admin_user(),
                            comments=comments, has_comments=has_comments)
+
+@app.route("/home/update_project", methods=['POST'])
+@login_required
+def update_project():
+    project = mongo.db.current_project
+    form = EditProject()
+    tag_list = list(form.tags.data.split(" "))
+    new_doc = {
+        'project_name': form.title.data, 'desc': form.description.data,
+        'tech_tags': tag_list, 'current_project': 'current_project'
+    }
+
+    project.update({'current_project': 'current_project'}, new_doc)
+    return redirect(url_for('home'))
 
 
 @app.route("/post/<post_id>", methods=['POST'])

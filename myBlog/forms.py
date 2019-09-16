@@ -77,6 +77,7 @@ class EditProject(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(max=50)])
     description = TextAreaField('Description', validators=[
                             DataRequired(), Length(min=1, max=1000)])
+    tags = StringField('#Tags - space separated', validators=[DataRequired()])
     submit = SubmitField('Save Project')
 
 
