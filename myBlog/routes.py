@@ -173,7 +173,7 @@ def edit_post(post_id):
     if request.method == 'GET':
         form.title.data = post['title']
         form.content.data = post['content']
-        return render_template('edit_post.html', form=form, post=post, admin_user=admin_user)
+        return render_template('edit_post.html', form=form, post=post, admin_user=admin_user())
 
     elif request.method == 'POST':
         content = request.form.get("content")

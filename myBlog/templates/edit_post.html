@@ -39,12 +39,12 @@
             </div>
         {% if current_user.is_authenticated and admin_user.admin %}
         <div class="button-wrapper">
-            <div class="input-field save-post-button">
+            <span class="input-field save-post-button">
                 {{ form.submit(class="btn z-depth-2 ")}}
-            </div>
-            <div class="input-field delete-post-button">
+            </span>
+            <span class="input-field delete-post-button">
                 {{ form.delete(class="btn z-depth-2 ")}}
-            </div>
+            </span>
         </div>
         {% endif %}
 

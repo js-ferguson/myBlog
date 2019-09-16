@@ -137,10 +137,6 @@ body {
   .post-view .post-heading {
     padding-top: 15px;
     height: 60px; }
-  .post-view #edit_post_fab {
-    position: absolute;
-    top: 12px;
-    left: 115px; }
   .post-view .post-title {
     margin-top: 0px;
     padding-top: 5px;
@@ -161,6 +157,11 @@ body {
     float: left; }
   .post-view .delete-post-button {
     float: right; }
+
+#edit_post_fab {
+  position: absolute;
+  bottom: -27px;
+  right: 0px; }
 
 .collapsible {
   border: 0; }

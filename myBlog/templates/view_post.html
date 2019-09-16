@@ -8,19 +8,6 @@
         {% if post.date_posted %}
         <div class="date">{{ post.date_posted.strftime("%d %b %Y") }}</div>
         {% endif %}
-        {% if current_user.is_authenticated and admin_user.admin %}
-        <div class="fixed-action-btn direction-right" id="edit_post_fab">
-            <a class="btn-floating btn-large red">
-                <i class="large material-icons">mode_edit</i>
-            </a>
-            <ul>
-                <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-                <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-                <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-                <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-            </ul>
-        </div>
-        {% endif %}
         <hr>
     </div>
     <div class="col s12 post-content">
@@ -28,7 +15,13 @@
             {{ post.content }}
         </div>
     </div>
-
+    {% if current_user.is_authenticated and admin_user.admin %}
+        <div class="fixed-action-btn direction-right" id="edit_post_fab">
+            <a href="{{ url_for('edit_post', post_id=post._id) }}" class="btn-floating btn-large red">
+                <i class="large material-icons">mode_edit</i>
+            </a>
+        </div>
+    {% endif %}
 </div>
 
 

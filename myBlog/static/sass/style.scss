@@ -199,13 +199,6 @@ body {
         height: 60px;
     }
 
-    #edit_post_fab {
-        position: absolute;
-        top: 12px;
-        left: 115px;
-
-    }
-
     .post-title {    
         margin-top: 0px;
         padding-top: 5px;
@@ -242,6 +235,11 @@ body {
     }
 }
 
+#edit_post_fab {
+    position: absolute;
+    bottom: -27px;
+    right: 0px;
+}
 
 // ------------------------------------ Comment Section --------------------------- //
 
