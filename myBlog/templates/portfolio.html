@@ -1,8 +1,142 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <h4>Software portfolio</h4>
+<h4 class="pt-2 pb-3">Software portfolio</h4>
 
-    This will be built from a form accessable by the admin user, allowing a Project title, a description an option field for technical challenges and a desktop and responsive screenshot
+
+
+{% if current_user.is_authenticated and admin_user.admin %}
+<div class="fixed-action-btn direction-bottom" id="fab-two">
+    <!-- <a href="{{ url_for('new_post') }}" class="btn-floating btn-large red z-depth-2"> -->
+    <a href="#modal1" class="btn-floating btn-large red z-depth-2 modal-trigger">
+        <i class="large material-icons">add</i>
+    </a>
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Add Project to Portfolio</h4>
+        </div>
+        <form method="POST" action="{{url_for('portfolio')}}" enctype="multipart/form-data" class="form">
+            {{ form.hidden_tag() }}
+            <!-- //adds cross site request forgery token (CSRF token) -->
+            <div class="row">
+                <div class="input-field col s12">
+                    {{ form.title.label() }}
+                    {% if form.title.errors %}
+                    {{ form.title(class="is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for errors in form.title.errors %}
+                        <span> {{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.title() }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    {{ form.description.label() }}
+                    {% if form.description.errors %}
+                    {{ form.description(class="is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for errors in form.description.errors %}
+                        <span> {{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.description() }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    {{ form.tags.label() }}
+                    {% if form.tags.errors %}
+                    {{ form.tags(class="is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for errors in form.tags.errors %}
+                        <span> {{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.tags() }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    {{ form.link.label() }}
+                    {% if form.link.errors %}
+                    {{ form.link(class="is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for errors in form.link.errors %}
+                        <span> {{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.link() }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    {{ form.github_link.label() }}
+                    {% if form.github_link.errors %}
+                    {{ form.github_link(class="is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for errors in form.github_link.errors %}
+                        <span> {{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.github_link() }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.images.label() }}
+                {{ form.images(class="form-control-file") }}
+                {% if form.images.errors %}
+                {% for error in form.images.errors %}
+                <span class="text-danger">{{ error }}</span></br>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    {{ form.submit(class="btn modal-close")}}
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endif %}
+
+{% for project in projects %}
+<div class="card">
+    <h4><a href="{{ project.link }}">{{ project.project_name }}</a></h4>
+    <p>{{ project.desc }}</p>
+    {% for tag in project.tech_tags %}
+    {{ tag + " "}}
+    {% endfor %}
+    <div>
+        <i class="fa fa-github-alt"></i><a href="{{ project.github_link }}">Github repository</a>
+        <i class="fa fa-globe"></i><a href="{{ project.link }}">Live website</a>
+        <div class="picture-card">
+            {% if project.images %}
+            {% for image in project.images %}
+
+            <img class="z-depth-2" src="{{ url_for('static', filename='images/project_pics/' + image ) }}">
+
+            {% endfor %}
+            {% endif %}
+        </div>
+
+    </div>
+
+</div>
+
+{% endfor %}
 
 {% endblock content %}

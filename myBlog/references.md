@@ -38,3 +38,5 @@ Although never is often better than *right* now.
 If the implementation is hard to explain, it's a bad idea.
 If the implementation is easy to explain, it may be a good idea.
 Namespaces are one honking great idea -- let's do more of those!
+
+Quick Cards is a quick reference for monsters and spells in D&D 5e. It is written primarily in JS6 and leans heavily on the dnd5eapi. Unfortunately the API is no longer in development, so some of the text encoding bugs in the API are carried over into the Quick Cards app. However, since it is just a few stray special characters that pop up in spell descriptions, it doesn't affect usability in a big way

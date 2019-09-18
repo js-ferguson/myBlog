@@ -7,8 +7,16 @@
 .brand-logo {
   margin-left: 15px; }
 
-#home {
-  font-weight: 600; }
+.card {
+  border-radius: 5px;
+  padding: 15px; }
+  .card a {
+    text-decoration: none; }
+
+.fa {
+  font-size: 40px;
+  color: black;
+  display: block; }
 
 #current_username {
   font-weight: 600; }
@@ -22,7 +30,7 @@ body {
   .blog-frame .left-pane {
     width: 70%;
     margin: auto;
-    margin-top: 100px; }
+    margin-top: 70px; }
     .blog-frame .left-pane .dark-bg {
       background: rgba(0, 0, 0, 0.5);
       color: white;
@@ -65,7 +73,7 @@ body {
     border-radius: 5px;
     position: relative; }
     .blog-frame .right-frame .posts {
-      margin: 20px 0 20px;
+      margin: 17px 0 20px;
       padding: 15px;
       background-color: white;
       border-radius: 5px;
@@ -233,5 +241,11 @@ body {
   .comment-wrapper .date-small {
     float: right;
     font-size: .9em; }
+
+.picture-card {
+  text-align: center;
+  margin: 15px; }
+  .picture-card img {
+    margin: 25px; }
 
 /*# sourceMappingURL=style.css.map */

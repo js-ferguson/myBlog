@@ -1,7 +1,8 @@
 from flask import request, flash
 from flask_login import current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
+from flask_wtf.file import FileAllowed
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, MultipleFileField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from myBlog import mongo
 
@@ -86,7 +87,19 @@ class PostReplyForm(FlaskForm):
     content = TextAreaField('Content', validators=[DataRequired()])
     submit = SubmitField('Post Comment')
 
+
 class NewCommentForm(FlaskForm):
     title = StringField('Comment Title (Optional)')
     content = TextAreaField('Comment', validators=[DataRequired()])
     submit = SubmitField('Post Comment')
+
+
+class NewPortfolioProject(FlaskForm):
+    title = StringField('Project Name', validators=[DataRequired(), Length(max=50)])
+    description = TextAreaField('Description', validators=[
+                            DataRequired(), Length(min=1, max=1000)])
+    tags = StringField('#Tags - space separated', validators=[DataRequired()])
+    link = StringField('Link to live project', validators=[DataRequired(), Length(max=50)])
+    github_link = StringField('Github link', validators=[DataRequired(), Length(max=50)])
+    images = MultipleFileField('Add screenshots/wireframes', validators=[FileAllowed(['jpg', 'png'])])
+    submit = SubmitField('Save Project') 

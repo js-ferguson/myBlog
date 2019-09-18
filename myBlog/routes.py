@@ -1,10 +1,13 @@
+import os
 from flask import render_template, url_for, flash, redirect, request, abort
 from datetime import datetime
 from myBlog import app, mongo, bcrypt
 from bson.objectid import ObjectId
-from myBlog.forms import RegistrationForm, LoginForm, NewPostForm, AccountUpdateForm, EditProject, PostReplyForm, NewCommentForm, EditProject
+from myBlog.forms import RegistrationForm, LoginForm, NewPostForm, AccountUpdateForm, EditProject, PostReplyForm, NewCommentForm, EditProject, NewPortfolioProject
 from myBlog.login import User
 from flask_login import current_user, login_user, logout_user, login_required
+import secrets
+from PIL import Image
 
 
 def admin_user():
@@ -34,7 +37,8 @@ def posts_with_comment_count():
 @app.route("/home")
 def home():
     form = EditProject()
-    project = mongo.db.current_project.find_one({'current_project': 'current_project'})
+    project = mongo.db.current_project.find_one(
+        {'current_project': 'current_project'})
     tags = " ".join(project['tech_tags'])
     return render_template('home.html', posts=posts_with_comment_count(), form=form, admin_user=admin_user(), project=project, tags=tags)
 
@@ -42,11 +46,6 @@ def home():
 @app.route("/about")
 def about():
     return render_template('about.html')
-
-
-@app.route("/portfolio")
-def portfolio():
-    return render_template('portfolio.html')
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -107,7 +106,7 @@ def insert_post():
 
     new_doc = {'title': request.form.get('title'), 'post_author': post_author,
                'tags': [], 'content': request.form.get('content'),
-               'date_posted': datetime.utcnow(), "images": []}
+               'date_posted': datetime.utcnow(), "images": [], "sticky": False}
     try:
         posts.insert_one(new_doc)
         print("")
@@ -132,7 +131,8 @@ def post(post_id):
         return user['username']
 
     return render_template('view_post.html', post=post, form=form, admin_user=admin_user(),
-                           comments=comments, has_comments=has_comments, get_comment_username=get_comment_username )
+                           comments=comments, has_comments=has_comments, get_comment_username=get_comment_username)
+
 
 @app.route("/home/update_project", methods=['POST'])
 @login_required
@@ -144,7 +144,6 @@ def update_project():
         'project_name': form.title.data, 'desc': form.description.data,
         'tech_tags': tag_list, 'current_project': 'current_project'
     }
-
     project.update({'current_project': 'current_project'}, new_doc)
     return redirect(url_for('home'))
 
@@ -156,7 +155,8 @@ def insert_comment(post_id):
     author = mongo.db.users.find_one({"username": current_user.get_id()})
     new_doc = {'user': author['_id'], 'post_id': ObjectId(post_id), 'title': request.form.get('title'),
                'content': request.form.get('content'),
-               'date_posted': datetime.utcnow()}
+               'date_posted': datetime.utcnow()
+               }
     comments.insert_one(new_doc)
     flash('Your comment was successfully posted', 'info')
     return redirect(url_for('post', post_id=post_id))
@@ -174,7 +174,6 @@ def edit_post(post_id):
         form.title.data = post['title']
         form.content.data = post['content']
         return render_template('edit_post.html', form=form, post=post, admin_user=admin_user())
-
     elif request.method == 'POST':
         content = request.form.get("content")
         title = request.form.get("title")
@@ -189,6 +188,75 @@ def edit_post(post_id):
         )
         flash('Your blog post has been updated', 'info')
     return redirect(url_for('home'))
+
+
+def save_images(images):    
+    file_filenames = [] #randomhex.jpg
+    save_paths = [] 
+    for image in images:       
+        rand_hex = secrets.token_hex(8)
+        _, f_ext = os.path.splitext(image.filename)
+        file_filenames.append(rand_hex + f_ext)  
+    for name in file_filenames:
+        save_paths.append(os.path.join(app.root_path, 'static/images/project_pics', name))             
+    for image,path in zip(images, save_paths):
+        i = Image.open(image)
+        (width, height) = (500, 500)
+        i.thumbnail((width, height))
+        i.save(path)
+    return file_filenames
+
+
+@app.route("/portfolio", methods=['GET', 'POST'])
+def portfolio():
+    form = NewPortfolioProject()
+    portfolio = mongo.db.portfolio
+    projects = portfolio.find()        
+    image_files = []
+    if request.method == 'POST':
+        tag_list = list(form.tags.data.split(" "))      
+     
+    if form.validate_on_submit():
+        if form.images.data:
+            image_files = save_images(form.images.data)
+        new_doc = {
+            'project_name': form.title.data, 
+            'desc': form.description.data,
+            'tech_tags': tag_list, 
+            'link': form.link.data, 
+            'github_link': form.github_link.data, 
+            'images': image_files
+            }
+
+        portfolio.insert_one(new_doc)
+        flash('Your new project has been added to your portfolio', 'info')        
+        return redirect(url_for('portfolio'))
+
+    return render_template('portfolio.html', projects=projects, form=form, admin_user=admin_user(), image_files=image_files)
+
+
+@app.route("/insert_project", methods=['POST'])
+@login_required
+def insert_project():
+    form = NewPortfolioProject()
+    portfolio = mongo.db.portfolio
+    tag_list = list(form.tags.data.split(" "))      
+     
+    if form.validate_on_submit():
+        if form.images.data:
+            image_files = save_images(form.images.data)
+        new_doc = {
+            'project_name': form.title.data, 
+            'desc': form.description.data,
+            'tech_tags': tag_list, 
+            'link': form.link.data, 
+            'github_link': form.github_link.data, 
+            'images': image_files
+            }
+
+        portfolio.insert_one(new_doc)
+        flash('Your new project has been added to your portfolio', 'info')        
+    return redirect(url_for('portfolio'))
 
 
 @app.route("/account", methods=['POST', 'GET'])
