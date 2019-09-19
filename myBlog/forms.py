@@ -99,7 +99,7 @@ class NewPortfolioProject(FlaskForm):
     description = TextAreaField('Description', validators=[
                             DataRequired(), Length(min=1, max=1000)])
     tags = StringField('#Tags - space separated', validators=[DataRequired()])
-    link = StringField('Link to live project', validators=[DataRequired(), Length(max=50)])
-    github_link = StringField('Github link', validators=[DataRequired(), Length(max=50)])
-    images = MultipleFileField('Add screenshots/wireframes')
+    link = StringField('Link to live project', validators=[DataRequired()])
+    github_link = StringField('Github link', validators=[DataRequired()])
+    images = MultipleFileField('Add screenshots/wireframes', validators=[FileAllowed(['png', 'jpg'])])
     submit = SubmitField('Save Project') 

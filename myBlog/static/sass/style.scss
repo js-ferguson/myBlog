@@ -5,8 +5,7 @@ $container-width: 85%;
 }
 
 .nav-wrapper {
-    background-color: #404040;
-    
+    background-color: #404040;    
 }
 
 .brand-logo {
@@ -24,7 +23,7 @@ $container-width: 85%;
 .fa {
     font-size: 40px;
     color: black;
-    display: block;
+    
 }
 
 #current_username {
@@ -330,10 +329,15 @@ body {
 
 // ------------------------------- Portfolio ---------------------------- //@at-root
 
+.portfolio-link-icons {
+    margin: 30px, 25px, 30px, 0;
+}
+
 .picture-card {
     text-align: center;
     margin: 15px;
     img {
         margin: 25px;
+        bottom: 25px;
     }
 }

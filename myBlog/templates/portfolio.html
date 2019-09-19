@@ -116,13 +116,17 @@
 {% for project in projects %}
 <div class="card">
     <h4><a href="{{ project.link }}">{{ project.project_name }}</a></h4>
+    <div class="portfolio-link-icons">
+        <i class="fa fa-github-alt"></i><a href="{{ project.github_link }}">Github repository</a>
+        <i class="fa fa-globe"></i><a href="{{ project.link }}">Live website</a>
+    </div>
+    
     <p>{{ project.desc }}</p>
     {% for tag in project.tech_tags %}
     {{ tag + " "}}
     {% endfor %}
     <div>
-        <i class="fa fa-github-alt"></i><a href="{{ project.github_link }}">Github repository</a>
-        <i class="fa fa-globe"></i><a href="{{ project.link }}">Live website</a>
+        
         <div class="picture-card">
             {% if project.images %}
             {% for image in project.images %}

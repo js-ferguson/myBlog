@@ -218,7 +218,7 @@ def portfolio():
     if request.method == 'POST':
         tag_list = list(form.tags.data.split(" "))      
      
-    #if form.validate_on_submit():
+    #f form.validate_on_submit():
     if form.images.data:
         image_files = save_images(form.images.data)
         new_doc = {
