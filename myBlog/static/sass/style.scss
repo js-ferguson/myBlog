@@ -27,10 +27,6 @@ $container-width: 85%;
     display: block;
 }
 
-#home {
-    //font-weight: 600;
-}
-
 #current_username {
 
     // margin-left: 160px;
@@ -335,12 +331,8 @@ body {
 // ------------------------------- Portfolio ---------------------------- //@at-root
 
 .picture-card {
-   // width: 60%;
-   // float: right;
     text-align: center;
     margin: 15px;
-    //border-radius: 5px;
-
     img {
         margin: 25px;
     }

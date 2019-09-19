@@ -209,16 +209,18 @@ def save_images(images):
 
 @app.route("/portfolio", methods=['GET', 'POST'])
 def portfolio():
+    
     form = NewPortfolioProject()
     portfolio = mongo.db.portfolio
     projects = portfolio.find()        
     image_files = []
+    
     if request.method == 'POST':
         tag_list = list(form.tags.data.split(" "))      
      
-    if form.validate_on_submit():
-        if form.images.data:
-            image_files = save_images(form.images.data)
+    #if form.validate_on_submit():
+    if form.images.data:
+        image_files = save_images(form.images.data)
         new_doc = {
             'project_name': form.title.data, 
             'desc': form.description.data,
@@ -226,7 +228,7 @@ def portfolio():
             'link': form.link.data, 
             'github_link': form.github_link.data, 
             'images': image_files
-            }
+        }
 
         portfolio.insert_one(new_doc)
         flash('Your new project has been added to your portfolio', 'info')        

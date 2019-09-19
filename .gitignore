@@ -1,8 +1,9 @@
 env
 __pycache__
 .vscode
-static/sass
-static/css/materialize.css.map
-static/.sass-cache
-static/css/style.css.map
-features_todo.md
+/myBlog/static/sass
+/myBlog/static/css/materialize.css.map
+/myBlog/static/.sass-cache
+/myBlog/static/css/style.css.map
+/myBlog/features_todo.md
+myBlog/static/.sass-cache/e629e558eb797675ebecd04d86526f4d5927be41/style.scssc
