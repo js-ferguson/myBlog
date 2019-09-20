@@ -19,6 +19,18 @@ https://stackoverflow.com/questions/54992412/flask-login-usermixin-class-with-a-
 https://boh717.github.io/post/flask-login-and-mongodb/
 https://flask-login.readthedocs.io/en/latest/
 
+multiple files upload
+https://stackoverflow.com/questions/53890136/how-to-upload-multiple-files-with-flask-wtf
+https://www.geeksforgeeks.org/zip-in-python/
+
+mongo aggreagation pipeline
+https://docs.mongodb.com/manual/aggregation/
+
+
+Pagination
+https://www.youtube.com/watch?v=Lnt6JqtzM7I
+https://www.codementor.io/arpitbhayani/fast-and-efficient-pagination-in-mongodb-9095flbqrb
+
 Beautiful is better than ugly.
 Explicit is better than implicit.
 Simple is better than complex.
@@ -38,5 +50,3 @@ Although never is often better than *right* now.
 If the implementation is hard to explain, it's a bad idea.
 If the implementation is easy to explain, it may be a good idea.
 Namespaces are one honking great idea -- let's do more of those!
-
-Quick Cards is a quick reference for monsters and spells in D&D 5e. It is written primarily in JS6 and leans heavily on the dnd5eapi. Unfortunately the API is no longer in development, so some of the text encoding bugs in the API are carried over into the Quick Cards app. However, since it is just a few stray special characters that pop up in spell descriptions, it doesn't affect usability in a big way

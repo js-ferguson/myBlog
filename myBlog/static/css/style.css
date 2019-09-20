@@ -7,12 +7,6 @@
 .brand-logo {
   margin-left: 15px; }
 
-.card {
-  border-radius: 5px;
-  padding: 15px; }
-  .card a {
-    text-decoration: none; }
-
 .fa {
   font-size: 40px;
   color: black; }
@@ -241,14 +235,25 @@ body {
     float: right;
     font-size: .9em; }
 
-.portfolio-link-icons {
-  margin: 30px, 25px, 30px, 0; }
-
-.picture-card {
-  text-align: center;
-  margin: 15px; }
-  .picture-card img {
-    margin: 25px;
-    bottom: 25px; }
+.portfolio-card {
+  position: relative;
+  margin: 0.5rem 0 1rem 0;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 15px; }
+  .portfolio-card a {
+    text-decoration: none; }
+  .portfolio-card .portfolio-link-icons {
+    margin: 30px, 25px, 30px, 0; }
+    .portfolio-card .portfolio-link-icons .fa {
+      margin: 0 15px 15px 15px; }
+    .portfolio-card .portfolio-link-icons span {
+      margin-bottom: 20px; }
+  .portfolio-card .picture-card {
+    text-align: center;
+    margin: 15px; }
+    .portfolio-card .picture-card img {
+      margin: 25px;
+      bottom: 25px; }
 
 /*# sourceMappingURL=style.css.map */

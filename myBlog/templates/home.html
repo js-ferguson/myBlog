@@ -101,7 +101,7 @@
         {% for post in posts %}
         <div class="posts z-depth-2">
             <div class="post-card">
-                <span class="post-title"><a href="{{ url_for('post', post_id=post._id) }}">{{ post.title }}</a></span>
+                <span class="post-title"><a href="{{ url_for('post', post_id=post._id) }}">{{ post['title'] }}</a></span>
                 | {{ post.comment_count }} replies
                 {% if post.date_posted %}
                 <span class="post-date">{{ post.date_posted.strftime("%d %b %Y") }}</span>

@@ -1,5 +1,5 @@
 import os
-from flask import render_template, url_for, flash, redirect, request, abort
+from flask import render_template, url_for, flash, redirect, request, abort, jsonify
 from datetime import datetime
 from myBlog import app, mongo, bcrypt
 from bson.objectid import ObjectId
@@ -9,7 +9,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 import secrets
 from PIL import Image
 
-
+''' function to determine if the current use has admin privelages'''
 def admin_user():
     admin_user = mongo.db.users.find_one(
         {'$and': [{'username': current_user.get_id()}, {'admin': True}]})
@@ -35,8 +35,12 @@ def posts_with_comment_count():
 
 @app.route("/")
 @app.route("/home")
+@app.route("/index")
 def home():
-    form = EditProject()
+    
+    form = EditProject()      
+
+
     project = mongo.db.current_project.find_one(
         {'current_project': 'current_project'})
     tags = " ".join(project['tech_tags'])
