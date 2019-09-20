@@ -10,13 +10,16 @@ import secrets
 from PIL import Image
 
 ''' function to determine if the current use has admin privelages'''
+
+
 def admin_user():
     admin_user = mongo.db.users.find_one(
         {'$and': [{'username': current_user.get_id()}, {'admin': True}]})
     return admin_user
 
 
-def posts_with_comment_count():
+def posts_with_comment_count(page):
+    
     pipeline = [
         {"$lookup": {
             "from": "comment",
@@ -27,7 +30,12 @@ def posts_with_comment_count():
         {"$addFields": {
             "comment_count": {"$size": "$comment_count"}
         }},
-        {"$sort": {"_id": -1}}
+        {"$sort": {"_id": -1}}, 
+        {'$facet': { 
+            "metadata": [{"$count": "total"}, {"$addFields": {"page": int(page)}}],
+            "data": [{"$skip": (page - 1)*5}, {"$limit": 5}] # add projection here wish you re-shape the docs
+            }}
+    
     ]
     posts = list(mongo.db.posts.aggregate(pipeline))
     return posts
@@ -37,14 +45,39 @@ def posts_with_comment_count():
 @app.route("/home")
 @app.route("/index")
 def home():
-    
-    form = EditProject()      
+    #posts = posts_with_comment_count()
+    form = EditProject()
 
+    page = request.args.get('page', 1, type=int)
+    print(page)
+    
+    data = posts_with_comment_count(page)
+
+    def posts():
+     for post in data:
+        return post['data']
+
+    '''def paginate(page_size, last_id=None):
+        for post in posts:
+        #db = mongo.db
+           if last_id is None:
+                cursor = post.find().limit(page_size)
+            else:
+                cursor = posts.find({'_id': {'$gt': last_id}}).limit(page_size)
+            data = [x for x in cursor]
+
+            if not data:
+                return None, None
+
+            last_id = data[-1]['_id']
+
+            return data, last_id'''
 
     project = mongo.db.current_project.find_one(
         {'current_project': 'current_project'})
     tags = " ".join(project['tech_tags'])
-    return render_template('home.html', posts=posts_with_comment_count(), form=form, admin_user=admin_user(), project=project, tags=tags)
+
+    return render_template('home.html', posts=posts(), form=form, admin_user=admin_user(), project=project, tags=tags)
 
 
 @app.route("/about")
@@ -194,16 +227,16 @@ def edit_post(post_id):
     return redirect(url_for('home'))
 
 
-def save_images(images):    
-    file_filenames = [] #randomhex.jpg
-    save_paths = [] 
-    for image in images:       
+def save_images(images):
+    file_filenames = []  # randomhex.jpg
+    save_paths = []
+    for image in images:
         rand_hex = secrets.token_hex(8)
         _, f_ext = os.path.splitext(image.filename)
-        file_filenames.append(rand_hex + f_ext)  
+        file_filenames.append(rand_hex + f_ext)
     for name in file_filenames:
-        save_paths.append(os.path.join(app.root_path, 'static/images/project_pics', name))             
-    for image,path in zip(images, save_paths):
+        save_paths.append(os.path.join(app.root_path, 'static/images/project_pics', name))
+    for image, path in zip(images, save_paths):
         i = Image.open(image)
         (width, height) = (500, 500)
         i.thumbnail((width, height))
@@ -213,29 +246,29 @@ def save_images(images):
 
 @app.route("/portfolio", methods=['GET', 'POST'])
 def portfolio():
-    
+
     form = NewPortfolioProject()
     portfolio = mongo.db.portfolio
-    projects = portfolio.find()        
+    projects = portfolio.find()
     image_files = []
-    
+
     if request.method == 'POST':
-        tag_list = list(form.tags.data.split(" "))      
-     
-    #f form.validate_on_submit():
+        tag_list = list(form.tags.data.split(" "))
+
+    # f form.validate_on_submit():
     if form.images.data:
         image_files = save_images(form.images.data)
         new_doc = {
-            'project_name': form.title.data, 
+            'project_name': form.title.data,
             'desc': form.description.data,
-            'tech_tags': tag_list, 
-            'link': form.link.data, 
-            'github_link': form.github_link.data, 
+            'tech_tags': tag_list,
+            'link': form.link.data,
+            'github_link': form.github_link.data,
             'images': image_files
         }
 
         portfolio.insert_one(new_doc)
-        flash('Your new project has been added to your portfolio', 'info')        
+        flash('Your new project has been added to your portfolio', 'info')
         return redirect(url_for('portfolio'))
 
     return render_template('portfolio.html', projects=projects, form=form, admin_user=admin_user(), image_files=image_files)
@@ -246,22 +279,22 @@ def portfolio():
 def insert_project():
     form = NewPortfolioProject()
     portfolio = mongo.db.portfolio
-    tag_list = list(form.tags.data.split(" "))      
-     
+    tag_list = list(form.tags.data.split(" "))
+
     if form.validate_on_submit():
         if form.images.data:
             image_files = save_images(form.images.data)
         new_doc = {
-            'project_name': form.title.data, 
+            'project_name': form.title.data,
             'desc': form.description.data,
-            'tech_tags': tag_list, 
-            'link': form.link.data, 
-            'github_link': form.github_link.data, 
+            'tech_tags': tag_list,
+            'link': form.link.data,
+            'github_link': form.github_link.data,
             'images': image_files
-            }
+        }
 
         portfolio.insert_one(new_doc)
-        flash('Your new project has been added to your portfolio', 'info')        
+        flash('Your new project has been added to your portfolio', 'info')
     return redirect(url_for('portfolio'))
 
 
