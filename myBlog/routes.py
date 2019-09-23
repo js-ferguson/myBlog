@@ -1,4 +1,5 @@
 import os
+import math
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify
 from datetime import datetime
 from myBlog import app, mongo, bcrypt
@@ -9,17 +10,17 @@ from flask_login import current_user, login_user, logout_user, login_required
 import secrets
 from PIL import Image
 
-''' function to determine if the current use has admin privelages'''
+
 
 
 def admin_user():
+    '''Determine if the current use has admin privelages'''
     admin_user = mongo.db.users.find_one(
         {'$and': [{'username': current_user.get_id()}, {'admin': True}]})
     return admin_user
 
 
-def posts_with_comment_count(page):
-    
+def posts_with_comment_count(page):    
     pipeline = [
         {"$lookup": {
             "from": "comment",
@@ -33,9 +34,8 @@ def posts_with_comment_count(page):
         {"$sort": {"_id": -1}}, 
         {'$facet': { 
             "metadata": [{"$count": "total"}, {"$addFields": {"page": int(page)}}],
-            "data": [{"$skip": (page - 1)*5}, {"$limit": 5}] # add projection here wish you re-shape the docs
-            }}
-    
+            "data": [{"$skip": (page - 1)*4}, {"$limit": 4}] # add projection here wish you re-shape the docs
+            }}    
     ]
     posts = list(mongo.db.posts.aggregate(pipeline))
     return posts
@@ -47,49 +47,64 @@ def posts_with_comment_count(page):
 def home():
     #posts = posts_with_comment_count()
     form = EditProject()
-
-    page = request.args.get('page', 1, type=int)
-    print(page)
-    
+    page = request.args.get('page', 1, type=int)  
     data = posts_with_comment_count(page)
+    print(dict(data))
+    
+    def get_page_count():
+        for item in data:
+            post_count = item['metadata'][0]['total']
+            page_count = post_count/4
+            return int(math.ceil(page_count))
+    
+    print(get_page_count())
+    #links = []
 
-    def posts():
-     for post in data:
-        return post['data']
-
-    '''def paginate(page_size, last_id=None):
-        for post in posts:
-        #db = mongo.db
-           if last_id is None:
-                cursor = post.find().limit(page_size)
+    def create_num_list():
+        num_list = []
+        
+        for num in range(1, (get_page_count() +1)):
+            
+            if num == (page -2) or num == (page -1):
+                num_list.append(num)
+                continue
+            if num == page:
+                num_list.append(num)
+                continue
+            if num == (page +1) or num == (page +2):
+                num_list.append(num)
+                continue
             else:
-                cursor = posts.find({'_id': {'$gt': last_id}}).limit(page_size)
-            data = [x for x in cursor]
-
-            if not data:
-                return None, None
-
-            last_id = data[-1]['_id']
-
-            return data, last_id'''
-
+                num_list.append(None)
+        for num in num_list:
+            if num == page:
+                del num_list[0]
+            if num == get_page_count():
+                del num_list[-1]        
+        return num_list 
+    
+    print(create_num_list())
+    
     project = mongo.db.current_project.find_one(
         {'current_project': 'current_project'})
     tags = " ".join(project['tech_tags'])
 
-    return render_template('home.html', posts=posts(), form=form, admin_user=admin_user(), project=project, tags=tags)
+    def posts():
+     for post in data:
+        return post['data']
+        
 
-
-@app.route("/about")
-def about():
-    return render_template('about.html')
+    return render_template('home.html', posts=posts(), form=form,
+     admin_user=admin_user(), project=project, tags=tags, page=page, page_links=create_num_list(), last_page=get_page_count())
 
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
+
     form = RegistrationForm()
+
     if form.validate_on_submit():
         users = mongo.db.users
         hashpass = bcrypt.generate_password_hash(
@@ -99,6 +114,7 @@ def register():
         users.insert(new_user)
         flash('Your account has been created. Log in to continue', 'info')
         return redirect(url_for('login'))
+
     return render_template('register.html', form=form)
 
 
@@ -106,10 +122,13 @@ def register():
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
+
     form = LoginForm()
+
     if form.validate_on_submit():
         users = mongo.db.users
         user = users.find_one({'email': form.email.data})
+
         if user and bcrypt.check_password_hash(user['password'], form.password.data):
             user_obj = User(username=user['username'])
             login_user(user_obj)
@@ -117,6 +136,7 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
             flash('Login was unsuccessful, wrong email/password', 'danger')
+
     return render_template('login.html', form=form)
 
 
@@ -130,7 +150,6 @@ def logout():
 @login_required
 def new_post():
     form = NewPostForm()
-    # if form.validate_on_submit():
     return render_template('new_post.html', form=form, posts=mongo.db.posts.find())
 
 
@@ -139,11 +158,10 @@ def insert_post():
     posts = mongo.db.posts
     author = mongo.db.users.find_one({'username': current_user.get_id()})
     post_author = author['_id']
-    # posts.insert_one(request.form.to_dict())
-
     new_doc = {'title': request.form.get('title'), 'post_author': post_author,
                'tags': [], 'content': request.form.get('content'),
                'date_posted': datetime.utcnow(), "images": [], "sticky": False}
+    
     try:
         posts.insert_one(new_doc)
         print("")
@@ -158,7 +176,6 @@ def insert_post():
 def post(post_id):
     form = NewCommentForm()
     has_comments = mongo.db.comment.count({'post_id': ObjectId(post_id)})
-    #comment_username = get_comment_username()
     comments = mongo.db.comment.find(
         {'post_id': ObjectId(post_id)}).sort("_id", -1)
     post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
@@ -181,6 +198,7 @@ def update_project():
         'project_name': form.title.data, 'desc': form.description.data,
         'tech_tags': tag_list, 'current_project': 'current_project'
     }
+
     project.update({'current_project': 'current_project'}, new_doc)
     return redirect(url_for('home'))
 
@@ -194,6 +212,7 @@ def insert_comment(post_id):
                'content': request.form.get('content'),
                'date_posted': datetime.utcnow()
                }
+
     comments.insert_one(new_doc)
     flash('Your comment was successfully posted', 'info')
     return redirect(url_for('post', post_id=post_id))
@@ -204,18 +223,18 @@ def insert_comment(post_id):
 def edit_post(post_id):
     post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
     author = mongo.db.users.find_one({'username': current_user.get_id()})
-    if post['post_author'] != author['_id']:
-        abort(403)
     form = NewPostForm()
+
+    if post['post_author'] != author['_id']:
+        abort(403)    
+    
     if request.method == 'GET':
         form.title.data = post['title']
         form.content.data = post['content']
         return render_template('edit_post.html', form=form, post=post, admin_user=admin_user())
     elif request.method == 'POST':
         content = request.form.get("content")
-        title = request.form.get("title")
-        print(content)
-        # try:
+        title = request.form.get("title")          
         posts = mongo.db.posts
         posts.find_one_and_update(
             {"_id": ObjectId(post_id)},
@@ -230,12 +249,15 @@ def edit_post(post_id):
 def save_images(images):
     file_filenames = []  # randomhex.jpg
     save_paths = []
+
     for image in images:
         rand_hex = secrets.token_hex(8)
         _, f_ext = os.path.splitext(image.filename)
         file_filenames.append(rand_hex + f_ext)
+
     for name in file_filenames:
         save_paths.append(os.path.join(app.root_path, 'static/images/project_pics', name))
+
     for image, path in zip(images, save_paths):
         i = Image.open(image)
         (width, height) = (500, 500)
@@ -255,7 +277,6 @@ def portfolio():
     if request.method == 'POST':
         tag_list = list(form.tags.data.split(" "))
 
-    # f form.validate_on_submit():
     if form.images.data:
         image_files = save_images(form.images.data)
         new_doc = {
@@ -282,6 +303,7 @@ def insert_project():
     tag_list = list(form.tags.data.split(" "))
 
     if form.validate_on_submit():
+
         if form.images.data:
             image_files = save_images(form.images.data)
         new_doc = {

@@ -35,6 +35,8 @@ body {
     .blog-frame .left-pane strong {
       font-size: 18px;
       font-weight: 600; }
+    .blog-frame .left-pane .post-nav {
+      margin: auto; }
     .blog-frame .left-pane aside {
       background-color: #fafafa;
       width: 80%;
