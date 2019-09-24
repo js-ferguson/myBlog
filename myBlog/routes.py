@@ -11,14 +11,15 @@ import secrets
 from PIL import Image
 
 
-
-
 def admin_user():
     '''Determine if the current use has admin privelages'''
     admin_user = mongo.db.users.find_one(
         {'$and': [{'username': current_user.get_id()}, {'admin': True}]})
     return admin_user
 
+def is_sticky():
+        sticky = mongo.db.posts.find_one({"sticky": True})
+        return sticky
 
 def posts_with_comment_count(page):    
     pipeline = [
@@ -48,13 +49,9 @@ def home():
     form = EditProject()
     page = request.args.get('page', 1, type=int)  
     data = posts_with_comment_count(page)
-    
-    def is_sticky():
-        sticky = mongo.db.posts.find_one({"sticky": True})
-        return sticky
 
     print(is_sticky())
-    
+
     def get_page_count():
         for item in data:
             post_count = item['metadata'][0]['total']
@@ -170,9 +167,23 @@ def insert_post():
     posts = mongo.db.posts
     author = mongo.db.users.find_one({'username': current_user.get_id()})
     post_author = author['_id']
-    new_doc = {'title': request.form.get('title'), 'post_author': post_author,
-               'tags': [], 'content': request.form.get('content'),
-               'date_posted': datetime.utcnow(), "images": [], "sticky": False}
+    post_is_sticky = request.form.get('sticky')
+
+    if post_is_sticky:
+        
+        mongo.db.posts.update_many({"sticky": True}, {"$set":
+                {"sticky": False}
+             }, upsert=True)
+        
+        new_doc = {'title': request.form.get('title'), 'post_author': post_author,
+                'tags': [], 'content': request.form.get('content'),
+                'date_posted': datetime.utcnow(), "images": [], "sticky": True}
+
+        
+    else:
+        new_doc = {'title': request.form.get('title'), 'post_author': post_author,
+                'tags': [], 'content': request.form.get('content'),
+                'date_posted': datetime.utcnow(), "images": [], "sticky": False}
     
     try:
         posts.insert_one(new_doc)
@@ -236,6 +247,7 @@ def edit_post(post_id):
     post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
     author = mongo.db.users.find_one({'username': current_user.get_id()})
     form = NewPostForm()
+    post_is_sticky = request.form.get('sticky')
 
     if post['post_author'] != author['_id']:
         abort(403)    
@@ -248,12 +260,24 @@ def edit_post(post_id):
         content = request.form.get("content")
         title = request.form.get("title")          
         posts = mongo.db.posts
-        posts.find_one_and_update(
-            {"_id": ObjectId(post_id)},
-            {"$set":
-                {"title": title, "content": content}
-             }, upsert=True
-        )
+        if post_is_sticky:
+            mongo.db.posts.update_many({"sticky": True}, {"$set":
+                {"sticky": False}
+             }, upsert=True)
+
+            posts.find_one_and_update(
+                {"_id": ObjectId(post_id)},
+                {"$set":
+                    {"title": title, "content": content, "sticky": True}
+                }, upsert=True
+            )
+        else:
+            posts.find_one_and_update(
+                {"_id": ObjectId(post_id)},
+                {"$set":
+                    {"title": title, "content": content, "sticky": False}
+                }, upsert=True
+            )
         flash('Your blog post has been updated', 'info')
     return redirect(url_for('home'))
 

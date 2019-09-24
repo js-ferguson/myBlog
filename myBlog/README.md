@@ -8,9 +8,9 @@
 
 * Add delete post functionality to edit post page
 
-* Users should be able to change their details. Optionally add first and last names, and change password with email token
+* Remember me on login screen should actually remember me
 
-* paginate posts and comments
+* Users should be able to change their details. Optionally add first and last names, and change password with email token
 
 * make nav links should be coloured differently if you are currently on that page.
 
@@ -23,8 +23,6 @@
 * Sub link to get an email about each new post
 
 * Feature to save draft posts so people don't get emailed every time you write something down
-
-* ability to make a post sticky so it stays at the top of the post feed
 
 * A personal feed for posts-in-progress / personal notes -- perhaps integrated with drafts. 
 

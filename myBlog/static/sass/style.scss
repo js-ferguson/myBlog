@@ -27,6 +27,8 @@ body {
     background-repeat: repeat;
 }
 
+
+
 // ------------------------------------------ Posts ----------------------------------------- //
 
 .blog-frame {
@@ -53,6 +55,8 @@ body {
     .post-nav {
         margin: auto;
     }
+
+    
 
         // ------------------------------------- project --------------------------------- //
 
@@ -102,6 +106,13 @@ body {
             overflow: hidden;
             span {
                 font-weight: 600;
+            }
+
+            .badge {
+                color: white;
+                float: left;
+                margin-left: 0;
+                margin-right: 5px;
             }
         }
         .post-date {
@@ -153,8 +164,6 @@ body {
     width: 75%;
 }
 
-
-
 // ----------------------------- New Post ----------------- //
 
 .new-post-title-label {
@@ -182,6 +191,20 @@ body {
     border-radius: 5px;
     padding: 10px;
     resize: none;
+}
+
+#mat-checkbox {
+    opacity: 1;
+}
+
+.check-row {
+    .form-check {
+        display: inline-block;
+        }
+    
+    .input-field {
+        width: 150px;
+    }
 }
 
 .single-post-frame {

@@ -76,6 +76,11 @@ body {
       overflow: hidden; }
       .blog-frame .right-frame .posts span {
         font-weight: 600; }
+      .blog-frame .right-frame .posts .badge {
+        color: white;
+        float: left;
+        margin-left: 0;
+        margin-right: 5px; }
     .blog-frame .right-frame .post-date {
       text-align: right;
       float: right;
@@ -134,6 +139,14 @@ body {
   border-radius: 5px;
   padding: 10px;
   resize: none; }
+
+#mat-checkbox {
+  opacity: 1; }
+
+.check-row .form-check {
+  display: inline-block; }
+.check-row .input-field {
+  width: 150px; }
 
 .single-post-frame {
   width: 70%;

@@ -43,8 +43,9 @@
             </div>
         </div>
         <div class="form-check">
-            {{ form.remember(class="form-check-input") }}
-            {{ form.remember.label(class="form-check-label") }}
+                {{ form.remember.label(class="switch") }}
+                {{ form.remember(class="danger") }}
+                <span class="slider round"></span>                
         </div>
         <div class="row">
             <div class="input-field col s12">

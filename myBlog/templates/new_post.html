@@ -2,7 +2,7 @@
 {% block content %}
 
 <h3>New Post</h3>
-<div class="row">
+
     <form action="{{ url_for('insert_post') }}" method="POST" class="col s12">
         <div class="form-group">
             <div class="input-field col s12">
@@ -36,10 +36,19 @@
                 </div>
             </div>
         </div>
-        <div class="input-field col s12">
-            {{ form.submit(class="btn z-depth-2")}}
+        <div class="check-row">
+            
+            <div class="form-check">
+                    {{ form.sticky.label(class="switch") }}
+                    {{ form.sticky(class="danger") }}
+                    <span class="slider round"></span>                
+            </div>
+            <div class="input-field col s12">
+                {{ form.submit(class="btn z-depth-2")}}
+            </div>
+
         </div>
+        
     </form>
-</div>
 
 {% endblock content %}
