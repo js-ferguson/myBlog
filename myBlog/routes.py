@@ -1,5 +1,5 @@
 import os
-import math
+import math 
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify
 from datetime import datetime
 from myBlog import app, mongo, bcrypt
@@ -45,22 +45,25 @@ def posts_with_comment_count(page):
 @app.route("/home")
 @app.route("/index")
 def home():
-    #posts = posts_with_comment_count()
     form = EditProject()
     page = request.args.get('page', 1, type=int)  
     data = posts_with_comment_count(page)
-    print(dict(data))
+    
+    def is_sticky():
+        sticky = mongo.db.posts.find_one({"sticky": True})
+        return sticky
+
+    print(is_sticky())
     
     def get_page_count():
         for item in data:
             post_count = item['metadata'][0]['total']
             page_count = post_count/4
-            return int(math.ceil(page_count))
-    
+            return int(math.ceil(page_count))    
     print(get_page_count())
-    #links = []
 
     def create_num_list():
+        '''Create a list of page numbers and None values for a forum style page nav'''
         num_list = []
         
         for num in range(1, (get_page_count() +1)):
@@ -80,7 +83,15 @@ def home():
             if num == page:
                 del num_list[0]
             if num == get_page_count():
-                del num_list[-1]        
+                del num_list[-1] 
+        
+        #remove consecutive duplicate None values
+        i = 0
+        while i < len(num_list) -1:
+            if num_list[i] == num_list[i+1]:
+                del num_list[i]
+            else:
+                i = i+1
         return num_list 
     
     print(create_num_list())
@@ -91,11 +102,12 @@ def home():
 
     def posts():
      for post in data:
-        return post['data']
-        
+        return post['data']        
 
     return render_template('home.html', posts=posts(), form=form,
-     admin_user=admin_user(), project=project, tags=tags, page=page, page_links=create_num_list(), last_page=get_page_count())
+        admin_user=admin_user(), project=project, tags=tags, page=page,
+        page_links=create_num_list(), last_page=get_page_count(),
+        is_sticky=is_sticky())
 
 
 @app.route("/register", methods=['GET', 'POST'])

@@ -98,6 +98,22 @@
 
     <div class="col s7 right-frame">
 
+        {% if is_sticky %}
+        <div class="posts z-depth-2">
+                <div class="post-card">
+                    <span class="post-title">STICKY <a href="{{ url_for('post', post_id=is_sticky._id) }}">{{ is_sticky['title'] }}</a></span>
+                    | {{ is_sticky.comment_count }} replies
+                    {% if is_sticky.date_posted %}
+                    <span class="post-date">{{ is_sticky.date_posted.strftime("%d %b %Y") }}</span>
+                    {% endif %}
+                    <hr>
+                </div>
+                <p>{{ is_sticky.content }}</p>
+            </div>
+
+            <hr>
+        {% endif %}
+
         {% for post in posts %}
         <div class="posts z-depth-2">
             <div class="post-card">
@@ -121,8 +137,7 @@
                     {% if item %}
                         <a class="btn btn-sm" href="{{url_for('home', page=item) }}">{{ item }}</a>
                         {% else %}
-                        .
-                        
+                        ...                        
                     {% endif %}
                 {% endfor %}                          
                 
