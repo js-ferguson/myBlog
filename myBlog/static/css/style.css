@@ -43,7 +43,7 @@ body {
       margin: auto;
       display: flex;
       border-radius: 5px;
-      margin: 50px 0 20px;
+      margin: 80px 0 20px;
       position: relative; }
       .blog-frame .left-pane aside p {
         margin-top: 10px; }
@@ -60,6 +60,15 @@ body {
         position: relative;
         top: -25px;
         left: 25px; }
+      .blog-frame .left-pane aside .fab-label {
+        background-color: white;
+        border-radius: 5px;
+        position: absolute;
+        padding: 12px;
+        right: 0px;
+        height: 45px;
+        width: 120px;
+        top: -50px; }
   .blog-frame .right-frame {
     width: 70%;
     background-color: transparent;
@@ -67,29 +76,53 @@ body {
     margin-top: 50px;
     border-radius: 5px;
     position: relative; }
-    .blog-frame .right-frame .posts {
-      margin: 17px 0 20px;
+    .blog-frame .right-frame .sticky-wrapper .badge {
+      color: white;
+      float: left;
+      margin-left: 0;
+      margin-right: 5px; }
+    .blog-frame .right-frame .sticky-wrapper .sticky-post {
       padding: 15px;
       background-color: white;
       border-radius: 5px;
+      margin: 17px 0 20px;
       max-height: 250px;
       overflow: hidden; }
-      .blog-frame .right-frame .posts span {
+      .blog-frame .right-frame .sticky-wrapper .sticky-post .post-title {
         font-weight: 600; }
-      .blog-frame .right-frame .posts .badge {
-        color: white;
-        float: left;
-        margin-left: 0;
-        margin-right: 5px; }
-    .blog-frame .right-frame .post-date {
-      text-align: right;
-      float: right;
-      font-size: .7em;
-      margin-top: 7px; }
-    .blog-frame .right-frame #fab-one {
-      position: absolute;
-      top: -70px;
-      right: -25px; }
+      .blog-frame .right-frame .sticky-wrapper .sticky-post .post-date {
+        text-align: right;
+        float: right;
+        font-size: .7em;
+        margin-top: 7px; }
+    .blog-frame .right-frame .post-wrapper {
+      position: relative;
+      margin-top: 65px; }
+      .blog-frame .right-frame .post-wrapper .posts {
+        padding: 15px;
+        background-color: white;
+        border-radius: 5px;
+        margin: 17px 0 20px;
+        max-height: 250px;
+        overflow: hidden; }
+      .blog-frame .right-frame .post-wrapper .post-date {
+        text-align: right;
+        float: right;
+        font-size: .7em;
+        margin-top: 7px; }
+      .blog-frame .right-frame .post-wrapper #fab-one {
+        position: absolute;
+        top: -25px;
+        right: -25px; }
+      .blog-frame .right-frame .post-wrapper .fab-one-label {
+        background-color: white;
+        border-radius: 5px;
+        position: absolute;
+        padding: 12px;
+        right: 0px;
+        height: 45px;
+        width: 110px;
+        top: -50px; }
 
 .modal-content {
   border: none;
@@ -105,60 +138,61 @@ body {
   margin: auto; }
 
 .form-card {
+  padding: 15px;
   background-color: white;
   border-radius: 5px;
   margin: auto;
   margin-top: 100px;
-  width: 80%;
-  padding: 20px; }
+  width: 80%; }
 
 .subtext {
   margin: auto;
   margin-top: 15px;
   width: 75%; }
 
-.new-post-title-label {
-  margin-left: 10px; }
+.new-post-heading {
+  margin: 100px 0 25px 0;
+  width: 100%; }
 
-.new-post-title {
-  height: 3rem;
-  width: 100%;
-  margin: auto;
-  background-color: white;
-  border-radius: 5px;
-  padding: 10px;
-  resize: none; }
-
-.new-post-body-label {
-  margin-left: 10px; }
-
-.new-post-body {
-  width: 100%;
-  height: 30rem;
-  background-color: white;
-  border-radius: 5px;
-  padding: 10px;
-  resize: none; }
-
-#mat-checkbox {
-  opacity: 1; }
-
-.check-row .form-check {
-  display: inline-block; }
-.check-row .input-field {
-  width: 150px; }
-
-.single-post-frame {
-  width: 70%;
-  background-color: white;
-  margin: auto;
-  margin-top: 50px;
-  border-radius: 5px; }
+.new-post-form {
+  width: 100%; }
+  .new-post-form .new-post-title-label {
+    margin-left: 10px; }
+  .new-post-form .new-post-title {
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+    height: 3rem;
+    width: 100%;
+    margin: auto;
+    resize: none; }
+  .new-post-form .new-post-body-label {
+    margin-left: 10px; }
+  .new-post-form .new-post-body {
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+    width: 100%;
+    height: 30rem;
+    resize: none; }
+  .new-post-form #mat-checkbox {
+    opacity: 1; }
+  .new-post-form .check-row .form-check {
+    display: inline-block; }
+  .new-post-form .check-row .input-field {
+    width: 150px; }
+  .new-post-form .single-post-frame {
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+    width: 70%;
+    margin: auto;
+    margin-top: 50px; }
 
 .post-view {
+  padding: 15px;
   background-color: white;
   border-radius: 5px;
-  padding: 5px;
   margin-top: 120px;
   position: relative; }
   .post-view .post-heading {
@@ -206,38 +240,39 @@ body {
   margin-left: 10px; }
 
 .comment-title {
+  padding: 15px;
+  background-color: white;
+  border-radius: 5px;
   height: 3rem;
   width: 100%;
   margin: auto;
-  background-color: white;
-  border-radius: 5px;
-  padding: 10px;
   resize: none; }
 
 .comment-body-label {
   margin-left: 10px; }
 
 .single-post-frame {
-  width: 70%;
-  background-color: white;
-  margin: auto;
-  margin-top: 50px;
-  border-radius: 5px; }
-
-.comment-body {
-  width: 100%;
-  height: 10rem;
+  padding: 15px;
   background-color: white;
   border-radius: 5px;
-  padding: 10px;
+  width: 70%;
+  margin: auto;
+  margin-top: 50px; }
+
+.comment-body {
+  padding: 15px;
+  background-color: white;
+  border-radius: 5px;
+  width: 100%;
+  height: 10rem;
   resize: none; }
 
 .comment-wrapper {
+  padding: 15px;
   background-color: white;
   border-radius: 5px;
   width: 80%;
-  margin-top: 15px;
-  padding: 15px; }
+  margin-top: 15px; }
   .comment-wrapper h5 {
     margin: 15px 0 10px 0; }
   .comment-wrapper h6 {
@@ -251,11 +286,11 @@ body {
     font-size: .9em; }
 
 .portfolio-card {
-  position: relative;
-  margin: 0.5rem 0 1rem 0;
-  background-color: #fff;
+  padding: 15px;
+  background-color: white;
   border-radius: 5px;
-  padding: 15px; }
+  position: relative;
+  margin: 0.5rem 0 1rem 0; }
   .portfolio-card a {
     text-decoration: none; }
   .portfolio-card .portfolio-link-icons {

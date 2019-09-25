@@ -5,7 +5,7 @@ $container-width: 85%;
 }
 
 .nav-wrapper {
-    background-color: #404040;    
+    background-color: #404040;
 }
 
 .brand-logo {
@@ -15,7 +15,7 @@ $container-width: 85%;
 .fa {
     font-size: 40px;
     color: black;
-    
+
 }
 
 #current_username {
@@ -27,13 +27,40 @@ body {
     background-repeat: repeat;
 }
 
+// ------------------------------------------ Mixins ---------------------------------------- //
 
+@mixin fab-label {
+    background-color: white;
+    border-radius: 5px;
+    position: absolute;
+    padding: 12px;
+    right: 0px;
+}
+
+@mixin card-style {
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+@mixin posts {
+    @include card-style;
+    margin: 17px 0 20px;
+    max-height: 250px;
+    overflow: hidden;
+}
+
+@mixin small-date {
+    text-align: right;
+    float: right;
+    font-size: .7em;
+    margin-top: 7px;
+}
 
 // ------------------------------------------ Posts ----------------------------------------- //
 
 .blog-frame {
     margin-top: 50px;
-
     .left-pane {
         width: 70%;
         margin: auto;
@@ -44,6 +71,7 @@ body {
             padding: 10px;
             border-radius: 5px;
             width: 80%;
+
             h4 {
                 margin-top: 5px;
             }
@@ -52,11 +80,9 @@ body {
             font-size: 18px;
             font-weight: 600;
         }
-    .post-nav {
-        margin: auto;
-    }
-
-    
+        .post-nav {
+            margin: auto;
+        }
 
         // ------------------------------------- project --------------------------------- //
 
@@ -66,7 +92,7 @@ body {
             margin: auto;
             display: flex;
             border-radius: 5px;
-            margin: 50px 0 20px;
+            margin: 80px 0 20px;
             position: relative;
             p {
                 margin-top: 10px;
@@ -87,9 +113,14 @@ body {
                 top: -25px;
                 left: 25px;
             }
+            .fab-label {
+                @include fab-label;
+                height: 45px;
+                width: 120px;
+                top: -50px;                
+            }
         }
     }
-
     .right-frame {
         width: 70%;
         background-color: transparent;
@@ -97,36 +128,45 @@ body {
         margin-top: 50px;
         border-radius: 5px;
         position: relative;
-        .posts {
-            margin: 17px 0 20px;
-            padding: 15px;
-            background-color: white;
-            border-radius: 5px;
-            max-height: 250px;
-            overflow: hidden;
-            span {
-                font-weight: 600;
-            }
-
+        .sticky-wrapper {
             .badge {
                 color: white;
                 float: left;
                 margin-left: 0;
                 margin-right: 5px;
             }
+            .sticky-post {
+                @include posts;
+                .post-title {
+                    font-weight: 600;
+                }
+                .post-date {
+                    @include small-date;
+                }
+            }
         }
-        .post-date {
-            text-align: right;
-            float: right;
-            font-size: .7em;
-            margin-top: 7px;
+        .post-wrapper {
+            position: relative;
+            margin-top: 65px;            
+            .posts {
+                @include posts;
+            }
+            .post-date {
+                @include small-date;
+            }
+            #fab-one {
+                position: absolute;
+                top: -25px;
+                right: -25px;
+            }
+            .fab-one-label {
+                @include fab-label;
+                height: 45px;
+                width: 110px;
+                top: -50px;                
+            }
         }
-        #fab-one {
-            position: absolute;
-            top: -70px;
-            right: -25px;
-        }
-    }    
+    }
 }
 
 // ----------------------------------------- Project Modal ------------------------------------ //
@@ -137,11 +177,9 @@ body {
     color: #fafafa;
     border-radius: 0;
 }
-
 #description {
     height: 200px;
 }
-
 .form {
     width: 80%;
     margin: auto;
@@ -150,14 +188,11 @@ body {
 // ----------------------------- Register ----------------- //
 
 .form-card {
-    background-color: white;
-    border-radius: 5px;
+    @include card-style;
     margin: auto;
     margin-top: 100px;
     width: 80%;
-    padding: 20px;
 }
-
 .subtext {
     margin: auto;
     margin-top: 15px;
@@ -166,98 +201,91 @@ body {
 
 // ----------------------------- New Post ----------------- //
 
-.new-post-title-label {
-    margin-left: 10px;
-}
-
-.new-post-title {
-    height: 3rem;
+.new-post-heading{
+    margin: 100px 0 25px 0;
     width: 100%;
-    margin: auto;
-    background-color: white;
-    border-radius: 5px;
-    padding: 10px;
-    resize: none;
 }
-
-.new-post-body-label {
-    margin-left: 10px;
-}
-
-.new-post-body {
+.new-post-form {
     width: 100%;
-    height: 30rem;
-    background-color: white;
-    border-radius: 5px;
-    padding: 10px;
-    resize: none;
-}
-
-#mat-checkbox {
-    opacity: 1;
-}
-
-.check-row {
-    .form-check {
-        display: inline-block;
+    .new-post-title-label {
+        margin-left: 10px;
+    }
+    .new-post-title {
+        @include card-style;
+        height: 3rem;
+        width: 100%;
+        margin: auto;    
+        resize: none;
+    }
+    .new-post-body-label {
+        margin-left: 10px;
+    }
+    .new-post-body {
+        @include card-style;
+        width: 100%;
+        height: 30rem;
+        resize: none;
+    }
+    #mat-checkbox {
+        opacity: 1;
+    }
+    .check-row {
+        .form-check {
+            display: inline-block;
         }
-    
-    .input-field {
-        width: 150px;
+        .input-field {
+            width: 150px;
+        }
+    }
+    .single-post-frame {
+        @include card-style;
+        width: 70%;    
+        margin: auto;
+        margin-top: 50px;
     }
 }
 
-.single-post-frame {
-    width: 70%;
-    background-color: white;
-    margin: auto;
-    margin-top: 50px;
-    border-radius: 5px;
-}
 
 // ----------------------------- View Post ------------------------ //@at-root
 
 .post-view {
-    background-color: white;
-    border-radius: 5px;
-    padding: 5px;
+    @include card-style;    
     margin-top: 120px;
     position: relative;
     .post-heading {
         padding-top: 15px;
         height: 60px;
     }
-    .post-title {    
+    .post-title {
         margin-top: 0px;
         padding-top: 5px;
-        font-weight: 500;     
+        font-weight: 500;
         font-size: 2em;
-        display: inline-block; 
-        
+        display: inline-block;
         a {
             text-decoration: none;
         }
-    }        
+    }
     .date {
         margin-top: 15px;
         padding-top: 5px;
         text-align: right;
         float: right;
-        font-size: 1em;            
+        font-size: 1em;
     }
     div hr {
         margin: 20px 0 15px 0;
-    }    
+    }
     .post-content {
         margin: 55px 0 35px 0;
     }
 
     // ------------------------------------ Edit Post --------------------------------- //
 
-    .save-post-button {        
-        float: left;        
-    }    
-    .delete-post-button {        
+    .save-post-button {
+        float: left;
+    }
+    .delete-post-button {
         float: right;
     }
 }
@@ -270,12 +298,12 @@ body {
 
 // ------------------------------------ Comment Section --------------------------- //
 
-.collapsible {    
+.collapsible {
     border: 0;
 }
 
 .collapsible-header {
-    background-color: transparent;    
+    background-color: transparent;
     border: 0;
 }
 
@@ -288,12 +316,10 @@ body {
 }
 
 .comment-title {
+    @include card-style;
     height: 3rem;
     width: 100%;
     margin: auto;
-    background-color: white;
-    border-radius: 5px;
-    padding: 10px;
     resize: none;
 }
 
@@ -302,30 +328,25 @@ body {
 }
 
 .single-post-frame {
-    width: 70%;
-    background-color: white;
+    @include card-style;
+    width: 70%;    
     margin: auto;
-    margin-top: 50px;
-    border-radius: 5px;
+    margin-top: 50px;    
 }
 
 .comment-body {
+    @include card-style;
     width: 100%;
     height: 10rem;
-    background-color: white;
-    border-radius: 5px;
-    padding: 10px;
     resize: none;
 }
 
 .comment-wrapper {
-    background-color: white;
-    border-radius: 5px;
+    @include card-style;
     width: 80%;
     margin-top: 15px;
-    padding: 15px;
     h5 {
-        
+
         margin: 15px 0 10px 0;
     }
     h6 {
@@ -334,7 +355,7 @@ body {
     hr {
         margin: 7px;
     }
-    span {        
+    span {
         font-weight: 600;
     }
     .date-small {
@@ -346,11 +367,9 @@ body {
 // ------------------------------- Portfolio ---------------------------- //@at-root
 
 .portfolio-card {
+    @include card-style;
     position: relative;
     margin: 0.5rem 0 1rem 0;
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 15px;
     a {
         text-decoration: none;
     }
@@ -366,12 +385,10 @@ body {
     .picture-card {
         text-align: center;
         margin: 15px;
+
         img {
             margin: 25px;
             bottom: 25px;
         }
     }
 }
-
-
-

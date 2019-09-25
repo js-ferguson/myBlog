@@ -10,6 +10,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 import secrets
 from PIL import Image
 
+posts_per_page = 3
 
 def admin_user():
     '''Determine if the current use has admin privelages'''
@@ -21,7 +22,8 @@ def is_sticky():
         sticky = mongo.db.posts.find_one({"sticky": True})
         return sticky
 
-def posts_with_comment_count(page):    
+def posts_with_comment_count(page):
+        
     pipeline = [
         {"$lookup": {
             "from": "comment",
@@ -35,7 +37,7 @@ def posts_with_comment_count(page):
         {"$sort": {"_id": -1}}, 
         {'$facet': { 
             "metadata": [{"$count": "total"}, {"$addFields": {"page": int(page)}}],
-            "data": [{"$skip": (page - 1)*4}, {"$limit": 4}] # add projection here wish you re-shape the docs
+            "data": [{"$skip": (page - 1)*posts_per_page}, {"$limit": posts_per_page}] # add projection here wish you re-shape the docs
             }}    
     ]
     posts = list(mongo.db.posts.aggregate(pipeline))
@@ -55,7 +57,7 @@ def home():
     def get_page_count():
         for item in data:
             post_count = item['metadata'][0]['total']
-            page_count = post_count/4
+            page_count = post_count/posts_per_page
             return int(math.ceil(page_count))    
     print(get_page_count())
 

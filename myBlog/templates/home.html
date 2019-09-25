@@ -7,23 +7,19 @@
             <h4 class="strong-text">Development Blog</h4>
             <strong>James Ferguson - Full-stack developer</strong>
         </div>
-
-        
-
-
         <aside class="z-depth-2">
             <div class="aside-card">
                 <strong>{{ project.project_name }}</strong>
                 <p>{{ project.desc }}</p>
                 <ul>
                     <li><strong>Tech stack</strong></li>
-
                     <li>{{ tags }}</li>
-
-
                 </ul>
             </div>
             {% if current_user.is_authenticated and admin_user.admin %}
+            <div class="fab-label z-depth-1">
+                <span class="fab-label-text">Edit Project</span>
+            </div>
             <div class="fixed-action-btn direction-bottom" id="fab-two">
                 <!-- <a href="{{ url_for('new_post') }}" class="btn-floating btn-large red z-depth-2"> -->
                 <a href="#modal1" class="btn-floating btn-large red z-depth-2 modal-trigger">
@@ -93,16 +89,16 @@
             </div>
             {% endif %}
         </aside>
-
     </div>
-
     <div class="col s7 right-frame">
+        <!-- If a stick post exists, we render it at the top of each page -->
 
         {% if is_sticky %}
-        <div class="posts z-depth-2">
+        <div class="sticky-wrapper">
+            <div class="sticky-post z-depth-2">
                 <div class="post-card">
-                    <span class="post-title"><span class="badge red">STICKY</span><a href="{{ url_for('post', post_id=is_sticky._id) }}">{{ is_sticky['title'] }}</a></span>
-                    | {{ is_sticky.comment_count }} replies
+                    <span class="post-title"><span class="badge red">STICKY</span><a
+                            href="{{ url_for('post', post_id=is_sticky._id) }}">{{ is_sticky['title'] }}</a></span>
                     {% if is_sticky.date_posted %}
                     <span class="post-date">{{ is_sticky.date_posted.strftime("%d %b %Y") }}</span>
                     {% endif %}
@@ -110,55 +106,63 @@
                 </div>
                 <p>{{ is_sticky.content }}</p>
             </div>
-
             <hr>
-        {% endif %}
-
-        {% for post in posts %}
-        {% if not post['sticky'] %}
-        <div class="posts z-depth-2">
-            <div class="post-card">
-                <span class="post-title"><a href="{{ url_for('post', post_id=post._id) }}">{{ post['title'] }}</a></span>
-                | {{ post.comment_count }} replies
-                {% if post.date_posted %}
-                <span class="post-date">{{ post.date_posted.strftime("%d %b %Y") }}</span>
-                {% endif %}
-                <hr>
-            </div>
-            <p>{{ post.content }}</p>
         </div>
         {% endif %}
-        {% endfor %}
 
-        <div class="row">
-            <div class="post-nav">
-                <a class="btn btn-sm" href="{{url_for('home', page=(page - 1)) }}">Prev</a>
-                <a class="btn btn-sm" href="{{url_for('home', page=1) }}">1</a>
-                              
-                {% for item in page_links %}
-                    {% if item %}
-                        <a class="btn btn-sm" href="{{url_for('home', page=item) }}">{{ item }}</a>
-                        {% else %}
-                        ...                        
+
+        <!-- render all posts except those with a sticky bit set -->
+        <div class="post-wrapper">
+            {% for post in posts %}
+            {% if not post['sticky'] %}
+            <div class="posts z-depth-2">
+                <div class="post-card">
+                    <span class="post-title"><a
+                            href="{{ url_for('post', post_id=post._id) }}">{{ post['title'] }}</a></span>
+                    | {{ post.comment_count }} replies
+                    {% if post.date_posted %}
+                    <span class="post-date">{{ post.date_posted.strftime("%d %b %Y") }}</span>
                     {% endif %}
-                {% endfor %}                          
-                
-                <a class="btn btn-sm" href="{{url_for('home', page=last_page) }}">{{ last_page }}</a>
-                <a class="btn btn-sm" href="{{url_for('home', page=(page + 1)) }}">Next</a>
-               
-                
+                    <hr>
+                </div>
+                <p>{{ post.content }}</p>
             </div>
+            {% endif %}
+            {% endfor %}
+
+            <div class="row">
+                <div class="post-nav">
+                    <a class="btn btn-sm" href="{{url_for('home', page=(page - 1)) }}">Prev</a>
+                    <a class="btn btn-sm" href="{{url_for('home', page=1) }}">1</a>
+
+                    {% for item in page_links %}
+                    {% if item %}
+                    <a class="btn btn-sm" href="{{url_for('home', page=item) }}">{{ item }}</a>
+                    {% else %}
+                    ...
+                    {% endif %}
+                    {% endfor %}
+
+                    <a class="btn btn-sm" href="{{url_for('home', page=last_page) }}">{{ last_page }}</a>
+                    <a class="btn btn-sm" href="{{url_for('home', page=(page + 1)) }}">Next</a>
+
+
+                </div>
+            </div>
+
+            {% if current_user.is_authenticated and admin_user.admin %}
+            <div class="fab-one-label z-depth-1">
+                <span class="fab-label-text">New Post</span>
+            </div>
+            <div class="fixed-action-btn direction-bottom" id="fab-one">
+                <a href="{{ url_for('new_post') }}" class="btn-floating btn-large red z-depth-2">
+                    <i class="large material-icons">add</i>
+                </a>
+            </div>
+
+            {% endif %}
+
         </div>
-
-        {% if current_user.is_authenticated and admin_user.admin %}
-        <div class="fixed-action-btn direction-bottom" id="fab-one">
-            <a href="{{ url_for('new_post') }}" class="btn-floating btn-large red z-depth-2">
-                <i class="large material-icons">add</i>
-            </a>
-        </div>
-
-        {% endif %}
-
     </div>
 
 </div>
