@@ -37,7 +37,7 @@ def posts_with_comment_count(page):
         {"$sort": {"_id": -1}}, 
         {'$facet': { 
             "metadata": [{"$count": "total"}, {"$addFields": {"page": int(page)}}],
-            "data": [{"$skip": (page - 1)*posts_per_page}, {"$limit": posts_per_page}] # add projection here wish you re-shape the docs
+            "data": [{"$skip": (page - 1)*posts_per_page}, {"$limit": posts_per_page}]
             }}    
     ]
     posts = list(mongo.db.posts.aggregate(pipeline))
@@ -362,4 +362,14 @@ def insert_project():
 @login_required
 def account():
     form = AccountUpdateForm()
+    users = mongo.db.users
+
+    new_doc = {"firstname": form.firstname.data, 
+               "lastname": form.lastname.data, 
+               "username": form.username.data,
+               "email": form.email.data
+               }
+
+    users.update_one({'username': current_user.username}, {"$set": new_doc}, upsert=True)   
+    flash('Your details have been updated', 'info')
     return render_template('account.html', form=form)

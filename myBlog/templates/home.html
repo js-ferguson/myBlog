@@ -109,8 +109,6 @@
             <hr>
         </div>
         {% endif %}
-
-
         <!-- render all posts except those with a sticky bit set -->
         <div class="post-wrapper">
             {% for post in posts %}
@@ -125,7 +123,7 @@
                     {% endif %}
                     <hr>
                 </div>
-                <p>{{ post.content }}</p>
+                <p>{{ post['content'] }}</p>
             </div>
             {% endif %}
             {% endfor %}

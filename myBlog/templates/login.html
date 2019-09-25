@@ -1,65 +1,62 @@
 {% extends "base.html" %}
 {% block content %}
-<!-- <div class="content-section">
-        <form method="POST" action=''>
-            {{ form.hidden_tag() }}  //adds cross site request forgery token (CSRF token) 
-
-        </form>
-    </div> -->
 
 <div class="row form-card z-depth-2">
-    <h4><legend class="join-legend">Login</legend></h4>
-    <form method="POST" action="" class="col s12">
+
+    <form method="POST" action="" class="col s8">
         {{ form.hidden_tag() }}
         <!-- //adds cross site request forgery token (CSRF token) -->
-        <div class="row">
-            <div class="input-field col s12">
-                {{ form.email.label() }}
-                {% if form.email.errors %}
-                    {{ form.email(class="is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for errors in form.email.errors %}
-                            <span> {{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.email() }}
-                {% endif %}
+        <h4>
+            <legend class="join-legend">Login</legend>
+        </h4>
+        <div class="input-field col s12">
+            {{ form.email.label() }}
+            {% if form.email.errors %}
+            {{ form.email(class="is-invalid is-invalid-lg") }}
+            <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                <span> {{ error }}</span>
+                {% endfor %}
             </div>
+            {% else %}
+            {{ form.email() }}
+            {% endif %}
         </div>
-        <div class="row">
-            <div class="input-field col s12">
-                {{ form.password.label() }}
-                {% if form.password.errors %}
-                    {{ form.password(class="is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for errors in form.password.errors %}
-                            <span> {{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.password() }}
-                {% endif %}
+
+        <div class="input-field col s12">
+            {{ form.password.label() }}
+            {% if form.password.errors %}
+            {{ form.password(class="is-invalid is-invalid-lg") }}
+            <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                <span> {{ error }}</span>
+                {% endfor %}
             </div>
+            {% else %}
+            {{ form.password() }}
+            {% endif %}
         </div>
-        <div class="form-check">
-                {{ form.remember.label(class="switch") }}
-                {{ form.remember(class="danger") }}
-                <span class="slider round"></span>                
+
+        <div>
+            {{ form.remember.label(class="switch") }}
+            {{ form.remember(class="danger") }}
+            <span class="slider round"></span>
         </div>
-        <div class="row">
-            <div class="input-field col s12">
-                {{ form.submit(class="btn")}}
-            </div>
+
+        <div class="input-field col s12">
+            {{ form.submit(class="btn")}}
         </div>
+
         <small class="text-muted ml-2">
             <a href="#">Forgot your password?</a>
         </small>
+
     </form>
+
 </div>
 <div class="pt-3 subtext">
     <small class="text-muted">
-        No account? <a class="ml-2" href="{{ url_for('register') }}">Register now</a>
+        Already have an account? <a class="ml-2" href="{{ url_for('login') }}"> Sign In</a>
     </small>
 </div>
 

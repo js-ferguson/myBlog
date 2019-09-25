@@ -3,7 +3,7 @@
 
 <div class="row form-card z-depth-2">
     <h4>
-        <legend class="join-legend">New Account</legend>
+        <legend class="join-legend">Login</legend>
     </h4>
     <div class="row">
         <form method="POST" action="" class="col s12">
@@ -11,23 +11,9 @@
             <!-- //adds cross site request forgery token (CSRF token) -->
 
             <div class="input-field col s12">
-                {{ form.username.label() }}
-                {% if form.username.errors %}
-                {{ form.username(class="form-control is-invalid") }}
-                <div class="invalid-feedback">
-                    {% for error in form.username.errors %}
-                    <span> {{ error }}</span>
-                    {% endfor %}
-                </div>
-                {% else %}
-                {{ form.username() }}
-                {% endif %}
-            </div>
-
-            <div class="input-field col s12">
                 {{ form.email.label() }}
                 {% if form.email.errors %}
-                {{ form.email(class="form-control is-invalid is-invalid-lg") }}
+                {{ form.email(class="is-invalid") }}
                 <div class="invalid-feedback">
                     {% for error in form.email.errors %}
                     <span> {{ error }}</span>
@@ -41,7 +27,7 @@
             <div class="input-field col s12">
                 {{ form.password.label() }}
                 {% if form.password.errors %}
-                {{ form.password(class="form-control is-invalid is-invalid-lg") }}
+                {{ form.password(class="is-invalid") }}
                 <div class="invalid-feedback">
                     {% for error in form.password.errors %}
                     <span> {{ error }}</span>
@@ -52,24 +38,19 @@
                 {% endif %}
             </div>
 
-            <div class="input-field col s12">
-                {{ form.confirm_password.label() }}
-                {% if form.confirm_password.errors %}
-                {{ form.confirm_password(class="form-control is-invalid") }}
-                <div class="invalid-feedback">
-                    {% for error in form.confirm_password.errors %}
-                    <span> {{ error }}</span>
-                    {% endfor %}
-                </div>
-                {% else %}
-                {{ form.confirm_password(class="form-control") }}
-                {% endif %}
+            <div class="form-check">
+                {{ form.remember.label(class="switch") }}
+                {{ form.remember(class="danger") }}
+                <span class="slider round"></span>
             </div>
 
             <div class="input-field col s12">
                 {{ form.submit(class="btn")}}
             </div>
 
+            <small class="text-muted ml-2">
+                <a href="#">Forgot your password?</a>
+            </small>
         </form>
 
     </div>
@@ -77,7 +58,7 @@
 </div>
 <div class="pt-3 subtext">
     <small class="text-muted">
-        Already have an account? <a class="ml-2" href="{{ url_for('login') }}"> Sign In</a>
+        No account? <a class="ml-2" href="{{ url_for('register') }}">Register now</a>
     </small>
 </div>
 

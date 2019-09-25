@@ -2,49 +2,78 @@
 {% block content %}
 
 
-<div class="row form-card z-depth-2">
+<div class="form-card z-depth-2">
+    <h4>
+        <legend class="join-legend">Account Manager</legend>
+    </h4>
+    <h6>Update details for {{ current_user.username }}</h6>
     
-    <form method="POST" action="" class="col s8">            
-        {{ form.hidden_tag() }} <!-- //adds cross site request forgery token (CSRF token) -->
+        <form method="POST" action="" class="col s8">
+            {{ form.hidden_tag() }}
+            <!-- //adds cross site request forgery token (CSRF token) -->
+            <div class="input-field col s6">
+                {{ form.firstname.label() }}
+                {% if form.firstname.errors %}
+                {{ form.firstname(class="is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.firstname.errors %}
+                    <span> {{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.firstname() }}
+                {% endif %}
+            </div>
+            <div class="input-field col s6">
+                {{ form.lastname.label() }}
+                {% if form.lastname.errors %}
+                {{ form.lastname(class="is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.lastname.errors %}
+                    <span> {{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.lastname() }}
+                {% endif %}
+            </div>
 
-        <h4><legend class="join-legend">Account Manager</legend></h4>
-        <h6>Update details for {{ current_user.username }}</h6>
-        <div class="row">
             <div class="input-field col s12">
                 {{ form.username.label() }}
                 {% if form.username.errors %}
-                    {{ form.username(class="is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for errors in form.username.errors %}
-                            <span> {{ error }}</span>
-                        {% endfor %}
-                    </div>
+                {{ form.username(class="is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                    <span> {{ error }}</span>
+                    {% endfor %}
+                </div>
                 {% else %}
-                    {{ form.username() }}
+                {{ form.username() }}
                 {% endif %}
             </div>
-        </div>
-        <div class="row">
+
             <div class="input-field col s12">
                 {{ form.email.label() }}
                 {% if form.email.errors %}
-                    {{ form.email(class="is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for errors in form.email.errors %}
-                            <span> {{ error }}</span>
-                        {% endfor %}
-                    </div>
+                {{ form.email(class="is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                    <span> {{ error }}</span>
+                    {% endfor %}
+                </div>
                 {% else %}
-                    {{ form.email() }}
+                {{ form.email() }}
                 {% endif %}
             </div>
-        </div>        
-        <div class="row">
+
             <div class="input-field col s12">
                 {{ form.submit(class="btn")}}
             </div>
-        </div>
-    </form>
+
+        </form>
+
+    
+
 </div>
 
 {% endblock content %}
