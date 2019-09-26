@@ -6,6 +6,10 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextA
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from myBlog import mongo
 
+def get_current_user():
+    active_user = mongo.db.users.find_one({'username': current_user.username})
+    return active_user
+
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[
@@ -66,7 +70,7 @@ class AccountUpdateForm(FlaskForm):
                 raise ValidationError('That username is already taken.')
 
     def validate_email(self, email):
-        if email.data != current_user.email:
+        if email.data != get_current_user()['email']:
             users = mongo.db.users
             existing_user = users.find_one({'email': email.data})
             if existing_user:

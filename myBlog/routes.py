@@ -1,5 +1,5 @@
 import os
-import math 
+import math
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify
 from datetime import datetime
 from myBlog import app, mongo, bcrypt
@@ -12,18 +12,21 @@ from PIL import Image
 
 posts_per_page = 3
 
+
 def admin_user():
     '''Determine if the current use has admin privelages'''
     admin_user = mongo.db.users.find_one(
         {'$and': [{'username': current_user.get_id()}, {'admin': True}]})
     return admin_user
 
+
 def is_sticky():
-        sticky = mongo.db.posts.find_one({"sticky": True})
-        return sticky
+    sticky = mongo.db.posts.find_one({"sticky": True})
+    return sticky
+
 
 def posts_with_comment_count(page):
-        
+
     pipeline = [
         {"$lookup": {
             "from": "comment",
@@ -34,11 +37,11 @@ def posts_with_comment_count(page):
         {"$addFields": {
             "comment_count": {"$size": "$comment_count"}
         }},
-        {"$sort": {"_id": -1}}, 
-        {'$facet': { 
+        {"$sort": {"_id": -1}},
+        {'$facet': {
             "metadata": [{"$count": "total"}, {"$addFields": {"page": int(page)}}],
             "data": [{"$skip": (page - 1)*posts_per_page}, {"$limit": posts_per_page}]
-            }}    
+        }}
     ]
     posts = list(mongo.db.posts.aggregate(pipeline))
     return posts
@@ -49,7 +52,7 @@ def posts_with_comment_count(page):
 @app.route("/index")
 def home():
     form = EditProject()
-    page = request.args.get('page', 1, type=int)  
+    page = request.args.get('page', 1, type=int)
     data = posts_with_comment_count(page)
 
     print(is_sticky())
@@ -58,22 +61,22 @@ def home():
         for item in data:
             post_count = item['metadata'][0]['total']
             page_count = post_count/posts_per_page
-            return int(math.ceil(page_count))    
+            return int(math.ceil(page_count))
     print(get_page_count())
 
     def create_num_list():
         '''Create a list of page numbers and None values for a forum style page nav'''
         num_list = []
-        
-        for num in range(1, (get_page_count() +1)):
-            
-            if num == (page -2) or num == (page -1):
+
+        for num in range(1, (get_page_count() + 1)):
+
+            if num == (page - 2) or num == (page - 1):
                 num_list.append(num)
                 continue
             if num == page:
                 num_list.append(num)
                 continue
-            if num == (page +1) or num == (page +2):
+            if num == (page + 1) or num == (page + 2):
                 num_list.append(num)
                 continue
             else:
@@ -81,32 +84,34 @@ def home():
         for num in num_list:
             if num == page:
                 del num_list[0]
+            if num == get_page_count() - 1:
+                del num_list[-1]
             if num == get_page_count():
-                del num_list[-1] 
-        
-        #remove consecutive duplicate None values
+                del num_list[-1]
+
+        # remove consecutive duplicate None values
         i = 0
-        while i < len(num_list) -1:
+        while i < len(num_list) - 1:
             if num_list[i] == num_list[i+1]:
                 del num_list[i]
             else:
                 i = i+1
-        return num_list 
-    
+        return num_list
+
     print(create_num_list())
-    
+
     project = mongo.db.current_project.find_one(
         {'current_project': 'current_project'})
     tags = " ".join(project['tech_tags'])
 
     def posts():
-     for post in data:
-        return post['data']        
+        for post in data:
+            return post['data']
 
     return render_template('home.html', posts=posts(), form=form,
-        admin_user=admin_user(), project=project, tags=tags, page=page,
-        page_links=create_num_list(), last_page=get_page_count(),
-        is_sticky=is_sticky())
+                           admin_user=admin_user(), project=project, tags=tags, page=page,
+                           page_links=create_num_list(), last_page=get_page_count(),
+                           is_sticky=is_sticky())
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -172,21 +177,22 @@ def insert_post():
     post_is_sticky = request.form.get('sticky')
 
     if post_is_sticky:
-        
-        mongo.db.posts.update_many({"sticky": True}, {"$set":
-                {"sticky": False}
-             }, upsert=True)
-        
-        new_doc = {'title': request.form.get('title'), 'post_author': post_author,
-                'tags': [], 'content': request.form.get('content'),
-                'date_posted': datetime.utcnow(), "images": [], "sticky": True}
 
-        
+        mongo.db.posts.update_many({"sticky": True}, {"$set":
+                                                      {"sticky": False}
+                                                      }, upsert=True)
+
+        new_doc = {'title': request.form.get('title'), 
+                   'post_author': post_author,
+                   'tags': [], 
+                   'content': request.form.get('content'),
+                   'date_posted': datetime.utcnow(), 
+                   'images': [], 
+                   'sticky': True}
+
     else:
-        new_doc = {'title': request.form.get('title'), 'post_author': post_author,
-                'tags': [], 'content': request.form.get('content'),
-                'date_posted': datetime.utcnow(), "images": [], "sticky": False}
-    
+        new_doc['sticky'] = False
+
     try:
         posts.insert_one(new_doc)
         print("")
@@ -210,7 +216,8 @@ def post(post_id):
         return user['username']
 
     return render_template('view_post.html', post=post, form=form, admin_user=admin_user(),
-                           comments=comments, has_comments=has_comments, get_comment_username=get_comment_username)
+                           comments=comments, has_comments=has_comments,
+                           get_comment_username=get_comment_username)
 
 
 @app.route("/home/update_project", methods=['POST'])
@@ -252,33 +259,33 @@ def edit_post(post_id):
     post_is_sticky = request.form.get('sticky')
 
     if post['post_author'] != author['_id']:
-        abort(403)    
-    
+        abort(403)
+
     if request.method == 'GET':
         form.title.data = post['title']
         form.content.data = post['content']
         return render_template('edit_post.html', form=form, post=post, admin_user=admin_user())
     elif request.method == 'POST':
         content = request.form.get("content")
-        title = request.form.get("title")          
+        title = request.form.get("title")
         posts = mongo.db.posts
         if post_is_sticky:
             mongo.db.posts.update_many({"sticky": True}, {"$set":
-                {"sticky": False}
-             }, upsert=True)
+                                                          {"sticky": False}
+                                                          }, upsert=True)
 
             posts.find_one_and_update(
                 {"_id": ObjectId(post_id)},
                 {"$set":
                     {"title": title, "content": content, "sticky": True}
-                }, upsert=True
+                 }, upsert=True
             )
         else:
             posts.find_one_and_update(
                 {"_id": ObjectId(post_id)},
                 {"$set":
                     {"title": title, "content": content, "sticky": False}
-                }, upsert=True
+                 }, upsert=True
             )
         flash('Your blog post has been updated', 'info')
     return redirect(url_for('home'))
@@ -294,7 +301,8 @@ def save_images(images):
         file_filenames.append(rand_hex + f_ext)
 
     for name in file_filenames:
-        save_paths.append(os.path.join(app.root_path, 'static/images/project_pics', name))
+        save_paths.append(os.path.join(
+            app.root_path, 'static/images/project_pics', name))
 
     for image, path in zip(images, save_paths):
         i = Image.open(image)
@@ -363,13 +371,25 @@ def insert_project():
 def account():
     form = AccountUpdateForm()
     users = mongo.db.users
+    user = users.find_one({'username': current_user.username})
 
-    new_doc = {"firstname": form.firstname.data, 
-               "lastname": form.lastname.data, 
-               "username": form.username.data,
-               "email": form.email.data
-               }
+    if request.method == 'GET':
+        form.username.data = user['username']
+        form.email.data = user['email']
+        if user['firstname']:
+            form.firstname.data = user['firstname']
+        if user['lastname']:
+            form.lastname.data = user['lastname']
 
-    users.update_one({'username': current_user.username}, {"$set": new_doc}, upsert=True)   
-    flash('Your details have been updated', 'info')
+    if form.validate_on_submit():
+        new_doc = {"firstname": form.firstname.data,
+                   "lastname": form.lastname.data,
+                   "username": form.username.data,
+                   "email": form.email.data
+                   }
+
+        users.update_one({'username': current_user.username},
+                         {"$set": new_doc}, upsert=True)
+        flash('Your details have been updated, please log in again', 'info')
+        return redirect(url_for('login'))
     return render_template('account.html', form=form)

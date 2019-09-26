@@ -2,7 +2,9 @@
 
 ## Todo / planned features
 
-* add ability for users to update their details
+* add mobile nav drawer
+
+* Fix resposive layout
 
 * add profile pics?
 
@@ -10,7 +12,7 @@
 
 * Remember me on login screen should actually remember me
 
-* Users should be able to change their details. Optionally add first and last names, and change password with email token
+* Users should be able to change password with email token
 
 * make nav links should be coloured differently if you are currently on that page.
 
