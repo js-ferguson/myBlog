@@ -18,6 +18,13 @@ body {
   background-image: url(../images/sprinkles/sprinkles.png);
   background-repeat: repeat; }
 
+.sidenav {
+  background: rgba(0, 0, 0, 0.9);
+  color: white; }
+  .sidenav i {
+    color: white;
+    font-size: 22px; }
+
 .blog-frame {
   margin-top: 50px; }
   .blog-frame .left-pane {
