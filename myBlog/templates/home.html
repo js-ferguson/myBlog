@@ -88,8 +88,20 @@
                 </div>
             </div>
             {% endif %}
+
         </aside>
+        <div class="media-wrapper">
+            <a href="https://github.com/js-ferguson"><div>Github repository</div> <i class="fa fa-github-alt"></i></a>
+        </div>
+        <div class="media-wrapper">
+            <a href="https://www.linkedin.com/in/jimiferguson/"><div>LinkedIn</div> <i class="fa fa-linkedin-square"></i></a>
+        </div>
+        <div class="media-wrapper">
+            <a href="https://twitter.com/JimiWindmills"><div>Twitter</div> <i class="fa fa-twitter"></i></a>
+        </div>
+        
     </div>
+
     <div class="col s7 right-frame">
         <!-- If a stick post exists, we render it at the top of each page -->
 
@@ -106,7 +118,7 @@
                 </div>
                 <p>{{ is_sticky.content }}</p>
             </div>
-            <hr>
+            
         </div>
         {% endif %}
         <!-- render all posts except those with a sticky bit set -->
@@ -130,7 +142,7 @@
 
             <div class="row">
                 <div class="post-nav">
-                    <a class="btn btn-sm" href="{{url_for('home', page=(page - 1)) }}">Prev</a>
+                    <a class="btn btn-sm prev" href="{{url_for('home', page=(page - 1)) }}">Prev</a>
                     <a class="btn btn-sm" href="{{url_for('home', page=1) }}">1</a>
 
                     {% for item in page_links %}
@@ -142,7 +154,7 @@
                     {% endfor %}
 
                     <a class="btn btn-sm" href="{{url_for('home', page=last_page) }}">{{ last_page }}</a>
-                    <a class="btn btn-sm" href="{{url_for('home', page=(page + 1)) }}">Next</a>
+                    <a class="btn btn-sm next" href="{{url_for('home', page=(page + 1)) }}">Next</a>
 
 
                 </div>

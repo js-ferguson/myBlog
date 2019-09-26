@@ -43,7 +43,7 @@ body {
       margin: auto;
       display: flex;
       border-radius: 5px;
-      margin: 80px 0 20px;
+      margin: 80px 0 50px;
       position: relative; }
       .blog-frame .left-pane aside p {
         margin-top: 10px; }
@@ -69,6 +69,21 @@ body {
         height: 45px;
         width: 120px;
         top: -50px; }
+    .blog-frame .left-pane .media-wrapper {
+      margin-bottom: 0px;
+      text-align: right;
+      width: 80%;
+      position: relative;
+      padding: 15px; }
+      .blog-frame .left-pane .media-wrapper i {
+        margin-left: 7px; }
+      .blog-frame .left-pane .media-wrapper div {
+        display: inline-block;
+        position: absolute;
+        top: 35%;
+        right: 65px;
+        text-decoration: none;
+        color: black; }
   .blog-frame .right-frame {
     width: 70%;
     background-color: transparent;
@@ -76,25 +91,29 @@ body {
     margin-top: 50px;
     border-radius: 5px;
     position: relative; }
-    .blog-frame .right-frame .sticky-wrapper .badge {
-      color: white;
-      float: left;
-      margin-left: 0;
-      margin-right: 5px; }
-    .blog-frame .right-frame .sticky-wrapper .sticky-post {
-      padding: 15px;
-      background-color: white;
-      border-radius: 5px;
-      margin: 17px 0 20px;
-      max-height: 250px;
-      overflow: hidden; }
-      .blog-frame .right-frame .sticky-wrapper .sticky-post .post-title {
-        font-weight: 600; }
-      .blog-frame .right-frame .sticky-wrapper .sticky-post .post-date {
-        text-align: right;
-        float: right;
-        font-size: .7em;
-        margin-top: 7px; }
+    .blog-frame .right-frame .sticky-wrapper {
+      margin-bottom: 80px; }
+      .blog-frame .right-frame .sticky-wrapper .sticky-post {
+        padding: 15px;
+        background-color: white;
+        border-radius: 5px;
+        margin: 17px 0 20px;
+        max-height: 250px;
+        overflow: hidden; }
+        .blog-frame .right-frame .sticky-wrapper .sticky-post .post-title {
+          font-weight: 600; }
+          .blog-frame .right-frame .sticky-wrapper .sticky-post .post-title a {
+            text-decoration: none; }
+        .blog-frame .right-frame .sticky-wrapper .sticky-post .post-date {
+          text-align: right;
+          float: right;
+          font-size: .7em;
+          margin-top: 7px; }
+      .blog-frame .right-frame .sticky-wrapper .badge {
+        color: white;
+        float: left;
+        margin-left: 0;
+        margin-right: 5px; }
     .blog-frame .right-frame .post-wrapper {
       position: relative;
       margin-top: 65px; }
@@ -105,6 +124,8 @@ body {
         margin: 17px 0 20px;
         max-height: 250px;
         overflow: hidden; }
+        .blog-frame .right-frame .post-wrapper .posts .post-title a {
+          text-decoration: none; }
       .blog-frame .right-frame .post-wrapper .post-date {
         text-align: right;
         float: right;
@@ -123,6 +144,18 @@ body {
         height: 45px;
         width: 110px;
         top: -50px; }
+    .blog-frame .right-frame .post-nav {
+      margin: auto; }
+      .blog-frame .right-frame .post-nav .btn {
+        height: 45px;
+        width: 35px;
+        margin: 15px 4px 50px;
+        padding-top: 12px;
+        color: white;
+        background: rgba(0, 0, 0, 0.5); }
+      .blog-frame .right-frame .post-nav .prev,
+      .blog-frame .right-frame .post-nav .next {
+        width: 55px; }
 
 .modal-content {
   border: none;
