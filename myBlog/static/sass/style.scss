@@ -27,6 +27,11 @@ body {
     background-repeat: repeat;
 }
 
+.btn-custom {
+    background: rgba(0, 0, 0, 0.6);
+    color: white
+}
+
 // ------------------------------------------ Mixins ---------------------------------------- //
 
 @mixin fab-label {
@@ -63,6 +68,11 @@ body {
 }
 
 // ----------------------------------------- Nav -------------------------------------------- //@include
+
+a:hover {
+    color: #53dbe5;
+    text-decoration: none;
+}
 
 .sidenav {
     background: rgba(0, 0, 0, 0.9);
@@ -221,7 +231,11 @@ body {
                 margin: 15px 4px 50px;
                 padding-top: 12px;
                 color: white;
-                background: rgba(0, 0, 0, 0.5);
+                background: rgba(0, 0, 0, 0.6);
+                &:hover {
+                    background-color: #53dbe5;
+                    color: black;
+                }
             }
 
             .prev,

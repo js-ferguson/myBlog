@@ -88,7 +88,7 @@ def home():
                 del num_list[-1]
             if num == get_page_count():
                 del num_list[-1]
-
+        
         # remove consecutive duplicate None values
         i = 0
         while i < len(num_list) - 1:
@@ -96,7 +96,7 @@ def home():
                 del num_list[i]
             else:
                 i = i+1
-        return num_list
+        return num_list    
 
     print(create_num_list())
 
@@ -111,7 +111,7 @@ def home():
     return render_template('home.html', posts=posts(), form=form,
                            admin_user=admin_user(), project=project, tags=tags, page=page,
                            page_links=create_num_list(), last_page=get_page_count(),
-                           is_sticky=is_sticky())
+                           is_sticky=is_sticky(), flash=flash)
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -175,7 +175,6 @@ def insert_post():
     author = mongo.db.users.find_one({'username': current_user.get_id()})
     post_author = author['_id']
     post_is_sticky = request.form.get('sticky')
-
     new_doc = {'title': request.form.get('title'), 
                    'post_author': post_author,
                    'tags': [], 
@@ -185,7 +184,6 @@ def insert_post():
                    'sticky': False}
 
     if post_is_sticky:
-
         mongo.db.posts.update_many({"sticky": True}, {"$set":
                                                       {"sticky": False}
                                                       }, upsert=True)
@@ -289,8 +287,21 @@ def edit_post(post_id):
     return redirect(url_for('home'))
 
 
+@app.route("/post/<post_id>/delete", methods=['GET', 'POST'])
+@login_required
+def delete_post(post_id):
+    query = {'_id': ObjectId(post_id)}
+    #post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
+
+    if not admin_user():
+        abort(403)
+    mongo.db.posts.delete_one(query)   
+    flash('Your post has been deleted', 'info')
+    return redirect(url_for('home'))
+
+
 def save_images(images):
-    file_filenames = []  # randomhex.jpg
+    file_filenames = []
     save_paths = []
 
     for image in images:

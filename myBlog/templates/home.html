@@ -103,7 +103,7 @@
     </div>
 
     <div class="col s7 right-frame">
-        <!-- If a stick post exists, we render it at the top of each page -->
+        <!-- If a sticky post exists, we render it at the top of each page -->
 
         {% if is_sticky %}
         <div class="sticky-wrapper">
@@ -142,7 +142,11 @@
 
             <div class="row">
                 <div class="post-nav">
+                    {% if page == 1 %}
+                    <a class="btn btn-sm prev" href="{{url_for('home', page=1) }}">Prev</a>
+                    {% else %}
                     <a class="btn btn-sm prev" href="{{url_for('home', page=(page - 1)) }}">Prev</a>
+                    {% endif %}
                     <a class="btn btn-sm" href="{{url_for('home', page=1) }}">1</a>
 
                     {% for item in page_links %}
@@ -154,7 +158,12 @@
                     {% endfor %}
 
                     <a class="btn btn-sm" href="{{url_for('home', page=last_page) }}">{{ last_page }}</a>
+                    {%  if page == last_page %}
+                    <a class="btn btn-sm next" href="{{url_for('home', page=last_page) }}">Next</a>
+                    {{ flash("You have reached the last page", "info") }}
+                    {% else %}
                     <a class="btn btn-sm next" href="{{url_for('home', page=(page + 1)) }}">Next</a>
+                    {% endif %}
 
 
                 </div>

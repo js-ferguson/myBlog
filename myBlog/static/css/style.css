@@ -18,6 +18,14 @@ body {
   background-image: url(../images/sprinkles/sprinkles.png);
   background-repeat: repeat; }
 
+.btn-custom {
+  background: rgba(0, 0, 0, 0.6);
+  color: white; }
+
+a:hover {
+  color: #53dbe5;
+  text-decoration: none; }
+
 .sidenav {
   background: rgba(0, 0, 0, 0.9);
   color: white; }
@@ -159,7 +167,10 @@ body {
         margin: 15px 4px 50px;
         padding-top: 12px;
         color: white;
-        background: rgba(0, 0, 0, 0.5); }
+        background: rgba(0, 0, 0, 0.6); }
+        .blog-frame .right-frame .post-nav .btn:hover {
+          background-color: #53dbe5;
+          color: black; }
       .blog-frame .right-frame .post-nav .prev,
       .blog-frame .right-frame .post-nav .next {
         width: 55px; }
