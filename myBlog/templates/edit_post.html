@@ -48,9 +48,21 @@
             <span class="input-field save-post-button">
                 {{ form.submit(class="btn z-depth-2 ")}}
             </span>
-            <span class="input-field delete-post-button">
+            <a href="#modal2" class="input-field delete-post-button modal-trigger">
                 {{ form.delete(class="btn z-depth-2 ")}}
-            </span>
+            </a>
+        </div>
+        <!-- Modal Structure -->
+        <div id="modal2" class="modal">
+            <div class="modal-content">
+                <h4>Delete confirmation</h4>
+                
+            </div>
+            <div class="modal-footer">
+                    <p>Are you sure you want to delete this post</p>
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Delete</a
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+            </div>
         </div>
         {% endif %}
     </form>

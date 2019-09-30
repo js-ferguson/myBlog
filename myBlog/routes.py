@@ -176,22 +176,20 @@ def insert_post():
     post_author = author['_id']
     post_is_sticky = request.form.get('sticky')
 
-    if post_is_sticky:
-
-        mongo.db.posts.update_many({"sticky": True}, {"$set":
-                                                      {"sticky": False}
-                                                      }, upsert=True)
-
-        new_doc = {'title': request.form.get('title'), 
+    new_doc = {'title': request.form.get('title'), 
                    'post_author': post_author,
                    'tags': [], 
                    'content': request.form.get('content'),
                    'date_posted': datetime.utcnow(), 
                    'images': [], 
-                   'sticky': True}
+                   'sticky': False}
 
-    else:
-        new_doc['sticky'] = False
+    if post_is_sticky:
+
+        mongo.db.posts.update_many({"sticky": True}, {"$set":
+                                                      {"sticky": False}
+                                                      }, upsert=True)
+        new_doc['sticky'] = False        
 
     try:
         posts.insert_one(new_doc)

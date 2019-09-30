@@ -2,11 +2,11 @@
 
 ## Todo / planned features
 
-* add mobile nav drawer
+* style mobile nav drawer
 
 * Fix resposive layout
 
-* add profile pics?
+* Style the edit post and delete post confirmation modal
 
 * Add delete post functionality to edit post page
 
@@ -14,13 +14,17 @@
 
 * Users should be able to change password with email token
 
-* make nav links should be coloured differently if you are currently on that page.
+* Nav links should be coloured differently if you are currently on that page.
 
-* change colour of nav hover
+* change colour of Nav hover
 
 * fa icons should also have a hover
 
+* Write nice code comments
+
 ## future features
+
+* add profile pics?
 
 * Sub link to get an email about each new post
 
