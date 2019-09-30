@@ -164,6 +164,9 @@ body {
       .blog-frame .right-frame .post-nav .next {
         width: 55px; }
 
+.modal {
+  width: 50%; }
+
 .modal-content {
   border: none;
   background-color: #1b5e20;
@@ -260,6 +263,10 @@ body {
     float: left; }
   .post-view .delete-post-button {
     float: right; }
+
+.delete-post-modal {
+  width: 50%;
+  height: 200px; }
 
 #edit_post_fab {
   position: absolute;

@@ -57,6 +57,11 @@ body {
     margin-top: 7px;
 }
 
+@mixin modal-style {
+    width: 50%;
+
+}
+
 // ----------------------------------------- Nav -------------------------------------------- //@include
 
 .sidenav {
@@ -229,6 +234,10 @@ body {
 
 // ----------------------------------------- Project Modal ------------------------------------ //
 
+.modal {
+    @include modal-style;
+}
+
 .modal-content {
     border: none;
     background-color: #1b5e20;
@@ -346,6 +355,11 @@ body {
     .delete-post-button {
         float: right;
     }
+}
+
+.delete-post-modal {
+    @include modal-style;
+    height: 200px;
 }
 
 #edit_post_fab {
