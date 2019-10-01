@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="row blog-frame">
-    <div class="col s5 left-pane">
+    <div class="col-lg-6 left-pane">
         <div class="dark-bg z-depth-2">
             <h4 class="strong-text">Development Blog</h4>
             <strong>James Ferguson - Full-stack developer</strong>
@@ -90,25 +90,26 @@
             {% endif %}
 
         </aside>
-        <div class="media-wrapper">
-            <a href="https://github.com/js-ferguson">
-                <div>Github repository</div> <i class="fa fa-github-alt"></i>
-            </a>
+        <div class="social-icons">
+            <div class="media-wrapper">
+                <a href="https://github.com/js-ferguson">
+                    <div>Github repository</div> <i class="fa fa-github-alt"></i>
+                </a>
+            </div>
+            <div class="media-wrapper">
+                <a href="https://www.linkedin.com/in/jimiferguson/">
+                    <div>LinkedIn</div> <i class="fa fa-linkedin-square"></i>
+                </a>
+            </div>
+            <div class="media-wrapper">
+                <a href="https://twitter.com/JimiWindmills">
+                    <div>Twitter</div> <i class="fa fa-twitter"></i>
+                </a>
+            </div>
         </div>
-        <div class="media-wrapper">
-            <a href="https://www.linkedin.com/in/jimiferguson/">
-                <div>LinkedIn</div> <i class="fa fa-linkedin-square"></i>
-            </a>
-        </div>
-        <div class="media-wrapper">
-            <a href="https://twitter.com/JimiWindmills">
-                <div>Twitter</div> <i class="fa fa-twitter"></i>
-            </a>
-        </div>
-
     </div>
 
-    <div class="col s7 right-frame">
+    <div class="col-lg-6 right-frame">
         <!-- If a sticky post exists, we render it at the top of each page -->
 
         {% if is_sticky %}
@@ -196,27 +197,15 @@
 <script type="text/javascript">
     $(document).ready(function ($) {
 
-        let path = window.location.pathname+location.search.split("/").pop();
+        let path = window.location.pathname + location.search.split("/").pop();
 
         if (path == '') {
             path = 'page=1';
         }
 
         let target = $('.post-nav .nav-light[href="' + path + '"]');
-        console.log(path);
-        console.log(target);
         target.addClass('post-nav-active');
     });
-
-
-
-    // $(".btn-sm").click(function () {
-
-    // remove the class i.e. active from all a
-    //     $('.post-nav a').removeClass("active");
-    // apply active class to the current item
-    //    $(this).addClass("active");
-    // });
 </script>
 
 {% endblock content %}

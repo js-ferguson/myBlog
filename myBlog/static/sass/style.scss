@@ -63,7 +63,25 @@ body {
 
 }
 
-// ----------------------------------------- Nav -------------------------------------------- //@include
+// ----------------------------------------- Media query mixins --------------------------------- //
+
+@mixin phone {
+    @media (max-width: 576px) { @content; }
+  }
+  @mixin tablet-portrait {
+    @media (min-width: 768px) { @content; }
+  }
+  @mixin tablet-landscape {
+    @media (min-width: 992px) { @content; }
+  }
+  @mixin desktop {
+    @media (min-width: 1200px) { @content; }
+  }
+  @mixin big-desktop {
+    @media (min-width: 1800px) { @content; }
+  }
+
+// ----------------------------------------- Nav -------------------------------------------- //
 
 .nav-wrapper {
     background-color: #404040;
@@ -94,17 +112,25 @@ body {
 // ------------------------------------------ Posts ----------------------------------------- //
 
 .blog-frame {
-    margin-top: 50px;
-    .left-pane {
-        width: 70%;
+    @include tablet-landscape{
+        margin-top: 50px;
+        width: 90%;
         margin: auto;
+    }
+    
+    .left-pane {
+        @include tablet-landscape() {
+            width: 80%;
+            margin: auto;
+        }
+        width: 100%;        
         margin-top: 70px;
         .dark-bg {
             background: rgba(0, 0, 0, 0.5);
             color: white;
             padding: 10px;
             border-radius: 5px;
-            width: 80%;
+            
 
             h4 {
                 margin-top: 5px;
@@ -121,12 +147,17 @@ body {
         // ------------------------------------- project --------------------------------- //
 
         aside {
+            @include tablet-landscape {
+                width: 80%;
+                margin: auto;
+                margin: 80px 0 50px;
+            }
+            margin-top: 25px;
             background-color: #fafafa;
-            width: 80%;
-            margin: auto;
+            width: 100%;            
             display: flex;
             border-radius: 5px;
-            margin: 80px 0 50px;
+            
             position: relative;
             p {
                 margin-top: 10px;
@@ -154,36 +185,58 @@ body {
                 top: -50px;                
             }
         }
-        .media-wrapper {
-            margin-bottom: 0px;
-            text-align: right;
-            width: 80%;
-            position: relative;
-            padding: 15px;
-
-            i {
-                margin-left: 7px;
-            }
-            div {
-                display: inline-block;
-                position: absolute;
-                top: 35%;
-                right: 65px;
-                text-decoration: none;
-                color: black;
+        .social-icons {
+            width: 200px;
+            margin: auto;
+            @include tablet-landscape {
                 
             }
+            .media-wrapper {
+                @include tablet-landscape{
+                    margin-bottom: 0px;                    
+                    text-align: right;
+                    width: 80%;
+                    position: relative;
+                    padding: 15px;
+                }            
+                width: 40px;            
+                display: inline-block;            
+                margin: 40px 10px 25px 10px;
+                
+                
+    
+                i {
+                    margin-left: 7px;
+                }
+                div {
+                    display: inline-block;
+                    position: absolute;
+                    top: 35%;
+                    right: 65px;
+                    text-decoration: none;
+                    color: black;
+                    
+                }
+            }
+            
         }
+        
     }
     .right-frame {
-        width: 70%;
-        background-color: transparent;
-        margin: auto;
-        margin-top: 50px;
-        border-radius: 5px;
-        position: relative;
+        @include tablet-landscape{
+            width: 70%;
+            background-color: transparent;
+            margin: auto;
+            margin-top: 50px;
+            border-radius: 5px;
+            position: relative;
+        }
+        
         .sticky-wrapper {
-            margin-bottom: 80px;
+            @include tablet-landscape{
+                margin-bottom: 80px;
+            }
+            
             .sticky-post {
                 @include posts;                
                 .post-title {
@@ -204,8 +257,11 @@ body {
             }            
         }
         .post-wrapper {
-            position: relative;
-            margin-top: 65px;            
+            @include tablet-landscape {
+                position: relative;
+                margin-top: 65px;
+            }
+            margin-top: 20px;            
             .posts {
                 @include posts;
                 .post-title {

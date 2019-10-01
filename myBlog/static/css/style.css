@@ -38,161 +38,183 @@ body {
     color: orange;
     text-decoration: none; }
 
-.blog-frame {
-  margin-top: 50px; }
-  .blog-frame .left-pane {
-    width: 70%;
-    margin: auto;
-    margin-top: 70px; }
-    .blog-frame .left-pane .dark-bg {
-      background: rgba(0, 0, 0, 0.5);
-      color: white;
-      padding: 10px;
-      border-radius: 5px;
-      width: 80%; }
-      .blog-frame .left-pane .dark-bg h4 {
-        margin-top: 5px; }
-    .blog-frame .left-pane strong {
-      font-size: 18px;
+@media (min-width: 992px) {
+  .blog-frame {
+    margin-top: 50px;
+    width: 90%;
+    margin: auto; } }
+.blog-frame .left-pane {
+  width: 100%;
+  margin-top: 70px; }
+  @media (min-width: 992px) {
+    .blog-frame .left-pane {
+      width: 80%;
+      margin: auto; } }
+  .blog-frame .left-pane .dark-bg {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    border-radius: 5px; }
+    .blog-frame .left-pane .dark-bg h4 {
+      margin-top: 5px; }
+  .blog-frame .left-pane strong {
+    font-size: 18px;
+    font-weight: 600; }
+  .blog-frame .left-pane .post-nav {
+    margin: auto; }
+  .blog-frame .left-pane aside {
+    margin-top: 25px;
+    background-color: #fafafa;
+    width: 100%;
+    display: flex;
+    border-radius: 5px;
+    position: relative; }
+    @media (min-width: 992px) {
+      .blog-frame .left-pane aside {
+        width: 80%;
+        margin: auto;
+        margin: 80px 0 50px; } }
+    .blog-frame .left-pane aside p {
+      margin-top: 10px; }
+    .blog-frame .left-pane aside .aside-heading {
+      margin: 10px 15px 7px;
+      display: inline-block;
       font-weight: 600; }
-    .blog-frame .left-pane .post-nav {
-      margin: auto; }
-    .blog-frame .left-pane aside {
-      background-color: #fafafa;
-      width: 80%;
-      margin: auto;
-      display: flex;
-      border-radius: 5px;
-      margin: 80px 0 50px;
-      position: relative; }
-      .blog-frame .left-pane aside p {
-        margin-top: 10px; }
-      .blog-frame .left-pane aside .aside-heading {
-        margin: 10px 15px 7px;
-        display: inline-block;
-        font-weight: 600; }
-      .blog-frame .left-pane aside .aside-card {
-        margin: 7px;
-        width: 100%;
-        display: block;
-        padding: 5px; }
-      .blog-frame .left-pane aside #fab-two {
-        position: relative;
-        top: -25px;
-        left: 25px; }
-      .blog-frame .left-pane aside .fab-label {
-        background-color: white;
-        border-radius: 5px;
-        position: absolute;
-        padding: 12px;
-        right: 0px;
-        height: 45px;
-        width: 120px;
-        top: -50px; }
-    .blog-frame .left-pane .media-wrapper {
-      margin-bottom: 0px;
-      text-align: right;
-      width: 80%;
+    .blog-frame .left-pane aside .aside-card {
+      margin: 7px;
+      width: 100%;
+      display: block;
+      padding: 5px; }
+    .blog-frame .left-pane aside #fab-two {
       position: relative;
-      padding: 15px; }
-      .blog-frame .left-pane .media-wrapper i {
+      top: -25px;
+      left: 25px; }
+    .blog-frame .left-pane aside .fab-label {
+      background-color: white;
+      border-radius: 5px;
+      position: absolute;
+      padding: 12px;
+      right: 0px;
+      height: 45px;
+      width: 120px;
+      top: -50px; }
+  .blog-frame .left-pane .social-icons {
+    width: 200px;
+    margin: auto; }
+    .blog-frame .left-pane .social-icons .media-wrapper {
+      width: 40px;
+      display: inline-block;
+      margin: 40px 10px 25px 10px; }
+      @media (min-width: 992px) {
+        .blog-frame .left-pane .social-icons .media-wrapper {
+          margin-bottom: 0px;
+          text-align: right;
+          width: 80%;
+          position: relative;
+          padding: 15px; } }
+      .blog-frame .left-pane .social-icons .media-wrapper i {
         margin-left: 7px; }
-      .blog-frame .left-pane .media-wrapper div {
+      .blog-frame .left-pane .social-icons .media-wrapper div {
         display: inline-block;
         position: absolute;
         top: 35%;
         right: 65px;
         text-decoration: none;
         color: black; }
+@media (min-width: 992px) {
   .blog-frame .right-frame {
     width: 70%;
     background-color: transparent;
     margin: auto;
     margin-top: 50px;
     border-radius: 5px;
-    position: relative; }
-    .blog-frame .right-frame .sticky-wrapper {
-      margin-bottom: 80px; }
-      .blog-frame .right-frame .sticky-wrapper .sticky-post {
-        padding: 15px;
-        background-color: white;
-        border-radius: 5px;
-        margin: 17px 0 20px;
-        max-height: 250px;
-        overflow: hidden; }
-        .blog-frame .right-frame .sticky-wrapper .sticky-post .post-title {
-          font-weight: 600; }
-          .blog-frame .right-frame .sticky-wrapper .sticky-post .post-title a {
-            text-decoration: none; }
-        .blog-frame .right-frame .sticky-wrapper .sticky-post .post-date {
-          text-align: right;
-          float: right;
-          font-size: .7em;
-          margin-top: 7px; }
-      .blog-frame .right-frame .sticky-wrapper .badge {
-        color: white;
-        float: left;
-        margin-left: 0;
-        margin-right: 5px; }
+    position: relative; } }
+@media (min-width: 992px) {
+  .blog-frame .right-frame .sticky-wrapper {
+    margin-bottom: 80px; } }
+.blog-frame .right-frame .sticky-wrapper .sticky-post {
+  padding: 15px;
+  background-color: white;
+  border-radius: 5px;
+  margin: 17px 0 20px;
+  max-height: 250px;
+  overflow: hidden; }
+  .blog-frame .right-frame .sticky-wrapper .sticky-post .post-title {
+    font-weight: 600; }
+    .blog-frame .right-frame .sticky-wrapper .sticky-post .post-title a {
+      text-decoration: none; }
+  .blog-frame .right-frame .sticky-wrapper .sticky-post .post-date {
+    text-align: right;
+    float: right;
+    font-size: .7em;
+    margin-top: 7px; }
+.blog-frame .right-frame .sticky-wrapper .badge {
+  color: white;
+  float: left;
+  margin-left: 0;
+  margin-right: 5px; }
+.blog-frame .right-frame .post-wrapper {
+  margin-top: 20px; }
+  @media (min-width: 992px) {
     .blog-frame .right-frame .post-wrapper {
       position: relative;
-      margin-top: 65px; }
-      .blog-frame .right-frame .post-wrapper .posts {
-        padding: 15px;
-        background-color: white;
-        border-radius: 5px;
-        margin: 17px 0 20px;
-        max-height: 250px;
-        overflow: hidden; }
-        .blog-frame .right-frame .post-wrapper .posts .post-title a {
-          text-decoration: none; }
-      .blog-frame .right-frame .post-wrapper .post-date {
-        text-align: right;
-        float: right;
-        font-size: .7em;
-        margin-top: 7px; }
-      .blog-frame .right-frame .post-wrapper #fab-one {
-        position: absolute;
-        top: -25px;
-        right: -25px; }
-      .blog-frame .right-frame .post-wrapper .fab-one-label {
-        background-color: white;
-        border-radius: 5px;
-        position: absolute;
-        padding: 12px;
-        right: 0px;
-        height: 45px;
-        width: 110px;
-        top: -50px; }
-    .blog-frame .right-frame .post-nav {
-      margin: auto;
-      /* Style the active class (and buttons on mouse-over) */ }
-      .blog-frame .right-frame .post-nav .btn {
-        height: 45px;
-        width: 35px;
-        margin: 15px 4px 50px;
-        padding-top: 12px;
-        color: white;
-        background: rgba(0, 0, 0, 0.6); }
-        .blog-frame .right-frame .post-nav .btn:hover {
-          background-color: #53dbe5;
-          color: black; }
-      .blog-frame .right-frame .post-nav .prev,
-      .blog-frame .right-frame .post-nav .next {
-        width: 65px; }
-      .blog-frame .right-frame .post-nav .btn-sm {
-        height: 45px;
-        width: 35px;
-        margin: 15px 4px 50px;
-        padding-top: 12px;
-        color: white;
-        background: rgba(0, 0, 0, 0.6); }
-        .blog-frame .right-frame .post-nav .btn-sm:hover {
-          background-color: #53dbe5;
-          color: black; }
-      .blog-frame .right-frame .post-nav .post-nav-active, .blog-frame .right-frame .post-nav .btn-sm:hover {
-        background-color: #53dbe5;
-        color: black; }
+      margin-top: 65px; } }
+  .blog-frame .right-frame .post-wrapper .posts {
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+    margin: 17px 0 20px;
+    max-height: 250px;
+    overflow: hidden; }
+    .blog-frame .right-frame .post-wrapper .posts .post-title a {
+      text-decoration: none; }
+  .blog-frame .right-frame .post-wrapper .post-date {
+    text-align: right;
+    float: right;
+    font-size: .7em;
+    margin-top: 7px; }
+  .blog-frame .right-frame .post-wrapper #fab-one {
+    position: absolute;
+    top: -25px;
+    right: -25px; }
+  .blog-frame .right-frame .post-wrapper .fab-one-label {
+    background-color: white;
+    border-radius: 5px;
+    position: absolute;
+    padding: 12px;
+    right: 0px;
+    height: 45px;
+    width: 110px;
+    top: -50px; }
+.blog-frame .right-frame .post-nav {
+  margin: auto;
+  /* Style the active class (and buttons on mouse-over) */ }
+  .blog-frame .right-frame .post-nav .btn {
+    height: 45px;
+    width: 35px;
+    margin: 15px 4px 50px;
+    padding-top: 12px;
+    color: white;
+    background: rgba(0, 0, 0, 0.6); }
+    .blog-frame .right-frame .post-nav .btn:hover {
+      background-color: #53dbe5;
+      color: black; }
+  .blog-frame .right-frame .post-nav .prev,
+  .blog-frame .right-frame .post-nav .next {
+    width: 65px; }
+  .blog-frame .right-frame .post-nav .btn-sm {
+    height: 45px;
+    width: 35px;
+    margin: 15px 4px 50px;
+    padding-top: 12px;
+    color: white;
+    background: rgba(0, 0, 0, 0.6); }
+    .blog-frame .right-frame .post-nav .btn-sm:hover {
+      background-color: #53dbe5;
+      color: black; }
+  .blog-frame .right-frame .post-nav .post-nav-active, .blog-frame .right-frame .post-nav .btn-sm:hover {
+    background-color: #53dbe5;
+    color: black; }
 
 .modal {
   width: 50%; }
