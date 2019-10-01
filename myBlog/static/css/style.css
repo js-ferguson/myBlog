@@ -181,6 +181,9 @@ body {
     overflow: hidden; }
     .blog-frame .right-frame .post-wrapper .posts .post-title a {
       text-decoration: none; }
+    .blog-frame .right-frame .post-wrapper .posts p {
+      max-height: 132px;
+      overflow: hidden; }
   .blog-frame .right-frame .post-wrapper .post-date {
     text-align: right;
     float: right;
@@ -199,6 +202,8 @@ body {
     height: 45px;
     width: 110px;
     top: -50px; }
+  .blog-frame .right-frame .post-wrapper .subtext {
+    font-size: 10px; }
 .blog-frame .right-frame .post-nav {
   margin: auto;
   /* Style the active class (and buttons on mouse-over) */ }

@@ -275,6 +275,10 @@ body {
                     a {
                         text-decoration: none;
                     }                    
+                }
+                p {
+                    max-height: 132px;
+                    overflow: hidden;
                 }                
             }
             .post-date {
@@ -290,6 +294,9 @@ body {
                 height: 45px;
                 width: 110px;
                 top: -50px;                
+            }
+            .subtext {
+                font-size: 10px;
             }
         }
         .post-nav {
