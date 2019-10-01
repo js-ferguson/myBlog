@@ -4,10 +4,6 @@ $container-width: 85%;
     width: $container-width;
 }
 
-.nav-wrapper {
-    background-color: #404040;
-}
-
 .brand-logo {
     margin-left: 15px;
 }
@@ -69,17 +65,29 @@ body {
 
 // ----------------------------------------- Nav -------------------------------------------- //@include
 
-a:hover {
-    color: #53dbe5;
-    text-decoration: none;
+.nav-wrapper {
+    background-color: #404040;
+    a:hover {
+        color: orange;
+        text-decoration: none;
+    }
+
+    .nav-active {
+        color: orange;
+        text-decoration: none;
+    }
 }
 
 .sidenav {
-    background: rgba(0, 0, 0, 0.9);
+    background-color: #404040;
     color: white;
     i {
         color: white;
         font-size: 22px;
+    }
+    a:hover {
+        color:orange;
+        text-decoration: none;
     }
 }
 
@@ -240,8 +248,27 @@ a:hover {
 
             .prev,
             .next {
-                width: 55px;
+                width: 65px;
             }
+
+            .btn-sm {
+                height: 45px;
+                width: 35px;
+                margin: 15px 4px 50px;
+                padding-top: 12px;
+                color: white;
+                background: rgba(0, 0, 0, 0.6);
+                &:hover {
+                    background-color: #53dbe5;
+                    color: black;
+                }
+              }
+              
+              /* Style the active class (and buttons on mouse-over) */
+              .post-nav-active, .btn-sm:hover {
+                background-color: #53dbe5;
+                color:black;
+              }
         }
     }
 }

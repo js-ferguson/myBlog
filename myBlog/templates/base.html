@@ -35,22 +35,20 @@
             <ul id="slide-out" class="sidenav">
                 <li>
                     <div class="user-view">
-                        <a href="{{ url_for('new_post') }}"><i class="fa fa-plus-circle"></i> New Post</a>
-                        <a href="#modal1" class="modal-trigger sidenav-closeför" onclick="instance.close()"><i class="far fa-file-alt"></i> Edit Project</a>
+                        <a href="{{ url_for('home') }}"><span class="">Home</span></a>
+                        <a href="{{ url_for('portfolio') }}"><span class="">Portfolio</span></a>
+                        <a href="{{ url_for('account') }}"><span class="">Account</span></a>
+                        <a href="{{ url_for('new_post') }}"><span class="">New Post</span></a>
+                        <a href="#modal1" class="modal-trigger sidenav-close" onclick="instance.close()"><span
+                                class="">Edit Project</span></a>
                     </div>
                 </li>
-                <li>
-                    
-                        <a href="#modal1"><i class="far fa-file-alt"></i> Edit Project</a>
-                    
-                </li>
+
                 <li>
                     <div class="divider"></div>
                 </li>
-                <li><a class="subheader">Subheader</a></li>
-                <a href="{{ url_for('home') }}"><span class="white-text name">Home</span></a>
-                <a href="{{ url_for('portfolio') }}"><span class="white-text name">Portfolio</span></a>
-                <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+
+
             </ul>
             <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <a href="{{ url_for('home') }}" class="brand-logo"></a>
@@ -103,9 +101,21 @@
             $('.fixed-action-btn').floatingActionButton();
             $('.modal').modal();
             $('.collapsible').collapsible();
-            $('.sidenav').sidenav();                        
-        });
+            $('.sidenav').sidenav();
 
+
+
+            let path = window.location.pathname.split("/").pop();
+
+            if (path == '') {
+                path = 'index';
+            }
+
+            let target = $('nav li a[href="' + '/' + path + '"]');
+            console.log(target);
+            target.addClass('nav-active');
+
+        });
     </script>
 
 </body>

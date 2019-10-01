@@ -1,9 +1,6 @@
 .container {
   width: 85%; }
 
-.nav-wrapper {
-  background-color: #404040; }
-
 .brand-logo {
   margin-left: 15px; }
 
@@ -22,16 +19,24 @@ body {
   background: rgba(0, 0, 0, 0.6);
   color: white; }
 
-a:hover {
-  color: #53dbe5;
-  text-decoration: none; }
+.nav-wrapper {
+  background-color: #404040; }
+  .nav-wrapper a:hover {
+    color: orange;
+    text-decoration: none; }
+  .nav-wrapper .nav-active {
+    color: orange;
+    text-decoration: none; }
 
 .sidenav {
-  background: rgba(0, 0, 0, 0.9);
+  background-color: #404040;
   color: white; }
   .sidenav i {
     color: white;
     font-size: 22px; }
+  .sidenav a:hover {
+    color: orange;
+    text-decoration: none; }
 
 .blog-frame {
   margin-top: 50px; }
@@ -160,7 +165,8 @@ a:hover {
         width: 110px;
         top: -50px; }
     .blog-frame .right-frame .post-nav {
-      margin: auto; }
+      margin: auto;
+      /* Style the active class (and buttons on mouse-over) */ }
       .blog-frame .right-frame .post-nav .btn {
         height: 45px;
         width: 35px;
@@ -173,7 +179,20 @@ a:hover {
           color: black; }
       .blog-frame .right-frame .post-nav .prev,
       .blog-frame .right-frame .post-nav .next {
-        width: 55px; }
+        width: 65px; }
+      .blog-frame .right-frame .post-nav .btn-sm {
+        height: 45px;
+        width: 35px;
+        margin: 15px 4px 50px;
+        padding-top: 12px;
+        color: white;
+        background: rgba(0, 0, 0, 0.6); }
+        .blog-frame .right-frame .post-nav .btn-sm:hover {
+          background-color: #53dbe5;
+          color: black; }
+      .blog-frame .right-frame .post-nav .post-nav-active, .blog-frame .right-frame .post-nav .btn-sm:hover {
+        background-color: #53dbe5;
+        color: black; }
 
 .modal {
   width: 50%; }

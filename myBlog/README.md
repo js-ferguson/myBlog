@@ -8,15 +8,11 @@
 
 * Style the edit post and delete post confirmation modal
 
-* Add delete post functionality to edit post page
-
 * Remember me on login screen should actually remember me
 
 * Users should be able to change password with email token
 
-* Nav links should be coloured differently if you are currently on that page.
-
-* change colour of Nav hover
+* reset password via email link
 
 * fa icons should also have a hover
 

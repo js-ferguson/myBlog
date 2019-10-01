@@ -91,15 +91,21 @@
 
         </aside>
         <div class="media-wrapper">
-            <a href="https://github.com/js-ferguson"><div>Github repository</div> <i class="fa fa-github-alt"></i></a>
+            <a href="https://github.com/js-ferguson">
+                <div>Github repository</div> <i class="fa fa-github-alt"></i>
+            </a>
         </div>
         <div class="media-wrapper">
-            <a href="https://www.linkedin.com/in/jimiferguson/"><div>LinkedIn</div> <i class="fa fa-linkedin-square"></i></a>
+            <a href="https://www.linkedin.com/in/jimiferguson/">
+                <div>LinkedIn</div> <i class="fa fa-linkedin-square"></i>
+            </a>
         </div>
         <div class="media-wrapper">
-            <a href="https://twitter.com/JimiWindmills"><div>Twitter</div> <i class="fa fa-twitter"></i></a>
+            <a href="https://twitter.com/JimiWindmills">
+                <div>Twitter</div> <i class="fa fa-twitter"></i>
+            </a>
         </div>
-        
+
     </div>
 
     <div class="col s7 right-frame">
@@ -118,7 +124,7 @@
                 </div>
                 <p>{{ is_sticky.content }}</p>
             </div>
-            
+
         </div>
         {% endif %}
         <!-- render all posts except those with a sticky bit set -->
@@ -143,25 +149,25 @@
             <div class="row">
                 <div class="post-nav">
                     {% if page == 1 %}
-                    <a class="btn btn-sm prev" href="{{url_for('home', page=1) }}">Prev</a>
+                    <a class="btn prev" href="{{url_for('home', page=1) }}">Prev</a>
                     {% else %}
-                    <a class="btn btn-sm prev" href="{{url_for('home', page=(page - 1)) }}">Prev</a>
+                    <a class="btn prev" href="{{url_for('home', page=(page - 1)) }}">Prev</a>
                     {% endif %}
-                    <a class="btn btn-sm" href="{{url_for('home', page=1) }}">1</a>
+                    <a class="btn btn-sm nav-light" href="{{url_for('home', page=1) }}">1</a>
 
                     {% for item in page_links %}
                     {% if item %}
-                    <a class="btn btn-sm" href="{{url_for('home', page=item) }}">{{ item }}</a>
+                    <a class="btn btn-sm nav-light" href="{{url_for('home', page=item) }}">{{ item }}</a>
                     {% else %}
                     ...
                     {% endif %}
                     {% endfor %}
 
-                    <a class="btn btn-sm" href="{{url_for('home', page=last_page) }}">{{ last_page }}</a>
+                    <a class="btn btn-sm nav-light" href="{{url_for('home', page=last_page) }}">{{ last_page }}</a>
                     {%  if page == last_page %}
-                    <a class="btn btn-sm next" href="{{url_for('home', page=last_page) }}">Next</a>                    
+                    <a class="btn next" href="{{url_for('home', page=last_page) }}">Next</a>
                     {% else %}
-                    <a class="btn btn-sm next" href="{{url_for('home', page=(page + 1)) }}">Next</a>
+                    <a class="btn next" href="{{url_for('home', page=(page + 1)) }}">Next</a>
                     {% endif %}
 
 
@@ -184,5 +190,33 @@
     </div>
 
 </div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script type="text/javascript">
+    $(document).ready(function ($) {
+
+        let path = window.location.pathname+location.search.split("/").pop();
+
+        if (path == '') {
+            path = 'page=1';
+        }
+
+        let target = $('.post-nav .nav-light[href="' + path + '"]');
+        console.log(path);
+        console.log(target);
+        target.addClass('post-nav-active');
+    });
+
+
+
+    // $(".btn-sm").click(function () {
+
+    // remove the class i.e. active from all a
+    //     $('.post-nav a').removeClass("active");
+    // apply active class to the current item
+    //    $(this).addClass("active");
+    // });
+</script>
 
 {% endblock content %}
