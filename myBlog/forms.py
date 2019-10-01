@@ -44,13 +44,11 @@ class LoginForm(FlaskForm):
 
 
 class NewPostForm(FlaskForm):
-
     title = TextAreaField('Title', validators=[DataRequired(), Length(max=50)])
     content = TextAreaField('Content', validators=[
                             DataRequired(), Length(min=1, max=1000)])
     submit = SubmitField('Save Post')
-    sticky = BooleanField('Sticky post')
-    delete = SubmitField('Delete Post')
+    sticky = BooleanField('Sticky post')   
 
 
 class AccountUpdateForm(FlaskForm):

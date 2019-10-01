@@ -159,8 +159,7 @@
 
                     <a class="btn btn-sm" href="{{url_for('home', page=last_page) }}">{{ last_page }}</a>
                     {%  if page == last_page %}
-                    <a class="btn btn-sm next" href="{{url_for('home', page=last_page) }}">Next</a>
-                    {{ flash("You have reached the last page", "info") }}
+                    <a class="btn btn-sm next" href="{{url_for('home', page=last_page) }}">Next</a>                    
                     {% else %}
                     <a class="btn btn-sm next" href="{{url_for('home', page=(page + 1)) }}">Next</a>
                     {% endif %}

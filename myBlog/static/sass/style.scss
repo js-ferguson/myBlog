@@ -297,6 +297,7 @@ a:hover {
         width: 100%;
         margin: auto;    
         resize: none;
+        overflow: hidden;
     }
     .new-post-body-label {
         margin-left: 10px;
@@ -360,16 +361,34 @@ a:hover {
     .post-content {
         margin: 55px 0 35px 0;
     }
+}
 
     // ------------------------------------ Edit Post --------------------------------- //
 
-    .save-post-button {
-        float: left;
+.edit-post-heading {
+    margin-top: 50px;
+}  
+
+.edit-post-form {       
+    
+    .edit-post-title {
+        padding-top: 10px;
+        height: 3rem;
+        width: 100%;
+        margin: auto;    
+        resize: none;
+        overflow: hidden;
     }
-    .delete-post-button {
-        float: right;
+    
+    .edit-post-body {
+        @include card-style;
+        width: 100%;
+        height: 30rem;
+        resize: none;
     }
+    
 }
+
 
 .delete-post-modal {
     @include modal-style;

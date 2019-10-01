@@ -1,7 +1,5 @@
 #from flask_login import current_user, login_user, logout_user, login_required
-from myBlog import mongo, login_manager
-
- 
+from myBlog import mongo, login_manager 
 
 class User:
     def __init__(self, username):

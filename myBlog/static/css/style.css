@@ -219,7 +219,8 @@ a:hover {
     height: 3rem;
     width: 100%;
     margin: auto;
-    resize: none; }
+    resize: none;
+    overflow: hidden; }
   .new-post-form .new-post-body-label {
     margin-left: 10px; }
   .new-post-form .new-post-body {
@@ -270,10 +271,24 @@ a:hover {
     margin: 20px 0 15px 0; }
   .post-view .post-content {
     margin: 55px 0 35px 0; }
-  .post-view .save-post-button {
-    float: left; }
-  .post-view .delete-post-button {
-    float: right; }
+
+.edit-post-heading {
+  margin-top: 50px; }
+
+.edit-post-form .edit-post-title {
+  padding-top: 10px;
+  height: 3rem;
+  width: 100%;
+  margin: auto;
+  resize: none;
+  overflow: hidden; }
+.edit-post-form .edit-post-body {
+  padding: 15px;
+  background-color: white;
+  border-radius: 5px;
+  width: 100%;
+  height: 30rem;
+  resize: none; }
 
 .delete-post-modal {
   width: 50%;

@@ -88,7 +88,7 @@ def home():
                 del num_list[-1]
             if num == get_page_count():
                 del num_list[-1]
-        
+
         # remove consecutive duplicate None values
         i = 0
         while i < len(num_list) - 1:
@@ -96,7 +96,10 @@ def home():
                 del num_list[i]
             else:
                 i = i+1
-        return num_list    
+        return num_list
+
+    if page == get_page_count():
+        flash("You have reached the last page", "info")
 
     print(create_num_list())
 
@@ -175,19 +178,19 @@ def insert_post():
     author = mongo.db.users.find_one({'username': current_user.get_id()})
     post_author = author['_id']
     post_is_sticky = request.form.get('sticky')
-    new_doc = {'title': request.form.get('title'), 
-                   'post_author': post_author,
-                   'tags': [], 
-                   'content': request.form.get('content'),
-                   'date_posted': datetime.utcnow(), 
-                   'images': [], 
-                   'sticky': False}
+    new_doc = {'title': request.form.get('title'),
+               'post_author': post_author,
+               'tags': [],
+               'content': request.form.get('content'),
+               'date_posted': datetime.utcnow(),
+               'images': [],
+               'sticky': False}
 
     if post_is_sticky:
         mongo.db.posts.update_many({"sticky": True}, {"$set":
                                                       {"sticky": False}
                                                       }, upsert=True)
-        new_doc['sticky'] = False        
+        new_doc['sticky'] = False
 
     try:
         posts.insert_one(new_doc)
@@ -260,31 +263,26 @@ def edit_post(post_id):
     if request.method == 'GET':
         form.title.data = post['title']
         form.content.data = post['content']
-        return render_template('edit_post.html', form=form, post=post, admin_user=admin_user())
+        
     elif request.method == 'POST':
         content = request.form.get("content")
         title = request.form.get("title")
         posts = mongo.db.posts
+        update_doc = {"title": title, "content": content, "sticky": False}
         if post_is_sticky:
             mongo.db.posts.update_many({"sticky": True}, {"$set":
                                                           {"sticky": False}
                                                           }, upsert=True)
-
-            posts.find_one_and_update(
-                {"_id": ObjectId(post_id)},
-                {"$set":
-                    {"title": title, "content": content, "sticky": True}
-                 }, upsert=True
-            )
-        else:
-            posts.find_one_and_update(
-                {"_id": ObjectId(post_id)},
-                {"$set":
-                    {"title": title, "content": content, "sticky": False}
-                 }, upsert=True
-            )
+            update_doc["sticky"] = True
+        
+        posts.find_one_and_update(
+            {"_id": ObjectId(post_id)},
+            {"$set": update_doc},
+            upsert=True
+        )
         flash('Your blog post has been updated', 'info')
-    return redirect(url_for('home'))
+        return redirect(url_for('home'))
+    return render_template('edit_post.html', form=form, post=post, admin_user=admin_user())
 
 
 @app.route("/post/<post_id>/delete", methods=['GET', 'POST'])
@@ -295,7 +293,7 @@ def delete_post(post_id):
 
     if not admin_user():
         abort(403)
-    mongo.db.posts.delete_one(query)   
+    mongo.db.posts.delete_one(query)
     flash('Your post has been deleted', 'info')
     return redirect(url_for('home'))
 
