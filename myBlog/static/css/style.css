@@ -40,21 +40,25 @@ body {
 
 @media (min-width: 992px) {
   .blog-frame {
-    margin-top: 50px;
-    width: 90%;
-    margin: auto; } }
+    width: 100%;
+    margin: auto;
+    margin-top: 100px; } }
 .blog-frame .left-pane {
   width: 100%;
   margin-top: 70px; }
   @media (min-width: 992px) {
     .blog-frame .left-pane {
       width: 80%;
-      margin: auto; } }
+      margin: auto;
+      margin-top: 0px; } }
   .blog-frame .left-pane .dark-bg {
     background: rgba(0, 0, 0, 0.5);
     color: white;
     padding: 10px;
     border-radius: 5px; }
+    @media (min-width: 992px) {
+      .blog-frame .left-pane .dark-bg {
+        width: 80%; } }
     .blog-frame .left-pane .dark-bg h4 {
       margin-top: 5px; }
   .blog-frame .left-pane strong {
@@ -101,17 +105,25 @@ body {
   .blog-frame .left-pane .social-icons {
     width: 200px;
     margin: auto; }
+    @media (min-width: 992px) {
+      .blog-frame .left-pane .social-icons {
+        width: 100%; } }
     .blog-frame .left-pane .social-icons .media-wrapper {
       width: 40px;
       display: inline-block;
       margin: 40px 10px 25px 10px; }
       @media (min-width: 992px) {
         .blog-frame .left-pane .social-icons .media-wrapper {
-          margin-bottom: 0px;
+          margin-top: 0px;
           text-align: right;
           width: 80%;
           position: relative;
           padding: 15px; } }
+      .blog-frame .left-pane .social-icons .media-wrapper .hide-on-small {
+        visibility: hidden; }
+        @media (min-width: 992px) {
+          .blog-frame .left-pane .social-icons .media-wrapper .hide-on-small {
+            visibility: visible; } }
       .blog-frame .left-pane .social-icons .media-wrapper i {
         margin-left: 7px; }
       .blog-frame .left-pane .social-icons .media-wrapper div {
@@ -126,7 +138,7 @@ body {
     width: 70%;
     background-color: transparent;
     margin: auto;
-    margin-top: 50px;
+    margin-top: 0px;
     border-radius: 5px;
     position: relative; } }
 @media (min-width: 992px) {
@@ -138,7 +150,8 @@ body {
   border-radius: 5px;
   margin: 17px 0 20px;
   max-height: 250px;
-  overflow: hidden; }
+  overflow: hidden;
+  margin-top: 0; }
   .blog-frame .right-frame .sticky-wrapper .sticky-post .post-title {
     font-weight: 600; }
     .blog-frame .right-frame .sticky-wrapper .sticky-post .post-title a {
@@ -212,6 +225,11 @@ body {
     .blog-frame .right-frame .post-nav .btn-sm:hover {
       background-color: #53dbe5;
       color: black; }
+  .blog-frame .right-frame .post-nav .hide-small {
+    display: none; }
+    @media (min-width: 1200px) {
+      .blog-frame .right-frame .post-nav .hide-small {
+        display: inline-block; } }
   .blog-frame .right-frame .post-nav .post-nav-active, .blog-frame .right-frame .post-nav .btn-sm:hover {
     background-color: #53dbe5;
     color: black; }

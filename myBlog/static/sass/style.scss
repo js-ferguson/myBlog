@@ -112,26 +112,28 @@ body {
 // ------------------------------------------ Posts ----------------------------------------- //
 
 .blog-frame {
-    @include tablet-landscape{
-        margin-top: 50px;
-        width: 90%;
+    @include tablet-landscape {        
+        width: 100%;
         margin: auto;
+        margin-top: 100px;
     }
     
     .left-pane {
-        @include tablet-landscape() {
+        @include tablet-landscape {
             width: 80%;
             margin: auto;
+            margin-top: 0px;
         }
         width: 100%;        
         margin-top: 70px;
         .dark-bg {
+            @include tablet-landscape{
+                width: 80%;
+            }
             background: rgba(0, 0, 0, 0.5);
             color: white;
             padding: 10px;
             border-radius: 5px;
-            
-
             h4 {
                 margin-top: 5px;
             }
@@ -189,11 +191,11 @@ body {
             width: 200px;
             margin: auto;
             @include tablet-landscape {
-                
+                width: 100%;
             }
             .media-wrapper {
                 @include tablet-landscape{
-                    margin-bottom: 0px;                    
+                    margin-top: 0px;                    
                     text-align: right;
                     width: 80%;
                     position: relative;
@@ -202,8 +204,12 @@ body {
                 width: 40px;            
                 display: inline-block;            
                 margin: 40px 10px 25px 10px;
-                
-                
+                .hide-on-small {
+                    visibility: hidden;
+                    @include tablet-landscape {
+                        visibility: visible;
+                    }
+                }               
     
                 i {
                     margin-left: 7px;
@@ -227,7 +233,7 @@ body {
             width: 70%;
             background-color: transparent;
             margin: auto;
-            margin-top: 50px;
+            margin-top: 0px;
             border-radius: 5px;
             position: relative;
         }
@@ -238,7 +244,8 @@ body {
             }
             
             .sticky-post {
-                @include posts;                
+                @include posts;  
+                margin-top: 0;              
                 .post-title {
                     font-weight: 600;
                     a {
@@ -318,7 +325,14 @@ body {
                     background-color: #53dbe5;
                     color: black;
                 }
+                
               }
+              .hide-small {
+                display: none;
+                @include desktop {
+                    display: inline-block;
+                }
+            }
               
               /* Style the active class (and buttons on mouse-over) */
               .post-nav-active, .btn-sm:hover {
