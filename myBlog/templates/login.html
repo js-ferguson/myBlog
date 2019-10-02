@@ -7,7 +7,7 @@
         {{ form.hidden_tag() }}
         <!-- //adds cross site request forgery token (CSRF token) -->
         <h4>
-            <legend class="join-legend">Login</legend>
+            <legend class="Login-heading">Login</legend>
         </h4>
         <div class="input-field col s12">
             {{ form.email.label() }}
@@ -37,14 +37,14 @@
             {% endif %}
         </div>
 
-        <div>
+        <div class="check-row">
             {{ form.remember.label(class="switch") }}
             {{ form.remember(class="danger") }}
             <span class="slider round"></span>
         </div>
 
         <div class="input-field col s12">
-            {{ form.submit(class="btn")}}
+            {{ form.submit(class="btn btn-custom")}}
         </div>
 
         <small class="text-muted ml-2">
