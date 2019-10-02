@@ -6,17 +6,19 @@
 
 * Fix resposive layout
 
-* Style the edit post and delete post confirmation modal
-
 * Remember me on login screen should actually remember me
 
 * Users should be able to change password with email token
+
+* Delete confirmation for both portfolio projects and comments - deleting a comment should redirect back to the post
 
 * reset password via email link
 
 * fa icons should also have a hover
 
 * Write nice code comments
+
+* remove debuging 
 
 ## future features
 
@@ -39,6 +41,8 @@
 * make comments editable for the author
 
 * allow (editable) replies to comments
+
+* delete for posts and portfolio projects
 
 * allow users to be able to dismiss or collapse a sticky post so they don't have to keep seeing it after they have read it
 

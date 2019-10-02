@@ -243,7 +243,6 @@ def insert_comment(post_id):
                'content': request.form.get('content'),
                'date_posted': datetime.utcnow()
                }
-
     comments.insert_one(new_doc)
     flash('Your comment was successfully posted', 'info')
     return redirect(url_for('post', post_id=post_id))
@@ -346,6 +345,33 @@ def portfolio():
         return redirect(url_for('portfolio'))
 
     return render_template('portfolio.html', projects=projects, form=form, admin_user=admin_user(), image_files=image_files)
+
+
+@app.route("/portfolio/<project_name>", methods=['GET', 'POST'])
+@login_required
+def delete_project(project_name):
+    query = {'project_name': project_name}
+
+    if not admin_user():
+        abort(403)
+
+    mongo.db.portfolio.delete_one(query)
+    flash('Your project has been deleted', 'info')
+    return redirect(url_for('portfolio'))
+
+
+@app.route("/post/<post_id>/<comment>", methods=['GET', 'POST'])
+@login_required
+def delete_comment(comment, post_id):
+    query = {'title': comment}
+
+    if not admin_user():
+        abort(403)
+
+    mongo.db.comment.delete_one(query)
+    flash('Your comment has been deleted', 'info')
+    return redirect(url_for('home'))
+    
 
 
 @app.route("/insert_project", methods=['POST'])

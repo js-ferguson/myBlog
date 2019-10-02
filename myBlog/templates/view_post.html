@@ -10,10 +10,10 @@
         {% endif %}
         <hr>
     </div>
-    <div class="col s12 post-content">
-        <div class="col s12">
+    <div class="post-content">
+        <p>
             {{ post.content }}
-        </div>
+        </p>
     </div>
     {% if current_user.is_authenticated and admin_user.admin %}
         <div class="fixed-action-btn direction-right" id="edit_post_fab">
@@ -89,6 +89,10 @@
     {% endif %}
     <hr>
     <h5>{{ comment.title }}</h5>
+    {% if current_user.username == get_comment_username(comment.user) %}
+    <a href="{{ url_for('delete_comment', comment=comment.title, post_id=post._id) }}" class="btn-small btn-danger mb-2">Delete comment</a>
+    
+    {% endif %}
     <p>{{ comment.content }}</p>   
 </div>
 {% endfor %}

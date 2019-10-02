@@ -36,24 +36,27 @@
         </div>
         {% if current_user.is_authenticated and admin_user.admin %}
 
-        <div class="check-row">            
-                {{ form.sticky.label(class="switch") }}
-                {{ form.sticky(class="danger") }}
-                <span class="slider round"></span>            
+        <div class="check-row">
+            {{ form.sticky.label(class="switch") }}
+            {{ form.sticky(class="danger") }}
+            <span class="slider round"></span>
         </div>
-        <span class="input-field save-post-button">
-            {{ form.submit(class="btn btn-custom z-depth-2 ")}}
-        </span>
-        <span class="delete-post-button">
-            <button class="btn btn-danger z-depth-2 modal-trigger" data-target="confirmModal">Delete Post</button>
-        </span>
+        <div class="button-row">
+            <span class="input-field save-post-button">
+                {{ form.submit(class="btn btn-custom z-depth-2 ")}}
+            </span>
+            <span class="delete-post-button">
+                <button class="btn btn-danger z-depth-2 modal-trigger" data-target="confirmModal">Delete Post</button>
+            </span>
+        </div>
+
 
 
         <!-- Delete confirmation modal -->
         <div id="confirmModal" class="modal delete-post-modal">
             <div class="modal-content">
-                <h4>Confirm Delete</h4>
-                <p>Are you sure you want to delete this post</p>
+                <h4>Delete post?</h4>
+                <p>Are you sure you want to delete this post?</p>
             </div>
             <div class="modal-footer">
                 <a href="{{ url_for('delete_post', post_id=post._id) }}"
@@ -74,17 +77,17 @@
         $('.edit-post-body-label').hide();
     });
 
-  //  var text = $('.edit-post-body').val(),
+    //  var text = $('.edit-post-body').val(),
     // look for any "\n" occurences
- //  matches = text.match(/\n/g),
-  ///  breaks = matches ? matches.length : 2;
+    //  matches = text.match(/\n/g),
+    ///  breaks = matches ? matches.length : 2;
 
-   // $('.edit-post-body').attr('rows',breaks + 2);
+    // $('.edit-post-body').attr('rows',breaks + 2);
 
-   //function auto_grow(element) {
-  //  element.style.height = "5px";
-  //  element.style.height = (element.scrollHeight+20)+"px";
-  //  }
+    //function auto_grow(element) {
+    //  element.style.height = "5px";
+    //  element.style.height = (element.scrollHeight+20)+"px";
+    //  }
 </script>
 
 {% endblock content %}

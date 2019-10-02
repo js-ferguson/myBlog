@@ -112,31 +112,30 @@
 {% for project in projects %}
 <div class="portfolio-card z-depth-2">
     <h4><a href="{{ project.link }}">{{ project.project_name }}</a></h4>
+
+    {% if current_user.is_authenticated and admin_user.admin %}    
+    <a href="{{ url_for('delete_project', project_name=project.project_name) }}" class="btn-small btn-danger">Delete project</a>
+    <span>This is permanent and cannot be undone</span>
+    {% endif %}
+
     <div class="portfolio-link-icons">
         <i class="fa fa-github-alt"></i><span><a href="{{ project.github_link }}">Github repository</a></span>
         <i class="fa fa-globe"></i><a href="{{ project.link }}">Live website</a>
     </div>
-    
     <p>{{ project.desc }}</p>
     {% for tag in project.tech_tags %}
     {{ tag + " "}}
     {% endfor %}
     <div>
-        
         <div class="picture-card">
             {% if project.images %}
             {% for image in project.images %}
-
             <img class="z-depth-2" src="{{ url_for('static', filename='images/project_pics/' + image ) }}">
-
             {% endfor %}
             {% endif %}
         </div>
-
     </div>
-
 </div>
-
 {% endfor %}
 
 {% endblock content %}

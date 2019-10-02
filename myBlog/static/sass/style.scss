@@ -31,7 +31,7 @@ body {
 // ------------------------------------------ Mixins ---------------------------------------- //
 
 @mixin fab-label {
-    background-color: white;
+    background-color: #fdffb6;
     border-radius: 5px;
     position: absolute;
     padding: 12px;
@@ -66,25 +66,40 @@ body {
 // ----------------------------------------- Media query mixins --------------------------------- //
 
 @mixin phone {
-    @media (max-width: 576px) { @content; }
-  }
-  @mixin tablet-portrait {
-    @media (min-width: 768px) { @content; }
-  }
-  @mixin tablet-landscape {
-    @media (min-width: 992px) { @content; }
-  }
-  @mixin desktop {
-    @media (min-width: 1200px) { @content; }
-  }
-  @mixin big-desktop {
-    @media (min-width: 1800px) { @content; }
-  }
+    @media (max-width: 576px) {
+        @content;
+    }
+}
+
+@mixin tablet-portrait {
+    @media (min-width: 768px) {
+        @content;
+    }
+}
+
+@mixin tablet-landscape {
+    @media (min-width: 992px) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: 1200px) {
+        @content;
+    }
+}
+
+@mixin big-desktop {
+    @media (min-width: 1800px) {
+        @content;
+    }
+}
 
 // ----------------------------------------- Nav -------------------------------------------- //
 
 .nav-wrapper {
     background-color: #404040;
+
     a:hover {
         color: orange;
         text-decoration: none;
@@ -99,12 +114,14 @@ body {
 .sidenav {
     background-color: #404040;
     color: white;
+
     i {
         color: white;
         font-size: 22px;
     }
+
     a:hover {
-        color:orange;
+        color: orange;
         text-decoration: none;
     }
 }
@@ -112,36 +129,42 @@ body {
 // ------------------------------------------ Posts ----------------------------------------- //
 
 .blog-frame {
-    @include tablet-landscape {        
+    @include tablet-landscape {
         width: 100%;
         margin: auto;
         margin-top: 100px;
     }
-    
+
     .left-pane {
         @include tablet-landscape {
             width: 80%;
             margin: auto;
             margin-top: 0px;
         }
-        width: 100%;        
+
+        width: 100%;
         margin-top: 70px;
+
         .dark-bg {
-            @include tablet-landscape{
+            @include tablet-landscape {
                 width: 80%;
             }
+
             background: rgba(0, 0, 0, 0.5);
             color: white;
             padding: 10px;
             border-radius: 5px;
+
             h4 {
                 margin-top: 5px;
             }
         }
+
         strong {
             font-size: 18px;
             font-weight: 600;
         }
+
         .post-nav {
             margin: auto;
         }
@@ -154,66 +177,79 @@ body {
                 margin: auto;
                 margin: 80px 0 50px;
             }
+
             margin-top: 25px;
             background-color: #fafafa;
-            width: 100%;            
+            width: 100%;
             display: flex;
             border-radius: 5px;
-            
+
             position: relative;
+
             p {
                 margin-top: 10px;
             }
+
             .aside-heading {
                 margin: 10px 15px 7px;
                 display: inline-block;
                 font-weight: 600;
             }
+
             .aside-card {
                 margin: 7px;
                 width: 100%;
                 display: block;
                 padding: 5px;
             }
+
             #fab-two {
                 position: relative;
                 top: -25px;
                 left: 25px;
             }
+
             .fab-label {
                 @include fab-label;
                 height: 45px;
                 width: 120px;
-                top: -50px;                
+                top: -50px;
             }
         }
+
         .social-icons {
             width: 200px;
             margin: auto;
+
             @include tablet-landscape {
                 width: 100%;
             }
+
             .media-wrapper {
-                @include tablet-landscape{
-                    margin-top: 0px;                    
+                @include tablet-landscape {
+                    margin-top: 0px;
                     text-align: right;
                     width: 80%;
                     position: relative;
                     padding: 15px;
-                }            
-                width: 40px;            
-                display: inline-block;            
+                }
+
+                width: 40px;
+                display: inline-block;
                 margin: 40px 10px 25px 10px;
+
                 .hide-on-small {
                     visibility: hidden;
+
                     @include tablet-landscape {
                         visibility: visible;
                     }
-                }               
-    
+                }
+
                 i {
                     margin-left: 7px;
                 }
+
                 div {
                     display: inline-block;
                     position: absolute;
@@ -221,15 +257,16 @@ body {
                     right: 65px;
                     text-decoration: none;
                     color: black;
-                    
+
                 }
             }
-            
+
         }
-        
+
     }
+
     .right-frame {
-        @include tablet-landscape{
+        @include tablet-landscape {
             width: 70%;
             background-color: transparent;
             margin: auto;
@@ -237,70 +274,98 @@ body {
             border-radius: 5px;
             position: relative;
         }
-        
+
         .sticky-wrapper {
-            @include tablet-landscape{
+            @include tablet-landscape {
                 margin-bottom: 80px;
             }
-            
+
             .sticky-post {
-                @include posts;  
-                margin-top: 0;              
+                @include posts;
+                margin-top: 0;
+
                 .post-title {
                     font-weight: 600;
+
                     a {
                         text-decoration: none;
                     }
                 }
+
                 .post-date {
                     @include small-date;
                 }
-            }            
+            }
+
             .badge {
                 color: white;
                 float: left;
                 margin-left: 0;
                 margin-right: 5px;
-            }            
+            }
         }
+
         .post-wrapper {
             @include tablet-landscape {
                 position: relative;
                 margin-top: 65px;
             }
-            margin-top: 20px;            
+
+            margin-top: 20px;
+
             .posts {
                 @include posts;
+
                 .post-title {
                     a {
                         text-decoration: none;
-                    }                    
+                    }
                 }
+
                 p {
                     max-height: 132px;
                     overflow: hidden;
-                }                
+                }
             }
+
             .post-date {
                 @include small-date;
             }
+
             #fab-one {
+                @include desktop {
+                    right: -30px;
+                }
+
                 position: absolute;
                 top: -25px;
-                right: -25px;
+                right: -15px;
             }
+
             .fab-one-label {
+                
+                @include tablet-portrait {
+                    right: 13px;
+                }
+                @include tablet-landscape {
+                    right: 0;
+                }
+                @include desktop {
+                    right: 0;
+                }
                 @include fab-label;
                 height: 45px;
-                width: 110px;
-                top: -50px;                
+                width: 105px;
+                top: -50px;
+                right: 13px;
             }
             .subtext {
                 font-size: 10px;
             }
         }
+
         .post-nav {
-            
+
             margin: auto;
 
             .btn {
@@ -310,6 +375,7 @@ body {
                 padding-top: 12px;
                 color: white;
                 background: rgba(0, 0, 0, 0.6);
+
                 &:hover {
                     background-color: #53dbe5;
                     color: black;
@@ -328,24 +394,28 @@ body {
                 padding-top: 12px;
                 color: white;
                 background: rgba(0, 0, 0, 0.6);
+
                 &:hover {
                     background-color: #53dbe5;
                     color: black;
                 }
-                
-              }
-              .hide-small {
+
+            }
+
+            .hide-small {
                 display: none;
+
                 @include desktop {
                     display: inline-block;
                 }
             }
-              
-              /* Style the active class (and buttons on mouse-over) */
-              .post-nav-active, .btn-sm:hover {
+
+            /* Style the active class (and buttons on mouse-over) */
+            .post-nav-active,
+            .btn-sm:hover {
                 background-color: #53dbe5;
-                color:black;
-              }
+                color: black;
+            }
         }
     }
 }
@@ -354,21 +424,26 @@ body {
 
 .modal {
     @include modal-style;
+    height: 650px;
+
+    .modal-content {
+        border: none;
+        background-color: #404040;
+        color: #fafafa;
+        border-radius: 0;
+    }
+
+    #description {
+        height: 200px;
+    }
+
+    .form {
+        width: 80%;
+        margin: auto;
+    }
 }
 
-.modal-content {
-    border: none;
-    background-color: #1b5e20;
-    color: #fafafa;
-    border-radius: 0;
-}
-#description {
-    height: 200px;
-}
-.form {
-    width: 80%;
-    margin: auto;
-}
+
 
 // ----------------------------- Register ----------------- //
 
@@ -378,6 +453,7 @@ body {
     margin-top: 100px;
     width: 80%;
 }
+
 .subtext {
     margin: auto;
     margin-top: 15px;
@@ -386,46 +462,55 @@ body {
 
 // ----------------------------- New Post ----------------- //
 
-.new-post-heading{
+.new-post-heading {
     margin: 100px 0 25px 0;
     width: 100%;
 }
+
 .new-post-form {
     width: 100%;
+
     .new-post-title-label {
         margin-left: 10px;
     }
+
     .new-post-title {
         @include card-style;
         height: 3rem;
         width: 100%;
-        margin: auto;    
+        margin: auto;
         resize: none;
         overflow: hidden;
     }
+
     .new-post-body-label {
         margin-left: 10px;
     }
+
     .new-post-body {
         @include card-style;
         width: 100%;
         height: 30rem;
         resize: none;
     }
+
     #mat-checkbox {
         opacity: 1;
     }
+
     .check-row {
         .form-check {
             display: inline-block;
         }
+
         .input-field {
             width: 150px;
         }
     }
+
     .single-post-frame {
         @include card-style;
-        width: 70%;    
+        width: 70%;
         margin: auto;
         margin-top: 50px;
     }
@@ -435,23 +520,27 @@ body {
 // ----------------------------- View Post ------------------------ //@at-root
 
 .post-view {
-    @include card-style;    
+    @include card-style;
     margin-top: 120px;
     position: relative;
+
     .post-heading {
         padding-top: 15px;
         height: 60px;
     }
+
     .post-title {
         margin-top: 0px;
         padding-top: 5px;
         font-weight: 500;
         font-size: 2em;
         display: inline-block;
+
         a {
             text-decoration: none;
         }
     }
+
     .date {
         margin-top: 15px;
         padding-top: 5px;
@@ -459,44 +548,61 @@ body {
         float: right;
         font-size: 1em;
     }
+
     div hr {
         margin: 20px 0 15px 0;
     }
+
     .post-content {
         margin: 55px 0 35px 0;
     }
 }
 
-    // ------------------------------------ Edit Post --------------------------------- //
+// ------------------------------------ Edit Post --------------------------------- //
 
 .edit-post-heading {
     margin-top: 50px;
-}  
+    padding-left: 7px;
+}
 
-.edit-post-form {       
-    
+.edit-post-form {
+
     .edit-post-title {
         padding-top: 10px;
         height: 3rem;
         width: 100%;
-        margin: auto;    
+        margin: auto;
         resize: none;
         overflow: hidden;
     }
-    
+
     .edit-post-body {
         @include card-style;
         width: 100%;
         height: 30rem;
         resize: none;
     }
-    
+
+    .check-row {
+        padding: 15px;
+    }
+
+    .button-row {
+        padding-left: 15px;
+    }
+
 }
 
 
 .delete-post-modal {
     @include modal-style;
-    height: 200px;
+    height: 160px;
+
+    .modal-content {
+        padding: 15px;
+        background-color: #404040
+    }
+
 }
 
 #edit_post_fab {
@@ -514,6 +620,10 @@ body {
 .collapsible-header {
     background-color: transparent;
     border: 0;
+
+    .btn-custom {
+        padding-top: 7px;
+    }
 }
 
 .collapsible-body {
@@ -538,9 +648,9 @@ body {
 
 .single-post-frame {
     @include card-style;
-    width: 70%;    
+    width: 70%;
     margin: auto;
-    margin-top: 50px;    
+    margin-top: 50px;
 }
 
 .comment-body {
@@ -554,19 +664,24 @@ body {
     @include card-style;
     width: 80%;
     margin-top: 15px;
+
     h5 {
 
         margin: 15px 0 10px 0;
     }
+
     h6 {
         font-weight: 600;
     }
+
     hr {
         margin: 7px;
     }
+
     span {
         font-weight: 600;
     }
+
     .date-small {
         float: right;
         font-size: .9em;
@@ -579,25 +694,37 @@ body {
     @include card-style;
     position: relative;
     margin: 0.5rem 0 1rem 0;
+    .btn-danger {
+        margin: 15px;
+    }
+
     a {
         text-decoration: none;
     }
+
     .portfolio-link-icons {
         margin: 30px, 25px, 30px, 0;
+
         .fa {
             margin: 0 15px 15px 15px;
         }
+
         span {
             margin-bottom: 20px;
         }
     }
+
     .picture-card {
         text-align: center;
-        margin: 15px;
+        margin: 5px;
+        
+        
 
         img {
             margin: 25px;
             bottom: 25px;
+            max-width: 80%;
+            height: auto;
         }
     }
 }
