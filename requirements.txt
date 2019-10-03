@@ -30,3 +30,4 @@ Werkzeug==0.15.5
 wrapt==1.11.2
 WTForms==2.2.1
 gunicorn
+flask-mail==0.9.1

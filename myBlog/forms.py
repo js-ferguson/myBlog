@@ -105,4 +105,23 @@ class NewPortfolioProject(FlaskForm):
     link = StringField('Link to live project', validators=[DataRequired()])
     github_link = StringField('Github link', validators=[DataRequired()])
     images = MultipleFileField('Add screenshots/wireframes', validators=[FileAllowed(['png', 'jpg'])])
+
     submit = SubmitField('Save Project') 
+
+class ResetPasswordForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Request password reset')
+
+    def validate_email(self, email):
+        users = mongo.db.users
+        existing_user = users.find_one({'email': email.data})
+        if existing_user is None:
+            raise ValidationError('That email is not registered. Make an account first')
+
+
+class NewPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[
+                             DataRequired(), Length(min=6, max=20)])
+    confirm_password = PasswordField('Confirm Password', validators=[
+                                     DataRequired(), EqualTo('password')])
+    submit = SubmitField('Reset password')

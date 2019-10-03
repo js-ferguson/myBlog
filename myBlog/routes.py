@@ -1,14 +1,18 @@
 import os
 import math
+from itsdangerous import TimedJSONWebSignatureSerializer as Serialiser
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify
 from datetime import datetime
-from myBlog import app, mongo, bcrypt
+from myBlog import app, mongo, bcrypt, mail
 from bson.objectid import ObjectId
-from myBlog.forms import RegistrationForm, LoginForm, NewPostForm, AccountUpdateForm, EditProject, PostReplyForm, NewCommentForm, EditProject, NewPortfolioProject
+from myBlog.forms import (RegistrationForm, LoginForm, NewPostForm, AccountUpdateForm, EditProject, 
+                          PostReplyForm, NewCommentForm, EditProject, NewPortfolioProject, 
+                          NewPasswordForm, ResetPasswordForm)
 from myBlog.login import User
 from flask_login import current_user, login_user, logout_user, login_required
 import secrets
 from PIL import Image
+from flask_mail import Message
 
 posts_per_page = 3
 
@@ -19,6 +23,10 @@ def admin_user():
         {'$and': [{'username': current_user.get_id()}, {'admin': True}]})
     return admin_user
 
+def get_current_users_id():
+    user = mongo.db.users.find_one({'username': current_user.get_id()})
+    print(user)
+    return user['_id']
 
 def is_sticky():
     sticky = mongo.db.posts.find_one({"sticky": True})
@@ -426,3 +434,74 @@ def account():
         flash('Your details have been updated, please log in again', 'info')
         return redirect(url_for('login'))
     return render_template('account.html', form=form)
+
+### --------------------------------------- pass tokens --------------------------------------- ###
+
+
+def get_reset_token(user, expires_sec=1800): #5. takes the user and generates a token 
+    s = Serialiser(app.config['SECRET_KEY'], expires_sec) # 
+    user_ob_id = user['_id']
+    user_id = str(user_ob_id) 
+    print('user_id=' + str(user['_id']))
+    token = s.dumps({'user_id': user_id}).decode('utf-8')
+    user_id_token = s.loads(token)['user_id']
+    print('user_id_token = ' + user_id_token)
+    return token
+
+
+def validate_reset_token(token):
+    s = Serialiser(app.config['SECRET_KEY'])   
+    
+    try:     
+        user_id = s.loads(token)['user_id']      
+    except:
+        return None
+    return mongo.db.users.find_one({'_id': ObjectId(user_id)})
+
+
+def send_reset_email(user): 
+    token = get_reset_token(user)
+    print(user['email'])
+    msg = Message('Password reset request', sender='jw.akupunktur@gmail.com', recipients=[user['email']])
+    msg.body = f'''To reset your password go to the following link:
+{url_for('reset_token', token=token, _external=True)}
+
+If you did not request a new password, you can safely ignore this email
+'''
+    mail.send(msg)
+
+@app.route("/reset_password", methods=['POST', 'GET'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user = mongo.db.users.find_one({'email': form.email.data}) # 1. finds the user whose email matched
+        send_reset_email(user) #2. call send_reset_email with the user we found.
+        
+        flash('Check your email for instructions to reset your password', 'info')
+        return redirect(url_for('login'))
+    return render_template('new_password.html', form=form)
+
+
+@app.route("/reset_password/<token>", methods=['POST', 'GET'])
+def reset_token(token):
+    
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    user = validate_reset_token(token)
+    
+    if user is None:
+        
+        flash('That is an invalid or expired token', 'danger')
+        return redirect(url_for('reset_request'))
+    form = NewPasswordForm()
+    if form.validate_on_submit():
+        users = mongo.db.users
+        hashpass = bcrypt.generate_password_hash(
+            form.password.data).decode('utf-8')
+        
+        users.update_one({'_id': user['_id']}, {'$set': {'password': hashpass}})
+        flash('Your password has been updated', 'info')
+        return redirect(url_for('login'))
+    return render_template('token_password.html', form=form)
