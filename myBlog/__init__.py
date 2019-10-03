@@ -22,9 +22,8 @@ app.config['MAIL_SERVER'] = 'in-v3.mailjet.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_USERNAME'] = 'cf1cf5a5dd813f2bddff29daae40a219'  #os.environ.get('MAILJET_USER')
-app.config['MAIL_PASSWORD'] = '435903d676101d3ac93c31cc0ffd627b'  #os.environ.get('MAILJET_PASS')
-#MAIL_DEFAULT_SENDER = 'jw.akupunktur@gmail.com'
+app.config['MAIL_USERNAME'] = os.environ.get('MAILJET_USER')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAILJET_PASS')
 mail = Mail(app)
 
 

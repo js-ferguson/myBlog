@@ -25,7 +25,6 @@ def admin_user():
 
 def get_current_users_id():
     user = mongo.db.users.find_one({'username': current_user.get_id()})
-    print(user)
     return user['_id']
 
 def is_sticky():
@@ -63,14 +62,11 @@ def home():
     page = request.args.get('page', 1, type=int)
     data = posts_with_comment_count(page)
 
-    print(is_sticky())
-
     def get_page_count():
         for item in data:
             post_count = item['metadata'][0]['total']
             page_count = post_count/posts_per_page
             return int(math.ceil(page_count))
-    print(get_page_count())
 
     def create_num_list():
         '''Create a list of page numbers and None values for a forum style page nav'''
@@ -108,8 +104,6 @@ def home():
 
     if page == get_page_count():
         flash("You have reached the last page", "info")
-
-    print(create_num_list())
 
     project = mongo.db.current_project.find_one(
         {'current_project': 'current_project'})
@@ -442,10 +436,8 @@ def get_reset_token(user, expires_sec=1800): #5. takes the user and generates a 
     s = Serialiser(app.config['SECRET_KEY'], expires_sec) # 
     user_ob_id = user['_id']
     user_id = str(user_ob_id) 
-    print('user_id=' + str(user['_id']))
     token = s.dumps({'user_id': user_id}).decode('utf-8')
     user_id_token = s.loads(token)['user_id']
-    print('user_id_token = ' + user_id_token)
     return token
 
 
@@ -461,7 +453,6 @@ def validate_reset_token(token):
 
 def send_reset_email(user): 
     token = get_reset_token(user)
-    print(user['email'])
     msg = Message('Password reset request', sender='jw.akupunktur@gmail.com', recipients=[user['email']])
     msg.body = f'''To reset your password go to the following link:
 {url_for('reset_token', token=token, _external=True)}
@@ -499,8 +490,7 @@ def reset_token(token):
     if form.validate_on_submit():
         users = mongo.db.users
         hashpass = bcrypt.generate_password_hash(
-            form.password.data).decode('utf-8')
-        
+            form.password.data).decode('utf-8')        
         users.update_one({'_id': user['_id']}, {'$set': {'password': hashpass}})
         flash('Your password has been updated', 'info')
         return redirect(url_for('login'))
