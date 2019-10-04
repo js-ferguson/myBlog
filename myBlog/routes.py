@@ -16,7 +16,6 @@ from flask_mail import Message
 
 posts_per_page = 3
 
-
 def admin_user():
     '''Determine if the current use has admin privelages'''
     admin_user = mongo.db.users.find_one(
@@ -131,7 +130,7 @@ def register():
         hashpass = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
         new_user = {'username': form.username.data,
-                    'password': hashpass, 'email': form.email.data}
+                    'password': hashpass, 'email': form.email.data, 'firstname': '', 'lastname': ''}
         users.insert(new_user)
         flash('Your account has been created. Log in to continue', 'info')
         return redirect(url_for('login'))
@@ -152,7 +151,7 @@ def login():
 
         if user and bcrypt.check_password_hash(user['password'], form.password.data):
             user_obj = User(username=user['username'])
-            login_user(user_obj)
+            login_user(user_obj, remember=form.remember.data)
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
@@ -413,8 +412,12 @@ def account():
         form.email.data = user['email']
         if user['firstname']:
             form.firstname.data = user['firstname']
+        else:
+            form.firstname.data = ""
         if user['lastname']:
             form.lastname.data = user['lastname']
+        else:
+            form.lastname.data = ""
 
     if form.validate_on_submit():
         new_doc = {"firstname": form.firstname.data,
@@ -429,16 +432,11 @@ def account():
         return redirect(url_for('login'))
     return render_template('account.html', form=form)
 
-### --------------------------------------- pass tokens --------------------------------------- ###
-
 
 def get_reset_token(user, expires_sec=1800): #5. takes the user and generates a token 
-    s = Serialiser(app.config['SECRET_KEY'], expires_sec) # 
-    user_ob_id = user['_id']
-    user_id = str(user_ob_id) 
-    token = s.dumps({'user_id': user_id}).decode('utf-8')
-    user_id_token = s.loads(token)['user_id']
-    return token
+    s = Serialiser(app.config['SECRET_KEY'], expires_sec)
+    user_id = str(user['_id'])     
+    return s.dumps({'user_id': user_id}).decode('utf-8')
 
 
 def validate_reset_token(token):
@@ -460,6 +458,7 @@ def send_reset_email(user):
 If you did not request a new password, you can safely ignore this email
 '''
     mail.send(msg)
+
 
 @app.route("/reset_password", methods=['POST', 'GET'])
 def reset_request():
