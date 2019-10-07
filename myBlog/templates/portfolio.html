@@ -114,9 +114,9 @@
     <h4><a href="{{ project.link }}">{{ project.project_name }}</a></h4>
 
     {% if current_user.is_authenticated and admin_user.admin %} 
-    <button data-target="del_project{{project._id}}" class="btn-small btn-danger modal-trigger">Delete</button>
+    <button data-target="del_project{{project._id}}" class="btn-flat modal-trigger">Delete</button>
 
-    <div id="del_project{{project._id}}" class="modal">
+    <div id="del_project{{project._id}}" class="delete-conf-modal">
         <div class="modal-content">
             <h4>Delete portfolio project</h4>
             <p>Are you sure you want to delete this project?</p>

@@ -372,6 +372,13 @@ body {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
       font-size: 16px; }
 
+.delete-conf-modal {
+  width: 50%;
+  height: 160px; }
+  .delete-conf-modal .modal-content {
+    padding: 15px;
+    background-color: #404040; }
+
 .edit-post-heading {
   margin-top: 50px;
   padding-left: 7px; }

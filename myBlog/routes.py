@@ -242,7 +242,7 @@ def delete_comment(post_id):
 
     mongo.db.comment.delete_one(query)
     flash('Your comment has been deleted', 'info')
-    return redirect(url_for('home'))
+    return redirect(url_for('post', post_id=post_id))
 
 
 @app.route("/home/update_project", methods=['POST'])

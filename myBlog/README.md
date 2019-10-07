@@ -4,15 +4,11 @@
 
 * Fix resposive layout
 
-* Delete confirmation for both portfolio projects and comments - deleting a comment should redirect back to the post
-
 * fa icons should also have a hover
 
 * Write nice code comments
 
 * remove debuging 
-
-* Formatting is lost when post are retrieved from the db. why?
 
 ## future features
 
