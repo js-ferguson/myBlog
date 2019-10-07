@@ -4,11 +4,13 @@
 
 * Fix resposive layout
 
-* fa icons should also have a hover
+* Fix Edit project modal
 
 * Write nice code comments
 
 * remove debuging 
+
+* deleting portfolio project should also delete pics from server
 
 ## future features
 

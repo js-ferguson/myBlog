@@ -11,6 +11,9 @@ $container-width: 85%;
 .fa {
     font-size: 40px;
     color: black;
+    &:hover {
+        color:#404040;
+    }
 
 }
 
@@ -25,7 +28,12 @@ body {
 
 .btn-custom {
     background: rgba(0, 0, 0, 0.6);
-    color: white
+    color: white;
+    &:hover {
+        background-color: #404040;
+        color: orange;
+    }
+    
 }
 
 // ------------------------------------------ Mixins ---------------------------------------- //
@@ -234,6 +242,10 @@ body {
                     padding: 15px;
                 }
 
+                .link-hover:hover {
+                    color: orange;
+                }
+
                 width: 40px;
                 display: inline-block;
                 margin: 40px 10px 25px 10px;
@@ -274,22 +286,28 @@ body {
             border-radius: 5px;
             position: relative;
         }
+
         .sticky-wrapper {
             @include tablet-landscape {
                 margin-bottom: 80px;
             }
+
             .sticky-post {
                 @include posts;
                 margin-top: 0;
+
                 .post-title {
                     font-weight: 600;
+
                     a {
                         text-decoration: none;
                     }
                 }
+
                 .post-date {
                     @include small-date;
                 }
+
                 pre {
                     white-space: pre-wrap;
                     overflow-x: auto;
@@ -299,6 +317,7 @@ body {
                     overflow-y: hidden;
                 }
             }
+
             .badge {
                 color: white;
                 float: left;
@@ -306,6 +325,7 @@ body {
                 margin-right: 5px;
             }
         }
+
         .post-wrapper {
             @include tablet-landscape {
                 position: relative;
@@ -341,6 +361,9 @@ body {
                 @include desktop {
                     right: -30px;
                 }
+                @include tablet-landscape {
+                    right: -30px;
+                }
 
                 position: absolute;
                 top: -25px;
@@ -348,22 +371,26 @@ body {
             }
 
             .fab-one-label {
-                
+
                 @include tablet-portrait {
                     right: 13px;
                 }
+
                 @include tablet-landscape {
                     right: 0;
                 }
+
                 @include desktop {
                     right: 0;
                 }
+
                 @include fab-label;
                 height: 45px;
                 width: 105px;
                 top: -50px;
                 right: 13px;
             }
+
             .subtext {
                 font-size: 10px;
             }
@@ -382,8 +409,8 @@ body {
                 background: rgba(0, 0, 0, 0.6);
 
                 &:hover {
-                    background-color: #53dbe5;
-                    color: black;
+                    background-color: #404040;
+                    color: orange;
                 }
             }
 
@@ -401,8 +428,8 @@ body {
                 background: rgba(0, 0, 0, 0.6);
 
                 &:hover {
-                    background-color: #53dbe5;
-                    color: black;
+                    background-color: #404040;
+                    color: orange;
                 }
 
             }
@@ -453,7 +480,7 @@ body {
 // ----------------------------- Register ----------------- //
 
 .form-card {
-    @include tablet-landscape{
+    @include tablet-landscape {
         @include card-style;
         padding: 25px;
         margin: auto;
@@ -461,6 +488,7 @@ body {
         width: 80%;
 
     }
+
     @include card-style;
     padding: 20px;
     margin: auto;
@@ -565,6 +593,7 @@ body {
 
     .post-content {
         margin: 35px 0 35px 0;
+
         pre {
             white-space: pre-wrap;
             overflow-x: auto;
@@ -716,10 +745,34 @@ body {
 
 // ------------------------------- Portfolio ---------------------------- //@at-root
 
+.fab-wrapper {
+    height: 10px;
+    width: 100%;
+    margin: 0;
+    position: relative;
+
+    #portfolio-fab {
+        position: absolute;
+        float: right;
+        right: -30px;
+        bottom: -130px;
+    }
+
+    .portfolio-fab-label {
+        @include fab-label;
+        float: right;
+        height: 45px;
+        width: 120px;
+        bottom: -85px;
+        right: 0px;
+    }
+}
+
 .portfolio-card {
     @include card-style;
-    position: relative;
-    margin: 0.5rem 0 1rem 0;
+    margin-top: 90px;
+    margin-bottom: 1rem;
+
     .btn-danger {
         margin: 15px;
     }
@@ -743,8 +796,8 @@ body {
     .picture-card {
         text-align: center;
         margin: 5px;
-        
-        
+
+
 
         img {
             margin: 25px;
@@ -755,14 +808,24 @@ body {
     }
 }
 
+// -------------------------------------- Portfolio Modal -------------------------------- //
+
+.portfolio-modal {
+    max-height: 1200px;
+    overflow-y: scroll;
+
+}
+
+
+
 // --------------------------------------- Login ----------------------------------------- //
 
 .form-card {
     .check-row {
         padding: 5px;
     }
+
     .input-field {
         padding: 0;
     }
 }
-

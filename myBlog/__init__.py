@@ -4,11 +4,9 @@ from flask_pymongo import PyMongo
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
-import jinja2
 
 app = Flask(__name__)
 
-app.jinja_env.lstrip_blocks = True
 app.config['SECRET_KEY'] = os.environ.get('NOFOLIO_SECRET_KEY')
 app.config["MONGO_URI"] = os.environ.get('MONGO_MYBLOG_URI')
 app.config["MONGO_DBNAME"] = 'myBlog'

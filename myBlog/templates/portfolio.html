@@ -1,152 +1,155 @@
 {% extends "base.html" %}
 {% block content %}
 
-{% if current_user.is_authenticated and admin_user.admin %}
-<div class="fixed-action-btn direction-bottom" id="fab-two">
-    <!-- <a href="{{ url_for('new_post') }}" class="btn-floating btn-large red z-depth-2"> -->
-    <a href="#modal1" class="btn-floating btn-large red z-depth-2 modal-trigger">
-        <i class="large material-icons">add</i>
-    </a>
-    <div id="modal1" class="modal">
-        <div class="modal-content">
-            <h4>Add Project to Portfolio</h4>
+<div class="fab-wrapper">
+        {% if current_user.is_authenticated and admin_user.admin %}
+        <div class="portfolio-fab-label z-depth-2">Add project</div>
+        <div class="fixed-action-btn direction-bottom" id="portfolio-fab">
+            <a href="#modal1" class="btn-floating btn-large red z-depth-2 modal-trigger">
+                <i class="large material-icons">add</i>
+            </a>
+            <div id="modal1" class="modal portfolio-modal">
+                <div class="modal-content">
+                    <h4>Add Project to Portfolio</h4>
+                </div>
+                <form method="POST" action="{{url_for('portfolio')}}" enctype="multipart/form-data" class="form">
+                    {{ form.hidden_tag() }}
+                    <!-- //adds cross site request forgery token (CSRF token) -->
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form.title.label() }}
+                            {% if form.title.errors %}
+                            {{ form.title(class="is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for errors in form.title.errors %}
+                                <span> {{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.title() }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form.description.label() }}
+                            {% if form.description.errors %}
+                            {{ form.description(class="is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for errors in form.description.errors %}
+                                <span> {{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.description() }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form.tags.label() }}
+                            {% if form.tags.errors %}
+                            {{ form.tags(class="is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for errors in form.tags.errors %}
+                                <span> {{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.tags() }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form.link.label() }}
+                            {% if form.link.errors %}
+                            {{ form.link(class="is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for errors in form.link.errors %}
+                                <span> {{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.link() }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form.github_link.label() }}
+                            {% if form.github_link.errors %}
+                            {{ form.github_link(class="is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for errors in form.github_link.errors %}
+                                <span> {{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.github_link() }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form.images.label() }}
+                        {{ form.images(class="form-control-file") }}
+                        {% if form.images.errors %}
+                        {% for error in form.images.errors %}
+                        <span class="text-danger">{{ error }}</span></br>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form.submit(class="btn btn-custom modal-close")}}
+                        </div>
+                    </div>
+                </form>
+    
+            </div>
         </div>
-        <form method="POST" action="{{url_for('portfolio')}}" enctype="multipart/form-data" class="form">
-            {{ form.hidden_tag() }}
-            <!-- //adds cross site request forgery token (CSRF token) -->
-            <div class="row">
-                <div class="input-field col s12">
-                    {{ form.title.label() }}
-                    {% if form.title.errors %}
-                    {{ form.title(class="is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for errors in form.title.errors %}
-                        <span> {{ error }}</span>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    {{ form.title() }}
-                    {% endif %}
-                </div>
+        {% endif %}
+</div>
+    
+    {% for project in projects %}
+    <div class="portfolio-card z-depth-2">
+        <h4><a href="{{ project.link }}">{{ project.project_name }}</a></h4>
+
+        {% if current_user.is_authenticated and admin_user.admin %}
+        <button data-target="del_project{{project._id}}" class="btn-small btn-danger modal-trigger">Delete</button>
+
+        <div id="del_project{{project._id}}" class="delete-conf-modal modal">
+            <div class="modal-content">
+                <h4>Delete portfolio project</h4>
+                <p>Are you sure you want to delete this project?</p>
             </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    {{ form.description.label() }}
-                    {% if form.description.errors %}
-                    {{ form.description(class="is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for errors in form.description.errors %}
-                        <span> {{ error }}</span>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    {{ form.description() }}
-                    {% endif %}
-                </div>
+            <div class="modal-footer">
+                <a href="{{ url_for('delete_project', project_id=project._id) }}"
+                    class="btn-small btn-danger mb-2">Delete</a>
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
             </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    {{ form.tags.label() }}
-                    {% if form.tags.errors %}
-                    {{ form.tags(class="is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for errors in form.tags.errors %}
-                        <span> {{ error }}</span>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    {{ form.tags() }}
-                    {% endif %}
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    {{ form.link.label() }}
-                    {% if form.link.errors %}
-                    {{ form.link(class="is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for errors in form.link.errors %}
-                        <span> {{ error }}</span>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    {{ form.link() }}
-                    {% endif %}
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    {{ form.github_link.label() }}
-                    {% if form.github_link.errors %}
-                    {{ form.github_link(class="is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for errors in form.github_link.errors %}
-                        <span> {{ error }}</span>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    {{ form.github_link() }}
-                    {% endif %}
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form.images.label() }}
-                {{ form.images(class="form-control-file") }}
-                {% if form.images.errors %}
-                {% for error in form.images.errors %}
-                <span class="text-danger">{{ error }}</span></br>
+        </div>
+
+        {% endif %}
+
+        <div class="portfolio-link-icons">
+            <i class="fa fa-github-alt"></i><span><a href="{{ project.github_link }}">Github repository</a></span>
+            <i class="fa fa-globe"></i><a href="{{ project.link }}">Live website</a>
+        </div>
+        <p>{{ project.desc }}</p>
+        {% for tag in project.tech_tags %}
+        {{ tag + " "}}
+        {% endfor %}
+        <div>
+            <div class="picture-card">
+                {% if project.images %}
+                {% for image in project.images %}
+                <img class="z-depth-2" src="{{ url_for('static', filename='images/project_pics/' + image ) }}">
                 {% endfor %}
                 {% endif %}
             </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    {{ form.submit(class="btn modal-close")}}
-                </div>
-            </div>
-        </form>
-
-    </div>
-</div>
-{% endif %}
-
-{% for project in projects %}
-<div class="portfolio-card z-depth-2">
-    <h4><a href="{{ project.link }}">{{ project.project_name }}</a></h4>
-
-    {% if current_user.is_authenticated and admin_user.admin %} 
-    <button data-target="del_project{{project._id}}" class="btn-flat modal-trigger">Delete</button>
-
-    <div id="del_project{{project._id}}" class="delete-conf-modal">
-        <div class="modal-content">
-            <h4>Delete portfolio project</h4>
-            <p>Are you sure you want to delete this project?</p>
-        </div>
-        <div class="modal-footer">
-            <a href="{{ url_for('delete_project', project_id=project._id) }}" class="btn-small btn-danger mb-2">Delete</a>
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
         </div>
     </div>
-
-    {% endif %}
-
-    <div class="portfolio-link-icons">
-        <i class="fa fa-github-alt"></i><span><a href="{{ project.github_link }}">Github repository</a></span>
-        <i class="fa fa-globe"></i><a href="{{ project.link }}">Live website</a>
-    </div>
-    <p>{{ project.desc }}</p>
-    {% for tag in project.tech_tags %}
-    {{ tag + " "}}
     {% endfor %}
-    <div>
-        <div class="picture-card">
-            {% if project.images %}
-            {% for image in project.images %}
-            <img class="z-depth-2" src="{{ url_for('static', filename='images/project_pics/' + image ) }}">
-            {% endfor %}
-            {% endif %}
-        </div>
-    </div>
-</div>
-{% endfor %}
-
+    
 {% endblock content %}
