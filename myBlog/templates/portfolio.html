@@ -113,9 +113,20 @@
 <div class="portfolio-card z-depth-2">
     <h4><a href="{{ project.link }}">{{ project.project_name }}</a></h4>
 
-    {% if current_user.is_authenticated and admin_user.admin %}    
-    <a href="{{ url_for('delete_project', project_name=project.project_name) }}" class="btn-small btn-danger">Delete project</a>
-    <span>This is permanent and cannot be undone</span>
+    {% if current_user.is_authenticated and admin_user.admin %} 
+    <button data-target="del_project{{project._id}}" class="btn-small btn-danger modal-trigger">Delete</button>
+
+    <div id="del_project{{project._id}}" class="modal">
+        <div class="modal-content">
+            <h4>Delete portfolio project</h4>
+            <p>Are you sure you want to delete this project?</p>
+        </div>
+        <div class="modal-footer">
+            <a href="{{ url_for('delete_project', project_id=project._id) }}" class="btn-small btn-danger mb-2">Delete</a>
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+        </div>
+    </div>
+
     {% endif %}
 
     <div class="portfolio-link-icons">

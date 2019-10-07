@@ -14,11 +14,11 @@
         <pre>{{ post.content }}</pre>
     </div>
     {% if current_user.is_authenticated and admin_user.admin %}
-        <div class="fixed-action-btn direction-right" id="edit_post_fab">
-            <a href="{{ url_for('edit_post', post_id=post._id) }}" class="btn-floating btn-large red">
-                <i class="large material-icons">mode_edit</i>
-            </a>
-        </div>
+    <div class="fixed-action-btn direction-right" id="edit_post_fab">
+        <a href="{{ url_for('edit_post', post_id=post._id) }}" class="btn-floating btn-large red">
+            <i class="large material-icons">mode_edit</i>
+        </a>
+    </div>
     {% endif %}
 </div>
 
@@ -80,26 +80,32 @@
 </ul>
 {% if has_comments != 0 %}
 {% for comment in comments %}
-<div class="comment-wrapper z-depth-2">     
+<div class="comment-wrapper z-depth-2">
     <span>{{ get_comment_username(comment.user) }}</span>
     {% if post.date_posted %}
-        <div class="date-small">{{ comment.date_posted.strftime("%d %b %Y") }}</div>
+    <div class="date-small">{{ comment.date_posted.strftime("%d %b %Y") }}</div>
     {% endif %}
     <hr>
-    <h5>{{ comment.title }}</h5>
-    
-    <p>{{ comment.content }}</p>  
+    <h5>{{ comment.title }}</h5>    
+
+    <p>{{ comment.content }}</p>
     {% if current_user.username == get_comment_username(comment.user) %}
-    <a href="{{ url_for('delete_comment', comment=comment.title, post_id=post._id) }}" class="btn-small btn-danger mb-2">Delete comment</a>
-    
-    {% endif %} 
+    <button data-target="del_comment{{comment._id}}" class="btn-small btn-danger modal-trigger">Delete</button>
+
+    <div id="del_comment{{comment._id}}" class="modal">
+        <div class="modal-content">
+            <h4>Modal Header</h4>
+            <p>A bunch of text</p>
+        </div>
+        <div class="modal-footer">
+            <a href="{{ url_for('delete_comment', post_id=post._id, comment_id=comment._id) }}" class="btn-small btn-danger mb-2">Delete comment</a>
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+        </div>
+    </div>
+
+    {% endif %}
 </div>
 {% endfor %}
 {% endif %}
-
-
-
-
-
 
 {% endblock content %}

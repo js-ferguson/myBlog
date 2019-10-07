@@ -216,15 +216,26 @@ def post(post_id):
         user = mongo.db.users.find_one({'_id': ObjectId(user_id)})
         return user['username']
 
+    '''def delete_post_comment(comment, post_id):
+        query = {'title': comment}
+
+        if not admin_user():
+            abort(403)
+
+        mongo.db.comment.delete_one(query)
+        flash('Your comment has been deleted', 'info')
+        return redirect(url_for('post/<post_id>'))'''
+
     return render_template('view_post.html', post=post, form=form, admin_user=admin_user(),
                            comments=comments, has_comments=has_comments,
                            get_comment_username=get_comment_username)
 
 
-@app.route("/post/<post_id>/<comment>", methods=['GET', 'POST'])
+@app.route("/post/<post_id>/delete_comment", methods=['GET', 'POST'])
 @login_required
-def delete_comment(comment, post_id):
-    query = {'title': comment}
+def delete_comment(post_id):
+    comment = request.args.get('comment_id')
+    query = {'_id': ObjectId(comment)}
 
     if not admin_user():
         abort(403)
@@ -362,10 +373,11 @@ def portfolio():
     return render_template('portfolio.html', projects=projects, form=form, admin_user=admin_user(), image_files=image_files)
 
 
-@app.route("/portfolio/<project_name>", methods=['GET', 'POST'])
+@app.route("/portfolio/delete", methods=['GET', 'POST'])
 @login_required
-def delete_project(project_name):
-    query = {'project_name': project_name}
+def delete_project():
+    project = request.args.get('project_id')
+    query = {'_id': ObjectId(project)}
 
     if not admin_user():
         abort(403)
