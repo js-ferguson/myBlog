@@ -274,29 +274,31 @@ body {
             border-radius: 5px;
             position: relative;
         }
-
         .sticky-wrapper {
             @include tablet-landscape {
                 margin-bottom: 80px;
             }
-
             .sticky-post {
                 @include posts;
                 margin-top: 0;
-
                 .post-title {
                     font-weight: 600;
-
                     a {
                         text-decoration: none;
                     }
                 }
-
                 .post-date {
                     @include small-date;
                 }
+                pre {
+                    white-space: pre-wrap;
+                    overflow-x: auto;
+                    font-family: Verdana, Geneva, Tahoma, sans-serif;
+                    font-size: 14px;
+                    max-height: 120px;
+                    overflow-y: hidden;
+                }
             }
-
             .badge {
                 color: white;
                 float: left;
@@ -304,7 +306,6 @@ body {
                 margin-right: 5px;
             }
         }
-
         .post-wrapper {
             @include tablet-landscape {
                 position: relative;
@@ -322,9 +323,13 @@ body {
                     }
                 }
 
-                p {
-                    max-height: 132px;
-                    overflow: hidden;
+                pre {
+                    white-space: pre-wrap;
+                    overflow-x: auto;
+                    font-family: Verdana, Geneva, Tahoma, sans-serif;
+                    font-size: 14px;
+                    max-height: 125px;
+                    overflow-y: hidden;
                 }
             }
 
@@ -534,7 +539,7 @@ body {
     position: relative;
 
     .post-heading {
-        padding-top: 15px;
+        padding: 0;
         height: 60px;
     }
 
@@ -544,10 +549,6 @@ body {
         font-weight: 500;
         font-size: 2em;
         display: inline-block;
-
-        a {
-            text-decoration: none;
-        }
     }
 
     .date {
@@ -563,7 +564,13 @@ body {
     }
 
     .post-content {
-        margin: 55px 0 35px 0;
+        margin: 35px 0 35px 0;
+        pre {
+            white-space: pre-wrap;
+            overflow-x: auto;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 16px;
+        }
     }
 }
 

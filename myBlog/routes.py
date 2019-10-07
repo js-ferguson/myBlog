@@ -14,6 +14,7 @@ import secrets
 from PIL import Image
 from flask_mail import Message
 
+
 posts_per_page = 3
 
 def admin_user():
@@ -220,6 +221,19 @@ def post(post_id):
                            get_comment_username=get_comment_username)
 
 
+@app.route("/post/<post_id>/<comment>", methods=['GET', 'POST'])
+@login_required
+def delete_comment(comment, post_id):
+    query = {'title': comment}
+
+    if not admin_user():
+        abort(403)
+
+    mongo.db.comment.delete_one(query)
+    flash('Your comment has been deleted', 'info')
+    return redirect(url_for('home'))
+
+
 @app.route("/home/update_project", methods=['POST'])
 @login_required
 def update_project():
@@ -358,21 +372,7 @@ def delete_project(project_name):
 
     mongo.db.portfolio.delete_one(query)
     flash('Your project has been deleted', 'info')
-    return redirect(url_for('portfolio'))
-
-
-@app.route("/post/<post_id>/<comment>", methods=['GET', 'POST'])
-@login_required
-def delete_comment(comment, post_id):
-    query = {'title': comment}
-
-    if not admin_user():
-        abort(403)
-
-    mongo.db.comment.delete_one(query)
-    flash('Your comment has been deleted', 'info')
-    return redirect(url_for('home'))
-    
+    return redirect(url_for('portfolio'))   
 
 
 @app.route("/insert_project", methods=['POST'])

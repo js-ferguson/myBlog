@@ -125,7 +125,7 @@
                     {% endif %}
                     <hr>
                 </div>
-                <p>{{ is_sticky.content }}</p>
+                <pre>{{ is_sticky.content }}</pre>
             </div>
 
         </div>
@@ -144,7 +144,7 @@
                     {% endif %}
                     <hr>
                 </div>
-                <p>{{ post['content'] }}</p>
+                <pre>{{ post.content }}</pre>
                 <a class="subtext" href="{{ url_for('post', post_id=post._id) }}">Continue reading...</a>
             </div>
             {% endif %}
