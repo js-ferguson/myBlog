@@ -2,13 +2,15 @@
 
 ## Todo / planned features
 
-* Fix resposive layout
+* Fix resposive layout 
 
 * Fix Edit project modal
 
 * Write nice code comments
 
 * remove debuging 
+
+* add files that don't need to be pushed to .gitignore and make sure they are removed from upstream
 
 * deleting portfolio project should also delete pics from server
 

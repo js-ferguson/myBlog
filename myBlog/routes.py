@@ -352,6 +352,15 @@ def portfolio():
     projects = portfolio.find()
     image_files = []
 
+    def sort_portfolio():
+        proj = []
+        for project in projects:
+            proj.append(project)
+        proj.reverse()
+        return proj
+
+    #projs = sort_portfolio().reverse()
+
     if request.method == 'POST':
         tag_list = list(form.tags.data.split(" "))
 
@@ -370,7 +379,7 @@ def portfolio():
         flash('Your new project has been added to your portfolio', 'info')
         return redirect(url_for('portfolio'))
 
-    return render_template('portfolio.html', projects=projects, form=form, admin_user=admin_user(), image_files=image_files)
+    return render_template('portfolio.html', projects=sort_portfolio(), form=form, admin_user=admin_user(), image_files=image_files)
 
 
 @app.route("/portfolio/delete", methods=['GET', 'POST'])
