@@ -4,39 +4,39 @@
 
 * Fix resposive layout 
 
-* Fix Edit project modal
+* Fix or remove favicon
 
 * Write nice code comments
 
-* remove debuging 
+* Remove debuging 
 
-* add files that don't need to be pushed to .gitignore and make sure they are removed from upstream
+* Add files that don't need to be pushed to .gitignore and make sure they are removed from upstream
 
-* deleting portfolio project should also delete pics from server
+* Deleting portfolio project should also delete pics from server
 
 ## future features
 
-* add profile pics?
+* Make comments editable for the author
 
-* Sub link to get an email about each new post
+* Users can add a profile pics - a default should be provided and displayed with their comments until they upload their own
+
+* Subscribe link to get an email notification about new blog posts
 
 * Feature to save draft posts so people don't get emailed every time you write something down
 
 * A personal feed for posts-in-progress / personal notes -- perhaps integrated with drafts. 
 
-* post page should have a link to next and previous posts
+* Post page should have a link to next and previous posts
 
-* users can add fav posts and see a list of favs in their user page
+* Users can add fav posts and see a list of favs in their user page
 
-* upvote and downvotes for replies
+* Upvote and downvotes for replies
 
-* add an admin page where admins can make other users admins
+* Add an admin page where admins can make other users admins - not strictly neccessary for a single user blog
 
-* make comments editable for the author
+* Allow replies to comments
 
-* allow (editable) replies to comments
-
-* allow users to be able to dismiss or collapse a sticky post so they don't have to keep seeing it after they have read it
+* Allow users to be able to dismiss or collapse a sticky post so they don't have to keep seeing it after they have read it
 
 
 
