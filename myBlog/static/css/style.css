@@ -181,6 +181,8 @@ body {
   float: left;
   margin-left: 0;
   margin-right: 5px; }
+.blog-frame .right-frame .sticky-wrapper .subtext {
+  font-size: 10px; }
 .blog-frame .right-frame .post-wrapper {
   margin-top: 20px; }
   @media (min-width: 992px) {

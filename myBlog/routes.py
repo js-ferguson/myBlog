@@ -192,16 +192,18 @@ def insert_post():
         mongo.db.posts.update_many({"sticky": True}, {"$set":
                                                       {"sticky": False}
                                                       }, upsert=True)
-        new_doc['sticky'] = False
+        new_doc['sticky'] = True
 
     try:
         posts.insert_one(new_doc)
+        posts.delete_many({"title": {"$exists": False}})
         print("")
         print("Document inserted")
     except:
         print("Error accessing the database")
 
     return redirect(url_for('home'))
+    
 
 
 @app.route("/post/<post_id>")
