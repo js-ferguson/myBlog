@@ -89,7 +89,7 @@
     <h5>{{ comment.title }}</h5>    
 
     <p>{{ comment.content }}</p>
-    {% if current_user.username == get_comment_username(comment.user) %}
+    {% if current_user.username == get_comment_username(comment.user) or admin_user %}
     <button data-target="del_comment{{comment._id}}" class="btn-small btn-danger modal-trigger">Delete</button>
 
     <div id="del_comment{{comment._id}}" class="modal delete-conf-modal">
@@ -106,6 +106,7 @@
     {% endif %}
 </div>
 {% endfor %}
+<div class="bottom-spacer"></div>
 {% endif %}
 
 {% endblock content %}

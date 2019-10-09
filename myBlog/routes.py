@@ -15,7 +15,7 @@ from PIL import Image
 from flask_mail import Message
 
 
-posts_per_page = 3
+posts_per_page = 5
 
 def admin_user():
     '''Determine if the current use has admin privelages'''
@@ -216,19 +216,17 @@ def post(post_id):
         user = mongo.db.users.find_one({'_id': ObjectId(user_id)})
         return user['username']
 
-    '''def delete_post_comment(comment, post_id):
-        query = {'title': comment}
-
-        if not admin_user():
-            abort(403)
-
-        mongo.db.comment.delete_one(query)
-        flash('Your comment has been deleted', 'info')
-        return redirect(url_for('post/<post_id>'))'''
-
     return render_template('view_post.html', post=post, form=form, admin_user=admin_user(),
                            comments=comments, has_comments=has_comments,
                            get_comment_username=get_comment_username)
+
+
+def is_comment_author(user, comment_id):
+    #author = mongo.db.posts.find_one({"post_author": user})
+    #comment = mongo.db.comment.find_one({'_id': comment_id})
+    is_author = mongo.db.comment.find_one({'$and': [{'_id': ObjectId(comment_id)}, {'user': ObjectId(user)}]})
+    if is_author:
+        return True
 
 
 @app.route("/post/<post_id>/delete_comment", methods=['GET', 'POST'])
@@ -237,11 +235,13 @@ def delete_comment(post_id):
     comment = request.args.get('comment_id')
     query = {'_id': ObjectId(comment)}
 
-    if not admin_user():
-        abort(403)
-
-    mongo.db.comment.delete_one(query)
-    flash('Your comment has been deleted', 'info')
+    #if not admin_user():
+    #    abort(403)
+    if not is_comment_author(get_current_users_id(), comment) and not admin_user():
+        flash('You do not have permission to remove this comment', 'info')
+    else:
+        mongo.db.comment.delete_one(query)
+        flash('Your comment has been deleted', 'info')
     return redirect(url_for('post', post_id=post_id))
 
 

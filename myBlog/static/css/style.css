@@ -97,7 +97,8 @@ body {
     .blog-frame .left-pane aside #fab-two {
       position: relative;
       top: -25px;
-      left: 25px; }
+      left: 25px;
+      z-index: 199; }
     .blog-frame .left-pane aside .fab-label {
       background-color: #fdffb6;
       border-radius: 5px;
@@ -210,7 +211,8 @@ body {
   .blog-frame .right-frame .post-wrapper #fab-one {
     position: absolute;
     top: -25px;
-    right: -15px; }
+    right: -15px;
+    z-index: 2; }
     @media (min-width: 1200px) {
       .blog-frame .right-frame .post-wrapper #fab-one {
         right: -30px; } }
@@ -389,6 +391,9 @@ body {
     padding: 15px;
     background-color: #404040; }
 
+.bottom-spacer {
+  height: 50px; }
+
 .edit-post-heading {
   margin-top: 50px;
   padding-left: 7px; }
@@ -422,7 +427,8 @@ body {
 #edit_post_fab {
   position: absolute;
   bottom: -27px;
-  right: 0px; }
+  right: 0px;
+  z-index: 199; }
 
 .collapsible {
   border: 0; }
@@ -471,8 +477,14 @@ body {
   padding: 15px;
   background-color: white;
   border-radius: 5px;
-  width: 80%;
+  width: 100%;
   margin-top: 15px; }
+  @media (min-width: 992px) {
+    .comment-wrapper {
+      width: 80%; } }
+  @media (min-width: 1200px) {
+    .comment-wrapper {
+      width: 80%; } }
   .comment-wrapper h5 {
     margin: 15px 0 10px 0; }
   .comment-wrapper h6 {
@@ -494,7 +506,8 @@ body {
     position: absolute;
     float: right;
     right: -30px;
-    bottom: -130px; }
+    bottom: -130px;
+    z-index: 199; }
   .fab-wrapper .portfolio-fab-label {
     background-color: #fdffb6;
     border-radius: 5px;
