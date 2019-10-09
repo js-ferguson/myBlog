@@ -1,5 +1,6 @@
 env
 __pycache__
+myBlog/__pycache__
 .vscode
 myBlog/static/sass
 myBlog/static/css/materialize.css.map
@@ -10,4 +11,3 @@ myBlog/static/.sass-cache/
 myBlog/static/.sass-cache
 myBlog/static/css/style.css.map
 myBlog/.sass-cache
-fontawesome-free-5.10.2-web.zip

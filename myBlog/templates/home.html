@@ -16,6 +16,7 @@
                     <li>{{ tags }}</li>
                 </ul>
             </div>
+            <!----------------------------------- Edit Current Project Fab -------------------------->
             {% if current_user.is_authenticated and admin_user.admin %}
             <div class="fab-label z-depth-1">
                 <span class="fab-label-text">Edit Project</span>
@@ -25,7 +26,7 @@
                 <a href="#modal1" class="btn-floating btn-large red z-depth-2 modal-trigger">
                     <i class="large material-icons">mode_edit</i>
                 </a>
-                <!------------------------------------ Project Modal --------------------------------->
+                <!------------------------------- Edit Current Project Modal --------------------------------->
                 <div id="modal1" class="modal project-modal">
                     <div class="modal-content">
                         <h4>Edit Current Project</h4>
@@ -89,7 +90,7 @@
                 </div>
             </div>
             {% endif %}
-            <!----------------------------- End Modal --------------------------------->
+            <!----------------------------- Social Links --------------------------------->
 
         </aside>
         <div class="social-icons">
@@ -112,8 +113,7 @@
     </div>
 
     <div class="col-lg-7 right-frame">
-        <!-- If a sticky post exists, we render it at the top of each page -->
-
+        <!----------------------------------- Sticky Post ----------------------------->
         {% if is_sticky %}
         <div class="sticky-wrapper">
             <div class="sticky-post z-depth-2">
@@ -131,7 +131,7 @@
 
         </div>
         {% endif %}
-        <!-- render all posts except those with a sticky bit set -->
+        <!-------------------------------------- Post Feed ------------------------------>
         <div class="post-wrapper">
             {% for post in posts %}
             {% if not post['sticky'] %}
@@ -150,7 +150,7 @@
             </div>
             {% endif %}
             {% endfor %}
-
+            <!----------------------------- Post Feed Navigation Links -------------------------->
             <div class="row">
                 <div class="post-nav">
                     {% if page == 1 %}
@@ -178,7 +178,7 @@
 
                 </div>
             </div>
-
+            <!---------------------------- New Post Fab ----------------------------------->
             {% if current_user.is_authenticated and admin_user.admin %}
             <div class="fab-one-label z-depth-1">
                 <span class="fab-label-text">New Post</span>

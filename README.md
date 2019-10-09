@@ -10,19 +10,15 @@
 
 * Horizontal social icons with tooltips with more pronounced hover - user their logo colours
 
-* rather than forbidden route, show a flash message
-
-* Fix or remove favicon
-
 * Write nice code comments
 
 * Remove debuging 
 
 * Add files that don't need to be pushed to .gitignore and make sure they are removed from upstream
 
-* Deleting portfolio project should also delete pics from server
-
 * post in peer review channel
+
+* create an .env doc
 
 ## future features
 
@@ -49,3 +45,15 @@
 * Allow users to be able to dismiss or collapse a sticky post so they don't have to keep seeing it after they have read it
 
 * move media assets to cloudinary
+
+
+Gender in academia - Data visualisation
+
+
+This was another course work project to learn data visualisation. It uses D3.js (Data Driven Documents) for handling SVG and DC.js (Dimensional Charting) to do the graphing. We did this early in the course when my understanding of JS was not at the level it is today, so while it was fun to build, it wasn't until later that I really started to understand how it worked.  
+
+#JavaScript #DC.js #D3.js #Bootstrap #CSS #HTML
+
+https://github.com/js-ferguson/dataVisualisation
+
+https://js-ferguson.github.io/dataVisualisation/

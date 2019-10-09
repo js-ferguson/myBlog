@@ -6,15 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="shortcut icon" href="{url_for('/' filename='favicon.ico')}" type="image/x-icon">
-    <link rel="icon" href="{url_for('/' filename='favicon.ico')}
-    " type="image/x-icon">
-
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
 
-
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.css') }}"
         media="screen,projection" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -101,8 +97,6 @@
             $('.collapsible').collapsible();
             $('.sidenav').sidenav();
 
-
-
             let path = window.location.pathname.split("/").pop();
 
             if (path == '') {
@@ -110,7 +104,6 @@
             }
 
             let target = $('nav li a[href="' + '/' + path + '"]');
-            console.log(target);
             target.addClass('nav-active');
 
         });
