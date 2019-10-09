@@ -317,10 +317,10 @@ def edit_post(post_id):
 @login_required
 def delete_post(post_id):
     query = {'_id': ObjectId(post_id)}
-    #post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
 
     if not admin_user():
         abort(403)
+
     mongo.db.posts.delete_one(query)
     flash('Your post has been deleted', 'info')
     return redirect(url_for('home'))
@@ -390,10 +390,14 @@ def portfolio():
 def delete_project():
     project = request.args.get('project_id')
     query = {'_id': ObjectId(project)}
+    port_proj = mongo.db.portfolio.find_one(query)
 
     if not admin_user():
         flash("You do not have permission to remove projects", "info")
         return redirect(url_for('portfolio'))
+
+    for image in port_proj['images']:
+        os.remove(app.root_path + '/static/images/project_pics/' + image)
 
     mongo.db.portfolio.delete_one(query)
     flash('Your project has been deleted', 'info')
