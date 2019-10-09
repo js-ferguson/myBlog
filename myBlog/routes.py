@@ -307,6 +307,7 @@ def edit_post(post_id):
             {"$set": update_doc},
             upsert=True
         )
+        posts.delete_many({"title": {"$exists": False}})
         flash('Your blog post has been updated', 'info')
         return redirect(url_for('home'))
     return render_template('edit_post.html', form=form, post=post, admin_user=admin_user())
@@ -391,7 +392,8 @@ def delete_project():
     query = {'_id': ObjectId(project)}
 
     if not admin_user():
-        abort(403)
+        flash("You do not have permission to remove projects", "info")
+        return redirect(url_for('portfolio'))
 
     mongo.db.portfolio.delete_one(query)
     flash('Your project has been deleted', 'info')

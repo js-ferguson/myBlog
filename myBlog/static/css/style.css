@@ -8,7 +8,7 @@
   font-size: 40px;
   color: black; }
   .fa:hover {
-    color: #404040; }
+    color: #0077b5; }
 
 #current_username {
   font-weight: 600; }
@@ -171,10 +171,10 @@ body {
     margin-top: 7px; }
   .blog-frame .right-frame .sticky-wrapper .sticky-post pre {
     white-space: pre-wrap;
-    overflow-x: auto;
+    overflow-x: hidden;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 14px;
-    max-height: 120px;
+    max-height: 125px;
     overflow-y: hidden; }
 .blog-frame .right-frame .sticky-wrapper .badge {
   color: white;
@@ -200,7 +200,7 @@ body {
       text-decoration: none; }
     .blog-frame .right-frame .post-wrapper .posts pre {
       white-space: pre-wrap;
-      overflow-x: auto;
+      overflow-x: hidden;
       font-family: Verdana, Geneva, Tahoma, sans-serif;
       font-size: 14px;
       max-height: 125px;

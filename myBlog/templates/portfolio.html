@@ -113,7 +113,7 @@
     
     {% for project in projects %}
     <div class="portfolio-card z-depth-2">
-        <h4><a href="{{ project.link }}">{{ project.project_name }}</a></h4>
+        <h4><a href="{{ project.link }}" target="_blank">{{ project.project_name }}</a></h4>
 
         {% if current_user.is_authenticated and admin_user.admin %}
         <button data-target="del_project{{project._id}}" class="btn-small btn-danger modal-trigger">Delete</button>
@@ -133,8 +133,8 @@
         {% endif %}
 
         <div class="portfolio-link-icons">
-            <i class="fa fa-github-alt"></i><span><a href="{{ project.github_link }}">Github repository</a></span>
-            <i class="fa fa-globe"></i><a href="{{ project.link }}">Live website</a>
+            <i class="fa fa-github-alt"></i><span><a href="{{ project.github_link }}" target="_blank">Github repository</a></span>
+            <i class="fa fa-globe"></i><a href="{{ project.link }}" target="_blank">Live website</a>
         </div>
         <p>{{ project.desc }}</p>
         {% for tag in project.tech_tags %}
