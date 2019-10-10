@@ -328,23 +328,24 @@ def delete_post(post_id):
 def save_images(images):
     file_filenames = []
     save_paths = []
-
+   
     for image in images:
-        rand_hex = secrets.token_hex(8)
-        _, f_ext = os.path.splitext(image.filename)
-        file_filenames.append(rand_hex + f_ext)
+        if image:
+            rand_hex = secrets.token_hex(8)
+            _, f_ext = os.path.splitext(image.filename)
+            file_filenames.append(rand_hex + f_ext)
 
     for name in file_filenames:
         save_paths.append(os.path.join(
             app.root_path, 'static/images/project_pics', name))
 
     for image, path in zip(images, save_paths):
-        i = Image.open(image)
-        (width, height) = (500, 500)
-        i.thumbnail((width, height))
-        i.save(path)
+        if image:
+            i = Image.open(image)
+            (width, height) = (500, 500)
+            i.thumbnail((width, height))
+            i.save(path)
     return file_filenames
-
 
 @app.route("/portfolio", methods=['GET', 'POST'])
 def portfolio():
@@ -408,27 +409,21 @@ def delete_project():
 def insert_project():
     form = NewPortfolioProject()
     portfolio = mongo.db.portfolio
-    tag_list = list(form.tags.data.split(" "))
-    new_doc = {
+    tag_list = list(form.tags.data.split(" "))    
+
+    if form.validate_on_submit():       
+        
+        image_files = save_images(form.images.data)  
+
+        new_doc = {
             'project_name': form.title.data,
             'desc': form.description.data,
             'tech_tags': tag_list,
             'link': form.link.data,
             'github_link': form.github_link.data,
-            'images': ''
-        }
-
-    if form.validate_on_submit():
-        
-        if form.images.data:
-            portfolio.insert_one(new_doc)
-        else: 
-            image_files = save_images(form.images.data)           
-            new_doc['images'] = image_files
-            portfolio.insert_one(new_doc)
-            
-
-        
+            'images': image_files
+        }         
+        portfolio.insert_one(new_doc)        
         flash('Your new project has been added to your portfolio', 'info')
     return redirect(url_for('portfolio'))
 
