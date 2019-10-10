@@ -1,7 +1,7 @@
 from flask import request, flash
 from flask_login import current_user
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileAllowed
+from flask_wtf.file import FileAllowed, FileRequired
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, MultipleFileField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from myBlog import mongo
@@ -102,7 +102,7 @@ class NewPortfolioProject(FlaskForm):
     description = TextAreaField('Description', validators=[
                             DataRequired(), Length(min=1, max=1000)])
     tags = StringField('#Tags - space separated', validators=[DataRequired()])
-    link = StringField('Link to live project', validators=[DataRequired()])
+    link = StringField('Link to live project')
     github_link = StringField('Github link', validators=[DataRequired()])
     images = MultipleFileField('Add screenshots/wireframes', validators=[FileAllowed(['png', 'jpg'])])
 
