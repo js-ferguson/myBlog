@@ -10,29 +10,29 @@ The live application can be viewed by going to [noFolio](https://nofolio.herokua
 
 The application will be used primarily by a single user (though there is some scope for adding other users as admins) and most of the apps functionality is hidden to regular users. The UX is designed to be functional, and aims to maintain a focus on content. For these reasons I have tried to keep this fairly minimalistic. Aside from the blog owner, the site will also (hopefully) be used by prospective eployers, so it aims to provide easy access to things an employer might be interested in. Namely an overview of the projects the blog owner has created or been involved in, as well as easy to find links to both github repositories and deployed applications.
 
-- Scenario 1 - The blog owner has been working on a difficult coding problem in their latest project. After many cups of coffee and reading many articles and posts on stack exchange, they finally crack the problem. The solution turned out to be simpler than they had expected. For future reference and because others might stumble across the same problem, they decide to write a blog post post detailing the problem and how it was solved. They fire up their blog and log in, the controls for adding a new post are overlaid on the normal UI allowing the blog owner to add a new post. They are taken to new post page where they can add a post with a title and optionally mark it as a sticky post. When they finish, they can save the post and it appears either at the top of the post feed, or in the case of a sticky post, at the very top of the landing page. 
+- Scenario 1 - The blog owner has been working on a difficult coding problem in their latest project. After many cups of coffee and reading many articles and posts on stack exchange, they finally crack the problem. The solution turned out to be simpler than they had expected. For future reference and because others might stumble across the same problem, they decide to write a blog post detailing the problem and how it was solved. They fire up their blog and log in, the controls for adding a new post are overlaid on the normal UI allowing the blog owner to add a new post. They are taken to new post page where they can add a post with a title and optionally mark it as a sticky post. When they finish, they can save the post and it appears either at the top of the post feed, or in the case of a sticky post, at the very top of the landing page. 
 
 - Scenario 2 - The blog owner has decided to begin a new project. It is currently in the conceptual stage and the blog owner would like to add it to their portfolio along with some wireframes. After logging in to their blog, they navigate to the portfolio page, where a button is displayed to add a new portfolio project. Clicking the button launches a modal with form fields for the projects title, a description, hashtags to add technologies used in the project and links for both the github repository and deployed application. They are also able to upload multiple image files (screenshots, wireframes, mockups) in either jpg or png format. Then they click save, the modal is closed and their new project is now visible in their portfolio.
 
 - Scenario 3 - A prospective employer recieves your CV and thinks you sound like a serious candidate for the role. They would like to see some of your previous work to get a feel for the quality of your code. Your CV contains a link to your dev blog, which they follow and find themselves on the noFolio landing page. It's clean, elegant and easy to navigate. After reading the first post in the feed, a post about solving a difficult problem, clearly detailing the solution, they navigate to the portfolio page to check out your work. On the portfolio page they find a neat feed listing previous projects, with the most recent displayed at the top. It looks like an ambitious project, and they are further intrigued. Clicking on the link to the deployed site, they find your work-in-progress deployed on Heroku. Next they hit the link to the projects github repo, and find a well structured application in development, with clean, commented code. They call you immidiately for an interview.
 
-- Scenario 4 - A devoper is working on a project and hits a stumbling block. A code challenge they have never encountered has presented itself, without an obvious solution. Let the googling begin. They come across a blog post by another developer who seems to have come across the same problem and they find that the solution posed, is exactly what they were looking for. They are greatful for the detailed post and they click the comment button to leave a nice thank you message. They also suggest a donate button so they could make a token contribution for your efforts. You think that is sweet of them since you are an open source developer and it's always nice to be appreciated.
+- Scenario 4 - A developer is working on a project and hits a stumbling block. A code challenge they have never encountered has presented itself, without an obvious solution. Let the googling begin. They come across a blog post by another developer who seems to have come across the same problem and they find that the solution posed, is exactly what they were looking for. They are greatful for the detailed post and they click the comment button to leave a nice thank you message. They also suggest a donate button so they could make a token contribution for your efforts. You think that is sweet of them since you are an open source developer and it's always nice to be appreciated.
 
 ### Wireframes
 
 Even though the finished project is somewhat different in design to the initial wireframes, the basic elements are still intact and the evolution from wireframe to finished product should be evident.
 
-![noFolio - Landing page](https://imgur.com/Ka8peKL)
+![noFolio - Landing page](https://imgur.com/Ka8peKL.png)
 
-![noFolio - Post view](https://imgur.com/nqYgq8U)
+![noFolio - Post view](https://imgur.com/nqYgq8U.png)
 
-![noFolio - Create post](https://imgur.com/Nc30kk1)
+![noFolio - Create post](https://imgur.com/Nc30kk1.png)
 
-### Screenshot
+### Screenshots
 
-![noFolio - Desktop Screenshot](https://imgur.com/ywANj0E)
+![noFolio - Desktop Screenshot](https://imgur.com/ywANj0E.png)
 
-![noFolio - Mobile Screenshot](https://imgur.com/xuPFsbe)
+![noFolio - Mobile Screenshot](https://imgur.com/xuPFsbe.jpg)
 
 ## Features
 
@@ -101,7 +101,7 @@ Underpinning the entire project is MongoDB, a document based database which esse
 
 There is some JavaScript used in places, but in all honesty, I did not have a huge need for elaborate JS in this project. The JavaScript used is mainly jQuery fucntions provided by MaterializeCSS for modals, collapsibles and the sidenav. Other than that, there is a bit of JS used to get the current URL to handle highlighting nav links to show which page the user is currently on.
 
-I have also used classes from both MaterializeCSS and bootstrap. I used MaterializeCSS for nav styling and material style floating action buttons (FABs). While I used boostrap for responsive design and for styling Flasks flash notifications.
+I have also used classes from both MaterializeCSS and Bootstrap. I used MaterializeCSS for nav styling and material style floating action buttons (FABs). While I used boostrap for responsive design and for styling Flasks flash notifications.
 
 I also used SASS rather than vanilla CSS3. I used SASS in my last project and loved it.
 
@@ -124,7 +124,7 @@ I have performed extensive testing to ensure the application operates as expecte
 - Click the delete button to launch a delete confirmation modal. 
 - Confirm that you want to delete the comment by pressing delete again in the modal. Comment is deleted. 
 - Go to another post with comments. Notice that there are no delete buttons on comments you didn't author. 
-- try to manually enter the delete_comment route via the address bar. Get a flash message that "You do not have permission to remove this comment" 
+- Try to manually enter the delete_comment route via the address bar. Get a flash message that "You do not have permission to remove this comment" 
 - Go to portfolio page. Looks nice, nothing to do here as a user.
 - Click Logout - rediected to landing page, with Login now visible where your username was previously displayed.
 
