@@ -1,0 +1,14 @@
+# This is your apps secret key, create this from a random string
+export NOFOLIO_SECRET_KEY=""
+
+# MongoDB connection string. Insert your password and database name as appropriate
+export MONGO_MYBLOG_URI="mongodb+srv://root:YOURPASSWORD@myfirstcluster-y9fbv.mongodb.net/DATABASE_NAME?retryWrites=true&w=majority"
+
+# Sendgrid Authentication. Add your API Key here as the password. For Sendgrid the username is always "apikey"
+export SENDGRID_PASS=""
+export SENDGRID_USER="apikey"
+
+# This is used for the Flask_mail package. 
+#This is the email address that password that appears in the sender field. Change this to reflect your domain name
+
+export SENDER_EMAIL="noreply@noFolio.se"

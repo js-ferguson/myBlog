@@ -139,7 +139,17 @@ I have performed extensive testing to ensure the application operates as expecte
 - The edited post is now a sticky post and the previous sticky post is now back in its chronological spot in the post feed.
 - Click on a post title or continue reading link to go to the post view. Click the Edit post FAB. On the edit post screen, click "Delete Post". A confirmation modal pops up asking if you really want to delete the post. Click Delete in the modal. You are redirected to the landing page with a flashed message that "Your post has been deleted". You post is no longer in the post feed.
 - Go to the portfolio page. Click the "Add Project" FAB. A modal form is launched with fields for adding a new project.
-- Fill out the form and add a couple of png files with the file selector. Hit "Save Project". 
+- Fill out the form and add a couple of png files with the file selector. Hit "Save Project". Your new portfolio project is displayed at the top of the portfolio page with a flashed message saying "Your new project has been added to your portfolio". 
+- Try the previous test, but with no image files. The new portfolio project is posted, without pictures.
+- Still on the portfolio page, the delete button is only displayed is you are an admin, click delete on a portfolio item to launch the delete confirmation modal. Select delete on the modal to confirm and the modal closes, leaving you on the portfolio page, the project is no longer displayed and a flashed message says "Your project has been deleted".
+- Click the logout button. Content controls are removed and nav items change from "username" and "logout" to "Login" and "Register".
+- Click login to go to the login page. Click "Forgot your password?". On the reset password page, enter an unregistered email. Redirected to register page with flash message "The email user.email is not associated with an account. Please register first."
+- Click login again. This time enter your registered email address. Redirected to login screen with flashed message "Check your email for instructions to reset your password"
+- Go to email and open "Password reset request" email. Click on reset link. arrive at password reset page.
+- Type in miss-matched passwords, error is displayed below the confirm password field "Field must be equal to password".
+- Type matching passwords. Redirected to login page with flashed message "Your password has been updated".
+- Click logout. You are logged out, and redirected to the landing page.
+
 
 
 
@@ -158,11 +168,98 @@ The layout has been tested for responsive design across all the platforms and sc
 
 ## Deployment
 
-Since the API used in this project is being hosted on an insecure server, a live version cannot be hosted from GitHub Pages. The live project is therefore hosted on another webserver that has been set up for the task.
+The project is currently hosted on Heroku and the code is available here on Github. 
 
-The server is a digital ocean droplet that has been configured with debian and the Apache2 web server. The site is updated once (somtimes more) a day from the repository via ssh.
+It is possible to download and deploy the project yourself, making some minor modifications to create your own noFolio blog and portfolio. The follow section provides deployment details, if you are interested in doing that, or if you would just like to get involved by contributing to this project.
 
-If you are interested in contributing to this project you can do so by following these steps;
+First lets clone the repository, create a new python virtual environment and install the projects dependencies. This is also a good time to generate the apps secret key
+
+1. Change to the directory where you keep your projects
+
+```
+user@somecoolhostname:~$ cd ~/code/
+```
+
+2. Make a local copy of the repository by cloning it with git
+
+```
+user@somecoolhostname:~$ git clone https://github.com/js-ferguson/myBlog
+```
+
+3. Next we will generate a new secret key for your app. This will be saved in your environment variables later, so for now paste it somewhere for safe keeping.
+
+navigate to the projects root directory and create a new python virtual environment
+
+```
+user@somecoolhostname:~$ cd myBlog && Python3 -m venv venv
+```
+
+4. This will create a virtual environment for you to install the apps dependancies without having to install them system wide. Now lets activate the venv and install the apps requirements.
+
+```
+user@somecoolhostname:~$ source venv/bin/activate && pip install -r requirements.txt
+```
+
+5. Now we want to generate a new secret key, from the root directory of the project, start the python shell
+
+```
+user@somecoolhostname:~$ python3
+```
+
+Import Bcrypt from the app
+
+
+
+
+### Configuring MongoDB
+
+noFolio uses a MongoDB database provided by [MongoDB Atlas](https://cloud.mongodb.com). I will detail configuration for this service, but it is also perfectly reasonable to just install MongoDB on your server, rather than use a cloud solution. The same can be said for using Apache2 on your own server rather than Heroku.
+
+1. Create an account at [MongoDB Atlas](https://cloud.mongodb.com). Create a new cluster, leave the provider set to AWS, select a server location, preferably close to you. Select a Cluster tier The M0 Sandbox has been sufficient so far, but you may want to opt for a more generous plan if you are a heavy blogger. The rest of the options can be left as defaults, if you want to name your cluster, go ahead. Click Create Cluster.
+
+2. Next, in the collections view, click on Create Database. Git it a name like noFolio or myBlog and enter a first collection name "users". Click Create.
+
+3. There a four more collections we need for our application. For each of these, click on the + next to your database name to add new collections named; "comment", "posts", "current_project" and "portfolio".
+
+4. Click the connect button and select "Connect Your Application", change the driver to Python and select 3.6 or later. Copy and save the connection string. We will need this later when we configure environment variables.
+
+### Configure an SMTP relay
+
+Next we need to set up an SMTP relay to send mail through.
+I have chosen to use a free SMTP service, [sendgrid](https://sendgrid.com). To condifure sendgrid;
+
+1. Go to [sendgrid](https://sendgrid.com) and create and account.
+
+2. Once you are logged in, click on your username in the top left sidenav and select "setup guide".
+
+3. Select "Integrate using our Web API or SMTP relay" and on the next page choose "SMTP Relay".
+
+4. Type a name, noFolio or myBlog into the "My First API Key Name" text field and hit "Create Key". This will be your password and again will be stored in an environment variable along with the Username "apikey", so save it for later with you MongoDB connection string.
+
+We can leave our SMTP config there for the moment. You can come back and verify later, although it is not strictly neccessary.
+
+### Environment variables
+
+Rather than expose sensitive data in the source code for the application, like the apps secret key, database login and smtp relay login details, we keep them in environment variable. If you are hosting the project locally on your own machine, you can edit the provided config file. If you are deploying to Heroku or another service, you will need to add them in the configuration of those services. I will cover deployment to Heroku and briefly discuss local deployment.
+
+If you are deploying locally on your own server, you can add the environment variables to either your .bachrc or .bash_profile. My preferance however, is to keep the config file separate and source it from .bash_profile
+
+1. Create a new file named ~/.config/noFolio/config
+
+2. Copy the contents of the config file located in the projects root directory to your new config file.
+
+3. Change the details to match your MongoDB connection string etc. and save your changes
+
+4. Add the following lines to your ~/.bash_profile 
+
+```
+if [ -f $HOME/.config/noFolio/config ]; then
+    . $HOME/.config/noFolio/config
+fi
+```
+This will load your environment variables from your config whenever bash runs.
+
+
 
 This project uses SASS/SCSS so you will need to make sure that is installed. 
 
@@ -170,7 +267,7 @@ If you run windows you can follow instructions to install SASS [here](https://ww
 
 If you are on Mac check out [compass.app](http://compass.kkbox.com/)
 
-If you run Linux you can use your package manager to search and install SASS and it's dependancies.
+If you run Linux you can use your package manager to search and install SASS and it's dependencies.
 
 on Debian or Ubuntu:
 
@@ -184,26 +281,19 @@ user@somecoolhostname:~$ sudo pacman -S ruby-sass
 ```
 
 Now that you are up and running with SASS/SCSS we can clone the repo and get to work
-1. change to the directory where you keep your projects
-
-```
-user@somecoolhostname:~$ cd ~/code/
-```
-
-2. Make a local copy of the repository by cloning it with git
-
-```
-user@somecoolhostname:~$ git clone https://github.com/cronugs/dndMonsterStats
-```
-
-3. Set SASS to watch the file static/css/style.scss this way updates to style.scss will be written to style.css every time it is saved
-
-```
-user@somecoolhostname:~$ sass --watch style.scss:style.css
 
 ```
 
-4. Open your editor and point it to the project directory. I recommend a live preview so that the page is reloaded in the browser every time you save. VS code has a plugin available to do this called Live Server, which I highly recommend.
+3. Navigate to the static directory and set SASS to watch the sass directory for changes. This way updates to style.scss will be written to style.css every time it is saved
+
+```
+user@somecoolhostname:~$ sass --watch sass/:css/
+
+```
+
+ 
+
+4. Next you will need to set some environment variables for the application to access sensitive data, such as your database login credentials.
 
 ## Bugs
 

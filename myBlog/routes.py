@@ -478,7 +478,7 @@ def validate_reset_token(token):
 
 def send_reset_email(user): 
     token = get_reset_token(user)
-    msg = Message('Password reset request', sender='jw.akupunktur@gmail.com', recipients=[user['email']])
+    msg = Message('Password reset request', sender=os.environ.get('SENDER_EMAIL'), recipients=[user['email']])
     msg.body = f'''To reset your password go to the following link:
 {url_for('reset_token', token=token, _external=True)}
 
