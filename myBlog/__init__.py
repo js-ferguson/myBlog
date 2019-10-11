@@ -18,12 +18,12 @@ login_manager.login_view = 'login'
 login_manager.login_message_category = 'danger'
 
 
-app.config['MAIL_SERVER'] = 'in-v3.mailjet.com'
+app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_USERNAME'] = os.environ.get('MAILJET_USER')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAILJET_PASS')
+app.config['MAIL_USERNAME'] = os.environ.get('SENDGRID_USER')
+app.config['MAIL_PASSWORD'] = os.environ.get('SENDGRID_PASS')
 mail = Mail(app)
 
 

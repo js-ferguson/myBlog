@@ -413,8 +413,7 @@ def insert_project():
 
     if form.validate_on_submit():       
         
-        image_files = save_images(form.images.data)  
-
+        image_files = save_images(form.images.data)
         new_doc = {
             'project_name': form.title.data,
             'desc': form.description.data,
@@ -493,10 +492,11 @@ def reset_request():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = ResetPasswordForm()
+    # 1. finds the user whose email matched
+    
     if form.validate_on_submit():
-        user = mongo.db.users.find_one({'email': form.email.data}) # 1. finds the user whose email matched
-        send_reset_email(user) #2. call send_reset_email with the user we found.
-        
+        user = mongo.db.users.find_one({'email': form.email.data})
+        send_reset_email(user)                
         flash('Check your email for instructions to reset your password', 'info')
         return redirect(url_for('login'))
     return render_template('new_password.html', form=form)

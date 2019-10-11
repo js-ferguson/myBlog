@@ -116,6 +116,7 @@ class ResetPasswordForm(FlaskForm):
         users = mongo.db.users
         existing_user = users.find_one({'email': email.data})
         if existing_user is None:
+            flash(f'The email {email.data} is not associated with an account. Please register first.', 'info')
             raise ValidationError('That email is not registered. Make an account first')
 
 
