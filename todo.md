@@ -20,6 +20,8 @@
 
 * create an .env doc
 
+* add the SENDER_EMAIL env variable in Heroku so emails don't fail.
+
 ## future features
 
 * Make comments editable for the author

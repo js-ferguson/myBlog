@@ -186,9 +186,7 @@ user@somecoolhostname:~$ cd ~/code/
 user@somecoolhostname:~$ git clone https://github.com/js-ferguson/myBlog
 ```
 
-3. Next we will generate a new secret key for your app. This will be saved in your environment variables later, so for now paste it somewhere for safe keeping.
-
-navigate to the projects root directory and create a new python virtual environment
+3. Next we will generate a new secret key for your app. This will be saved in your environment variables later, so for now paste it somewhere for safe keeping. Navigate to the projects root directory and create a new python virtual environment
 
 ```
 user@somecoolhostname:~$ cd myBlog && Python3 -m venv venv
@@ -200,16 +198,25 @@ user@somecoolhostname:~$ cd myBlog && Python3 -m venv venv
 user@somecoolhostname:~$ source venv/bin/activate && pip install -r requirements.txt
 ```
 
-5. Now we want to generate a new secret key, from the root directory of the project, start the python shell
+5. Now we want to generate a new secret key, start the python shell and import the secrets module
 
 ```
 user@somecoolhostname:~$ python3
 ```
+```
+>>> import secrets
+```
+Then we create a 16 byte token hex 
 
-Import Bcrypt from the app
+```
+>>> secrets.token_hex(16)
+```
+This will return a random string, copy it and save it for later when we set our environment variables
 
-
-
+quit out of python
+```
+>>> quit()
+```
 
 ### Configuring MongoDB
 
