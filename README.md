@@ -48,7 +48,7 @@ Even though the finished project is somewhat different in design to the initial 
 
 - Feature 3 - When registering a new account, the database is checked to ensure the users email address and username are unique. Passwords are hashed before they are saved to the database to secure the users password.
 
-- Feature 4 - Logging in a an admin reveals content controls site wide. On the landing page, this enables an admin user to change the details of their current project or add a new post. On the portfolio page it enables the add new project button. It also allows the admin user to delete or edit posts, remove portfolio items and delete comments made by any user. 
+- Feature 4 - Logging in as an admin reveals content controls site wide. On the landing page, this enables an admin user to change the details of their current project or add a new post. On the portfolio page it enables the add new project button. It also allows the admin user to delete or edit posts, remove portfolio items and delete comments made by any user. 
 
 - Feature 5 - Registering on the site as a regular user allows you to create and delete your own comments on posts.
 
@@ -116,7 +116,7 @@ I also used SASS rather than vanilla CSS3. I used SASS in my last project and lo
 
 I have performed extensive testing to ensure the application operates as expected. I have also had quite a few people using the site and reporting bugs and inconsistencies. Testing was performed manually by using the sites features as different users. First as a visitor without and account, then as a registered user, and finally logged in as an admin.
 
-- Go to the landing page and test each link to ensure it works as expected and links to other sites open in new tabs.
+- Go to the landing page and test each link to ensure it works as expected. Links to other sites open in new tabs.
 - Click through pagination links
 - Click on a post title or continue reading to go to the view for a single post.
 - Click comment to reveal the comment textbox. 
@@ -167,7 +167,7 @@ The layout has been tested for responsive design across all the platforms and sc
 
 ### Validation and delinting
 
-
+WC3 HTML validation is not passing due to Materialize.css using a deprecated media type.
 
 ## Deployment
 
