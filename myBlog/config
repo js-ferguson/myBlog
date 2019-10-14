@@ -1,3 +1,5 @@
+### noFolio configuration file ###
+
 # This is your apps secret key, create this from a random string
 export NOFOLIO_SECRET_KEY=""
 

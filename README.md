@@ -6,6 +6,7 @@ The application is intended to to be used by an individual to chronical their wo
 
 The live application can be viewed by going to [noFolio](https://nofolio.herokuapp.com/)
 
+
 ## UX
 
 The application will be used primarily by a single user (though there is some scope for adding other users as admins) and most of the apps functionality is hidden to regular users. The UX is designed to be functional, and aims to maintain a focus on content. For these reasons I have tried to keep this fairly minimalistic. Aside from the blog owner, the site will also (hopefully) be used by prospective eployers, so it aims to provide easy access to things an employer might be interested in. Namely an overview of the projects the blog owner has created or been involved in, as well as easy to find links to both github repositories and deployed applications.
@@ -18,6 +19,7 @@ The application will be used primarily by a single user (though there is some sc
 
 - Scenario 4 - A developer is working on a project and hits a stumbling block. A code challenge they have never encountered has presented itself, without an obvious solution. Let the googling begin. They come across a blog post by another developer who seems to have come across the same problem and they find that the solution posed, is exactly what they were looking for. They are greatful for the detailed post and they click the comment button to leave a nice thank you message. They also suggest a donate button so they could make a token contribution for your efforts. You think that is sweet of them since you are an open source developer and it's always nice to be appreciated.
 
+
 ### Wireframes
 
 Even though the finished project is somewhat different in design to the initial wireframes, the basic elements are still intact and the evolution from wireframe to finished product should be evident.
@@ -28,6 +30,7 @@ Even though the finished project is somewhat different in design to the initial 
 
 ![noFolio - Create post](https://imgur.com/Nc30kk1.png)
 
+
 ### Screenshots
 
 ![noFolio - Desktop Screenshot](https://imgur.com/ywANj0E.png)
@@ -35,6 +38,7 @@ Even though the finished project is somewhat different in design to the initial 
 ![noFolio - Mobile Screenshot](https://imgur.com/xuPFsbe.jpg)
 
 ## Features
+
 
 ### Existing Features
 
@@ -59,6 +63,7 @@ Even though the finished project is somewhat different in design to the initial 
 - Feature 10 - Users are able to update their details on the account management page. This includes adding a first and last name as well as being able to change their username and email address, providing the new ones are unique in the database.
 
 - Feature 11 - Password changes are provided on the login screen via the "Forgot your password?" link. Clicking this allows the user to submit their email address and if there is a matching address in the database they will recieve an email with a link containing an embeded secure token, that takes them to a password reset page.
+
 
 ### Features Left to Implement
 
@@ -92,6 +97,7 @@ There are many more features that I intend to impliment. I would like to put the
 
 * Add tags to posts and be able to search posts or projects by tags
 
+
 ## Technologies used
 
 This project is written almost entirely in Python, using the Flask framework and Jinja2 templating engine. There are also a number of Flask extensions and Python packages used as well, which are detailed in the requirements.txt. Some of the more notable ones include;
@@ -104,6 +110,7 @@ There is some JavaScript used in places, but in all honesty, I did not have a hu
 I have also used classes from both MaterializeCSS and Bootstrap. I used MaterializeCSS for nav styling and material style floating action buttons (FABs). While I used boostrap for responsive design and for styling Flasks flash notifications.
 
 I also used SASS rather than vanilla CSS3. I used SASS in my last project and loved it.
+
 
 ## Testing
 
@@ -149,10 +156,6 @@ I have performed extensive testing to ensure the application operates as expecte
 - Type in miss-matched passwords, error is displayed below the confirm password field "Field must be equal to password".
 - Type matching passwords. Redirected to login page with flashed message "Your password has been updated".
 - Click logout. You are logged out, and redirected to the landing page.
-
-
-
-
 
 The layout has been tested for responsive design across all the platforms and screen sizes I have immidiate access to, including; 
 
@@ -218,9 +221,10 @@ quit out of python
 >>> quit()
 ```
 
+
 ### Configuring MongoDB
 
-noFolio uses a MongoDB database provided by [MongoDB Atlas](https://cloud.mongodb.com). I will detail configuration for this service, but it is also perfectly reasonable to just install MongoDB on your server, rather than use a cloud solution. The same can be said for using Apache2 on your own server rather than Heroku.
+noFolio uses a MongoDB database provided by [MongoDB Atlas](https://cloud.mongodb.com). I will detail configuration for this service, but it is also perfectly reasonable to just install MongoDB on your server, rather than use a cloud solution. The same can be said for using Apache2 on your own server rather than deploying to Heroku.
 
 1. Create an account at [MongoDB Atlas](https://cloud.mongodb.com). Create a new cluster, leave the provider set to AWS, select a server location, preferably close to you. Select a Cluster tier The M0 Sandbox has been sufficient so far, but you may want to opt for a more generous plan if you are a heavy blogger. The rest of the options can be left as defaults, if you want to name your cluster, go ahead. Click Create Cluster.
 
@@ -229,6 +233,7 @@ noFolio uses a MongoDB database provided by [MongoDB Atlas](https://cloud.mongod
 3. There a four more collections we need for our application. For each of these, click on the + next to your database name to add new collections named; "comment", "posts", "current_project" and "portfolio".
 
 4. Click the connect button and select "Connect Your Application", change the driver to Python and select 3.6 or later. Copy and save the connection string. We will need this later when we configure environment variables.
+
 
 ### Configure an SMTP relay
 
@@ -244,6 +249,7 @@ I have chosen to use a free SMTP service, [sendgrid](https://sendgrid.com). To c
 4. Type a name, noFolio or myBlog into the "My First API Key Name" text field and hit "Create Key". This will be your password and again will be stored in an environment variable along with the Username "apikey", so save it for later with you MongoDB connection string.
 
 We can leave our SMTP config there for the moment. You can come back and verify later, although it is not strictly neccessary.
+
 
 ### Environment variables
 
@@ -267,8 +273,9 @@ fi
 This will load your environment variables from your config whenever bash runs.
 
 
+### SASS 
 
-This project uses SASS/SCSS so you will need to make sure that is installed. 
+This project uses [SASS/SCSS](https://sass-lang.com/), a CSS preprocessor that gives you access to some nice features not available with regular CSS . You will need to make sure that it is installed if you intend to make any styling changes. 
 
 If you run windows you can follow instructions to install SASS [here](https://www.impressivewebs.com/sass-on-windows/). Alternatively, you can install Windows Subsystem for Linux (WSL) and follow the rest of the instructions for Linux. Instructions to install WSL can be found [here](https://itsfoss.com/install-bash-on-windows/)
 
@@ -287,10 +294,6 @@ on Arch:
 user@somecoolhostname:~$ sudo pacman -S ruby-sass
 ```
 
-Now that you are up and running with SASS/SCSS we can clone the repo and get to work
-
-```
-
 3. Navigate to the static directory and set SASS to watch the sass directory for changes. This way updates to style.scss will be written to style.css every time it is saved
 
 ```
@@ -298,24 +301,43 @@ user@somecoolhostname:~$ sass --watch sass/:css/
 
 ```
 
- 
-
-4. Next you will need to set some environment variables for the application to access sensitive data, such as your database login credentials.
 
 ## Bugs
 
-There is currently just one bug that I am aware of. If you try to submit a project to the portfolio page and do not add image file, you get an error and can't post the project to the portfolio. 
+As far as I am aware, all functionality works as intended. That's not to say that there are no bugs, but there are no major ones that I am aware of.
+
 
 ## References
 
-There are some snippets of code that I found while searching for answers to problems I was solving.
+There are some articles and documentation as well as some snippets of code that I found that were especially helpful.
 
-Thanks to user somethinghere on stackoverflow for a function that capitalises the first letter in every word in a string [found here](https://stackoverflow.com/questions/32589197/capitalize-first-letter-of-each-word-in-a-string-javascript/32589256).
 
-Thanks to user Fabiano on stackoverflow for this snippet to remove entries in a selector [found here](https://stackoverflow.com/questions/3364493/how-do-i-clear-all-options-in-a-dropdown-box/3364546#3364546).
+Flask flashes
+https://getbootstrap.com/docs/4.0/components/alerts/
+https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/
 
-Thanks to Flavio Copes for a snippet to caps the first letter in a string [found here](https://flaviocopes.com/how-to-uppercase-first-letter-javascript/).
+WTForms
+https://flask.palletsprojects.com/en/1.1.x/patterns/wtforms/
 
-Thanks to w3schools for the loading animation [found here](https://www.w3schools.com/howto/howto_css_loader.asp).
+WTForms custom validators
+https://wtforms.readthedocs.io/en/stable/validators.html
+https://hackersandslackers.com/guide-to-building-forms-in-flask/
 
-Thanks to user user216441 on stackoverflow for the function to throttle calls to a function [found here](https://stackoverflow.com/questions/2924330/how-can-i-rate-limit-how-fast-a-javascript-function-allows-itself-to-be-called).
+Python Modules and Packages
+https://realpython.com/python-modules-packages/
+
+Flask_login
+https://stackoverflow.com/questions/54992412/flask-login-usermixin-class-with-a-mongodb
+https://boh717.github.io/post/flask-login-and-mongodb/
+https://flask-login.readthedocs.io/en/latest/
+
+Files uploads
+https://stackoverflow.com/questions/53890136/how-to-upload-multiple-files-with-flask-wtf
+https://www.geeksforgeeks.org/zip-in-python/
+
+Mongo aggregation
+https://docs.mongodb.com/manual/aggregation/
+
+Pagination
+https://www.youtube.com/watch?v=Lnt6JqtzM7I
+https://www.codementor.io/arpitbhayani/fast-and-efficient-pagination-in-mongodb-9095flbqrb
