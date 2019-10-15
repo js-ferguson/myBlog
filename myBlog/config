@@ -4,6 +4,7 @@
 export NOFOLIO_SECRET_KEY=""
 
 # MongoDB connection string. Insert your password and database name as appropriate
+# Make sure your cluster name following the @ sign is correct
 export MONGO_MYBLOG_URI="mongodb+srv://root:YOURPASSWORD@myfirstcluster-y9fbv.mongodb.net/DATABASE_NAME?retryWrites=true&w=majority"
 
 # Sendgrid Authentication. Add your API Key here as the password. For Sendgrid the username is always "apikey"

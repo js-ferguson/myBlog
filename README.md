@@ -257,13 +257,28 @@ We can leave our SMTP config there for the moment. You can come back and verify 
 
 Rather than expose sensitive data in the source code for the application, like the apps secret key, database login and smtp relay login details, we keep them in environment variable. If you are hosting the project locally on your own machine, you can edit the provided config file. If you are deploying to Heroku or another service, you will need to add them in the configuration of those services. I will cover deployment to Heroku and briefly discuss local deployment.
 
-If you are deploying locally on your own server, you can add the environment variables to either your .bachrc or .bash_profile. My preferance however, is to keep the config file separate and source it from .bash_profile
+#### Local Deployment
+
+If you are deploying locally for development, you can enable debugging in run.py with 
+
+```
+app.run(debug=True)
+```
+Then use the development server by running the app and going to localhost:5000.
+
+If you are deploying locally for production, endure debugging either unset or set to False
+
+For deployment on your own server, you can add the environment variables to either your .bachrc or .bash_profile. My preference however, is to keep the environment variables in a separate file and source it from .bash_profile
 
 1. Create a new file named ~/.config/noFolio/config
 
+```
+mkdir ~/.config/noFolio && touch ~/.config/noFolio/config
+```
+
 2. Copy the contents of the config file located in the projects root directory to your new config file.
 
-3. Change the details to match your MongoDB connection string etc. and save your changes
+3. Using the details we saved before, update your config with a secret key, your MongoDB connection string, email server login, and sender email. Sender email is the email address in the "From" field for password reset tokens.
 
 4. Add the following lines to your ~/.bash_profile 
 
@@ -274,6 +289,37 @@ fi
 ```
 This will load your environment variables from your config whenever bash runs.
 
+#### Deploy to Heroku
+
+The app already has a procfile and a requirements.txt, so there is no need to create those. 
+
+Assuming you have an account at Heroku and are logged in, click new and create new app.
+
+1. Add an app name, whatever you like. Select a region and hit "Create app"
+
+2. Select "Heroku Git" as the deployment method and follow the instuctions to install the Heroku CLI tool, if you don't already have it installed. The app may fail to start because of missing environment variables. We can fix that now. 
+
+3. Click on settings and then "Reveal Config Vars".
+
+Add these five config vars with the values you saved earlier.
+
+NOFOLIO_SECRET_KEY "r4nd0mH3x0f4bUncHof41ph4Num5"
+
+MONGO_MYBLOG_URI "address you got when you set up mongodb"
+
+SENDGRID_USER "email server username"
+
+SENDGRID_PASS "email server password" 
+
+SENDER_EMAIL 
+
+Sender_email is the email address in the "From" field for password reset tokens.
+
+Now that you have entered your environment variables, you can either restart the app by clicking the "More" button in the top right and selecting "Restart all dynos" or you can just push the project again.
+
+```
+git push heroku master
+```
 
 ### SASS 
 
