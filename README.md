@@ -335,7 +335,7 @@ on Debian or Ubuntu:
 
 ```
 user@somecoolhostname:~$ sudo apt-get install ruby-sass
-````
+```
 on Arch:
 
 ```
@@ -360,42 +360,42 @@ There are some articles and documentation as well as some snippets of code that 
 
 
 #### Flask flashes
-https://getbootstrap.com/docs/4.0/components/alerts/
-https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/
+- https://getbootstrap.com/docs/4.0/components/alerts/
+- https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/
 
 #### WTForms
-https://flask.palletsprojects.com/en/1.1.x/patterns/wtforms/
+- https://flask.palletsprojects.com/en/1.1.x/patterns/wtforms/
 
 #### WTForms custom validators
-https://wtforms.readthedocs.io/en/stable/validators.html
-https://hackersandslackers.com/guide-to-building-forms-in-flask/
+- https://wtforms.readthedocs.io/en/stable/validators.html
+- https://hackersandslackers.com/guide-to-building-forms-in-flask/
 
 #### Python Modules and Packages
-https://realpython.com/python-modules-packages/
+- https://realpython.com/python-modules-packages/
 
 #### Flask_login
-https://stackoverflow.com/questions/54992412/flask-login-usermixin-class-with-a-mongodb
-https://boh717.github.io/post/flask-login-and-mongodb/
-https://flask-login.readthedocs.io/en/latest/
+- https://stackoverflow.com/questions/54992412/flask-login-usermixin-class-with-a-mongodb
+- https://boh717.github.io/post/flask-login-and-mongodb/
+- https://flask-login.readthedocs.io/en/latest/
 
 #### Files uploads
-https://stackoverflow.com/questions/53890136/how-to-upload-multiple-files-with-flask-wtf
-https://www.geeksforgeeks.org/zip-in-python/
+- https://stackoverflow.com/questions/53890136/how-to-upload-multiple-files-with-flask-wtf
+- https://www.geeksforgeeks.org/zip-in-python/
 
 #### Mongo aggregation
-https://docs.mongodb.com/manual/aggregation/
+- https://docs.mongodb.com/manual/aggregation/
 
 #### Pagination
-https://www.youtube.com/watch?v=Lnt6JqtzM7I
-https://www.codementor.io/arpitbhayani/fast-and-efficient-pagination-in-mongodb-9095flbqr
+- https://www.youtube.com/watch?v=Lnt6JqtzM7I
+- https://www.codementor.io/arpitbhayani/fast-and-efficient-pagination-in-mongodb-9095flbqr
 
 
 ## References
 
-Aggeregation pipline
-https://stackoverflow.com/questions/57941559/how-to-get-a-count-of-documents-that-contain-keys-from-another-collection
+#### Aggeregation pipline
+- https://stackoverflow.com/questions/57941559/how-to-get-a-count-of-documents-that-contain-keys-from-another-collection
 - Stackoverflow user Chidram
 
-Pagination using facet
-https://stackoverflow.com/questions/48305624/how-to-use-mongodb-aggregation-for-pagination?rq=1
+#### Pagination using facet
+- https://stackoverflow.com/questions/48305624/how-to-use-mongodb-aggregation-for-pagination?rq=1
 - Stackoverflow user Alex Blex
