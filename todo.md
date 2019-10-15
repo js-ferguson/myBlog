@@ -10,17 +10,13 @@
 
 * Horizontal social icons with tooltips with more pronounced hover - user their logo colours
 
-* Write nice code comments
+* Write nice code comments - I'm not sure I need more
 
 * Remove debuging 
 
-* Add files that don't need to be pushed to .gitignore and make sure they are removed from upstream
+* Add files that don't need to be pushed to .gitignore and make sure they are removed from upstream - like this todo file
 
-* post in peer review channel
-
-* create an .env doc
-
-* add the SENDER_EMAIL env variable in Heroku so emails don't fail.
+* delint
 
 ## future features
 

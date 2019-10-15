@@ -105,11 +105,11 @@ Bcrypt to encrypt user passwords and create random filenames, Flask-Login to man
 
 Underpinning the entire project is MongoDB, a document based database which essentilly stores all the content you see on the site. Data for the application is spread across five document collections; comment, current_project, portfolio, posts and users. In some cases, most notably for comment counts and pagination, I have used aggregation to pull data from different collections.
 
-There is some JavaScript used in places, but in all honesty, I did not have a huge need for elaborate JS in this project. The JavaScript used is mainly jQuery fucntions provided by MaterializeCSS for modals, collapsibles and the sidenav. Other than that, there is a bit of JS used to get the current URL to handle highlighting nav links to show which page the user is currently on.
+There is some JavaScript used in places, but in all honesty, I did not have a huge need for elaborate JS in this project. The JavaScript I did use is mainly jQuery functions provided by MaterializeCSS for modals, collapsibles and the sidenav. Other than that, there is a bit of JS used to get the current URL to handle highlighting nav links to show which page the user is currently on.
 
 I have also used classes from both MaterializeCSS and Bootstrap. I used MaterializeCSS for nav styling and material style floating action buttons (FABs). While I used boostrap for responsive design and for styling Flasks flash notifications.
 
-I also used SASS rather than vanilla CSS3. I used SASS in my last project and loved it.
+I used SASS rather than vanilla CSS3. I used SASS in my last project and loved it.
 
 
 ## Testing
@@ -273,7 +273,7 @@ For deployment on your own server, you can add the environment variables to eith
 1. Create a new file named ~/.config/noFolio/config
 
 ```
-mkdir ~/.config/noFolio && touch ~/.config/noFolio/config
+user@somecoolhostname:~$ mkdir ~/.config/noFolio && touch ~/.config/noFolio/config
 ```
 
 2. Copy the contents of the config file located in the projects root directory to your new config file.
@@ -318,7 +318,7 @@ Sender_email will be the email address in the "From" field for password reset to
 Now that you have entered your environment variables, you can either restart the app by clicking the "More" button in the top right and selecting "Restart all dynos" or you can just push the project again.
 
 ```
-git push heroku master
+user@somecoolhostname:~$ git push heroku master
 ```
 
 ### SASS 
