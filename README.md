@@ -167,7 +167,9 @@ The layout has been tested for responsive design across all the platforms and sc
 
 ### Validation and delinting
 
-WC3 HTML validation is not passing due to Materialize.css using a deprecated media type.
+WC3 HTML validation is not passing due to Materialize.css using a deprecated media type. Otherwise there are just a few warnings about extra hyphens in my comments
+
+CSS Validation returns 31 errors and 782 warnings, all of which are in materialize.css and bootstrap.min.css. There was a single error in my own css, a stray comma. I fixed it.
 
 ## Deployment
 
@@ -306,8 +308,7 @@ user@somecoolhostname:~$ sass --watch sass/:css/
 
 As far as I am aware, all functionality works as intended. That's not to say that there are no bugs, but there are no major ones that I am aware of.
 
-
-## References
+## Acknowledgements
 
 There are some articles and documentation as well as some snippets of code that I found that were especially helpful.
 
@@ -340,4 +341,15 @@ https://docs.mongodb.com/manual/aggregation/
 
 Pagination
 https://www.youtube.com/watch?v=Lnt6JqtzM7I
-https://www.codementor.io/arpitbhayani/fast-and-efficient-pagination-in-mongodb-9095flbqrb
+https://www.codementor.io/arpitbhayani/fast-and-efficient-pagination-in-mongodb-9095flbqr
+
+
+## References
+
+Aggeregation pipline
+https://stackoverflow.com/questions/57941559/how-to-get-a-count-of-documents-that-contain-keys-from-another-collection
+- Stackoverflow user Chidram
+
+Pagination using facet
+https://stackoverflow.com/questions/48305624/how-to-use-mongodb-aggregation-for-pagination?rq=1
+- Stackoverflow user Alex Blex

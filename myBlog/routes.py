@@ -5,8 +5,8 @@ from flask import render_template, url_for, flash, redirect, request, abort, jso
 from datetime import datetime
 from myBlog import app, mongo, bcrypt, mail
 from bson.objectid import ObjectId
-from myBlog.forms import (RegistrationForm, LoginForm, NewPostForm, AccountUpdateForm, EditProject, 
-                          PostReplyForm, NewCommentForm, EditProject, NewPortfolioProject, 
+from myBlog.forms import (RegistrationForm, LoginForm, NewPostForm, AccountUpdateForm, EditProject,
+                          PostReplyForm, NewCommentForm, EditProject, NewPortfolioProject,
                           NewPasswordForm, ResetPasswordForm)
 from myBlog.login import User
 from flask_login import current_user, login_user, logout_user, login_required
@@ -17,23 +17,56 @@ from flask_mail import Message
 
 posts_per_page = 4
 
+
 def admin_user():
-    '''Determine if the current use has admin privelages'''
     admin_user = mongo.db.users.find_one(
         {'$and': [{'username': current_user.get_id()}, {'admin': True}]})
     return admin_user
 
+
 def get_current_users_id():
     user = mongo.db.users.find_one({'username': current_user.get_id()})
     return user['_id']
+
+
+def is_comment_author(user, comment_id):
+    is_author = mongo.db.comment.find_one(
+        {'$and': [{'_id': ObjectId(comment_id)}, {'user': ObjectId(user)}]})
+    if is_author:
+        return True
+
 
 def is_sticky():
     sticky = mongo.db.posts.find_one({"sticky": True})
     return sticky
 
 
-def posts_with_comment_count(page):
+def save_images(images):
+    file_filenames = []
+    save_paths = []
 
+    for image in images:
+        if image:
+            rand_hex = secrets.token_hex(8)
+            _, f_ext = os.path.splitext(image.filename)
+            file_filenames.append(rand_hex + f_ext)
+
+    for name in file_filenames:
+        save_paths.append(os.path.join(
+            app.root_path, 'static/images/project_pics', name))
+
+    for image, path in zip(images, save_paths):
+        if image:
+            i = Image.open(image)
+            (width, height) = (500, 500)
+            i.thumbnail((width, height))
+            i.save(path)
+    return file_filenames
+
+
+def posts_with_comment_count(page):
+    # This pipeline (up to but not including the facet) was provided by user chridam on stackoverflow in respose to a question I posted
+    # The facet came from stack overflow user Alex Blex
     pipeline = [
         {"$lookup": {
             "from": "comment",
@@ -69,7 +102,7 @@ def home():
             return int(math.ceil(page_count))
 
     def create_num_list():
-        '''Create a list of page numbers and None values for a forum style page nav'''
+        #Create a list of page numbers and None values for a forum style page nav
         num_list = []
 
         for num in range(1, (get_page_count() + 1)):
@@ -202,7 +235,6 @@ def insert_post():
         print("Error accessing the database")
 
     return redirect(url_for('home'))
-    
 
 
 @app.route("/post/<post_id>")
@@ -222,22 +254,12 @@ def post(post_id):
                            get_comment_username=get_comment_username)
 
 
-def is_comment_author(user, comment_id):
-    #author = mongo.db.posts.find_one({"post_author": user})
-    #comment = mongo.db.comment.find_one({'_id': comment_id})
-    is_author = mongo.db.comment.find_one({'$and': [{'_id': ObjectId(comment_id)}, {'user': ObjectId(user)}]})
-    if is_author:
-        return True
-
-
 @app.route("/post/<post_id>/delete_comment", methods=['GET', 'POST'])
 @login_required
 def delete_comment(post_id):
     comment = request.args.get('comment_id')
     query = {'_id': ObjectId(comment)}
 
-    #if not admin_user():
-    #    abort(403)
     if not is_comment_author(get_current_users_id(), comment) and not admin_user():
         flash('You do not have permission to remove this comment', 'info')
     else:
@@ -289,7 +311,7 @@ def edit_post(post_id):
     if request.method == 'GET':
         form.title.data = post['title']
         form.content.data = post['content']
-        
+
     elif request.method == 'POST':
         content = request.form.get("content")
         title = request.form.get("title")
@@ -300,7 +322,7 @@ def edit_post(post_id):
                                                           {"sticky": False}
                                                           }, upsert=True)
             update_doc["sticky"] = True
-        
+
         posts.find_one_and_update(
             {"_id": ObjectId(post_id)},
             {"$set": update_doc},
@@ -315,37 +337,16 @@ def edit_post(post_id):
 @app.route("/post/<post_id>/delete", methods=['GET', 'POST'])
 @login_required
 def delete_post(post_id):
+    posts = mongo.db.posts
     query = {'_id': ObjectId(post_id)}
 
     if not admin_user():
         abort(403)
 
-    mongo.db.posts.delete_one(query)
+    posts.delete_one(query)
     flash('Your post has been deleted', 'info')
     return redirect(url_for('home'))
 
-
-def save_images(images):
-    file_filenames = []
-    save_paths = []
-   
-    for image in images:
-        if image:
-            rand_hex = secrets.token_hex(8)
-            _, f_ext = os.path.splitext(image.filename)
-            file_filenames.append(rand_hex + f_ext)
-
-    for name in file_filenames:
-        save_paths.append(os.path.join(
-            app.root_path, 'static/images/project_pics', name))
-
-    for image, path in zip(images, save_paths):
-        if image:
-            i = Image.open(image)
-            (width, height) = (500, 500)
-            i.thumbnail((width, height))
-            i.save(path)
-    return file_filenames
 
 @app.route("/portfolio", methods=['GET', 'POST'])
 def portfolio():
@@ -361,8 +362,6 @@ def portfolio():
             proj.append(project)
         proj.reverse()
         return proj
-
-    #projs = sort_portfolio().reverse()
 
     if request.method == 'POST':
         tag_list = list(form.tags.data.split(" "))
@@ -401,7 +400,7 @@ def delete_project():
 
     mongo.db.portfolio.delete_one(query)
     flash('Your project has been deleted', 'info')
-    return redirect(url_for('portfolio'))   
+    return redirect(url_for('portfolio'))
 
 
 @app.route("/insert_project", methods=['POST'])
@@ -409,10 +408,10 @@ def delete_project():
 def insert_project():
     form = NewPortfolioProject()
     portfolio = mongo.db.portfolio
-    tag_list = list(form.tags.data.split(" "))    
+    tag_list = list(form.tags.data.split(" "))
 
-    if form.validate_on_submit():       
-        
+    if form.validate_on_submit():
+
         image_files = save_images(form.images.data)
         new_doc = {
             'project_name': form.title.data,
@@ -421,8 +420,8 @@ def insert_project():
             'link': form.link.data,
             'github_link': form.github_link.data,
             'images': image_files
-        }         
-        portfolio.insert_one(new_doc)        
+        }
+        portfolio.insert_one(new_doc)
         flash('Your new project has been added to your portfolio', 'info')
     return redirect(url_for('portfolio'))
 
@@ -460,25 +459,26 @@ def account():
     return render_template('account.html', form=form)
 
 
-def get_reset_token(user, expires_sec=1800): #5. takes the user and generates a token 
+def get_reset_token(user, expires_sec=1800):
     s = Serialiser(app.config['SECRET_KEY'], expires_sec)
-    user_id = str(user['_id'])     
+    user_id = str(user['_id'])
     return s.dumps({'user_id': user_id}).decode('utf-8')
 
 
 def validate_reset_token(token):
-    s = Serialiser(app.config['SECRET_KEY'])   
-    
-    try:     
-        user_id = s.loads(token)['user_id']      
+    s = Serialiser(app.config['SECRET_KEY'])
+
+    try:
+        user_id = s.loads(token)['user_id']
     except:
         return None
     return mongo.db.users.find_one({'_id': ObjectId(user_id)})
 
 
-def send_reset_email(user): 
+def send_reset_email(user):
     token = get_reset_token(user)
-    msg = Message('Password reset request', sender=os.environ.get('SENDER_EMAIL'), recipients=[user['email']])
+    msg = Message('Password reset request', sender=os.environ.get(
+        'SENDER_EMAIL'), recipients=[user['email']])
     msg.body = f'''To reset your password go to the following link:
 {url_for('reset_token', token=token, _external=True)}
 
@@ -493,10 +493,10 @@ def reset_request():
         return redirect(url_for('home'))
     form = ResetPasswordForm()
     # 1. finds the user whose email matched
-    
+
     if form.validate_on_submit():
         user = mongo.db.users.find_one({'email': form.email.data})
-        send_reset_email(user)                
+        send_reset_email(user)
         flash('Check your email for instructions to reset your password', 'info')
         return redirect(url_for('login'))
     return render_template('new_password.html', form=form)
@@ -504,21 +504,22 @@ def reset_request():
 
 @app.route("/reset_password/<token>", methods=['POST', 'GET'])
 def reset_token(token):
-    
+
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     user = validate_reset_token(token)
-    
+
     if user is None:
-        
+
         flash('That is an invalid or expired token', 'danger')
         return redirect(url_for('reset_request'))
     form = NewPasswordForm()
     if form.validate_on_submit():
         users = mongo.db.users
         hashpass = bcrypt.generate_password_hash(
-            form.password.data).decode('utf-8')        
-        users.update_one({'_id': user['_id']}, {'$set': {'password': hashpass}})
+            form.password.data).decode('utf-8')
+        users.update_one({'_id': user['_id']}, {
+                         '$set': {'password': hashpass}})
         flash('Your password has been updated', 'info')
         return redirect(url_for('login'))
     return render_template('token_password.html', form=form)
