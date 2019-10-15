@@ -175,7 +175,7 @@ CSS Validation returns 31 errors and 782 warnings, all of which are in materiali
 
 The project is currently hosted on Heroku and the code is available here on Github. 
 
-It is possible to download and deploy the project yourself, making some minor modifications to create your own noFolio blog and portfolio. The follow section provides deployment details, if you are interested in doing that, or if you would just like to get involved by contributing to this project.
+It is possible to download and deploy the project yourself, making some minor modifications to create your own noFolio blog and portfolio. The following section provides deployment details, if you are interested in doing that. Perhaps you would like to get involved by contributing to this project, that would also be great.
 
 First lets clone the repository, create a new python virtual environment and install the projects dependencies. This is also a good time to generate the apps secret key
 
@@ -216,7 +216,7 @@ Then we create a 16 byte token hex
 ```
 >>> secrets.token_hex(16)
 ```
-This will return a random string, copy it and save it for later when we set our environment variables
+This will return a random string, copy it and save it for later when we set our environment variables. This will be the apps secret key.
 
 quit out of python
 ```
@@ -228,9 +228,9 @@ quit out of python
 
 noFolio uses a MongoDB database provided by [MongoDB Atlas](https://cloud.mongodb.com). I will detail configuration for this service, but it is also perfectly reasonable to just install MongoDB on your server, rather than use a cloud solution. The same can be said for using Apache2 on your own server rather than deploying to Heroku.
 
-1. Create an account at [MongoDB Atlas](https://cloud.mongodb.com). Create a new cluster, leave the provider set to AWS, select a server location, preferably close to you. Select a Cluster tier The M0 Sandbox has been sufficient so far, but you may want to opt for a more generous plan if you are a heavy blogger. The rest of the options can be left as defaults, if you want to name your cluster, go ahead. Click Create Cluster.
+1. Create an account at [MongoDB Atlas](https://cloud.mongodb.com). Create a new cluster, leave the provider set to AWS, select a server location, preferably close to you. Select a Cluster tier. The M0 Sandbox has been sufficient so far, but you may want to opt for a more generous plan if you are a heavy blogger or you expect a lot of traffic. The rest of the options can be left as defaults, if you want to name your cluster, go ahead. Click Create Cluster.
 
-2. Next, in the collections view, click on Create Database. Git it a name like noFolio or myBlog and enter a first collection name "users". Click Create.
+2. Next, in the collections view, click on Create Database. Give it a name like noFolio or myBlog and enter a first collection name "users". Click Create.
 
 3. There a four more collections we need for our application. For each of these, click on the + next to your database name to add new collections named; "comment", "posts", "current_project" and "portfolio".
 
@@ -248,7 +248,7 @@ I have chosen to use a free SMTP service, [sendgrid](https://sendgrid.com). To c
 
 3. Select "Integrate using our Web API or SMTP relay" and on the next page choose "SMTP Relay".
 
-4. Type a name, noFolio or myBlog into the "My First API Key Name" text field and hit "Create Key". This will be your password and again will be stored in an environment variable along with the Username "apikey", so save it for later with you MongoDB connection string.
+4. Type a name, noFolio or myBlog into the "My First API Key Name" text field and hit "Create Key". This will be your password and again will be stored in an environment variable along with the username "apikey", so save it for later with you MongoDB connection string and the apps secret key.
 
 We can leave our SMTP config there for the moment. You can come back and verify later, although it is not strictly neccessary.
 
@@ -278,7 +278,7 @@ mkdir ~/.config/noFolio && touch ~/.config/noFolio/config
 
 2. Copy the contents of the config file located in the projects root directory to your new config file.
 
-3. Using the details we saved before, update your config with a secret key, your MongoDB connection string, email server login, and sender email. Sender email is the email address in the "From" field for password reset tokens.
+3. Using the details we saved before, update your config with a secret key, your MongoDB connection string, email server login, and sender email. Sender email will be the email address in the "From" field for password reset tokens.
 
 4. Add the following lines to your ~/.bash_profile 
 
@@ -297,7 +297,7 @@ Assuming you have an account at Heroku and are logged in, click new and create n
 
 1. Add an app name, whatever you like. Select a region and hit "Create app"
 
-2. Select "Heroku Git" as the deployment method and follow the instuctions to install the Heroku CLI tool, if you don't already have it installed. The app may fail to start because of missing environment variables. We can fix that now. 
+2. Select "Heroku Git" as the deployment method and follow the instuctions to install the Heroku CLI tool, if you don't already have it installed. When you push the app the first time, it may fail to start because of missing environment variables. We can fix that now. 
 
 3. Click on settings and then "Reveal Config Vars".
 
@@ -313,7 +313,7 @@ SENDGRID_PASS "email server password"
 
 SENDER_EMAIL 
 
-Sender_email is the email address in the "From" field for password reset tokens.
+Sender_email will be the email address in the "From" field for password reset tokens.
 
 Now that you have entered your environment variables, you can either restart the app by clicking the "More" button in the top right and selecting "Restart all dynos" or you can just push the project again.
 
@@ -359,33 +359,33 @@ As far as I am aware, all functionality works as intended. That's not to say tha
 There are some articles and documentation as well as some snippets of code that I found that were especially helpful.
 
 
-Flask flashes
+#### Flask flashes
 https://getbootstrap.com/docs/4.0/components/alerts/
 https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/
 
-WTForms
+#### WTForms
 https://flask.palletsprojects.com/en/1.1.x/patterns/wtforms/
 
-WTForms custom validators
+#### WTForms custom validators
 https://wtforms.readthedocs.io/en/stable/validators.html
 https://hackersandslackers.com/guide-to-building-forms-in-flask/
 
-Python Modules and Packages
+#### Python Modules and Packages
 https://realpython.com/python-modules-packages/
 
-Flask_login
+#### Flask_login
 https://stackoverflow.com/questions/54992412/flask-login-usermixin-class-with-a-mongodb
 https://boh717.github.io/post/flask-login-and-mongodb/
 https://flask-login.readthedocs.io/en/latest/
 
-Files uploads
+#### Files uploads
 https://stackoverflow.com/questions/53890136/how-to-upload-multiple-files-with-flask-wtf
 https://www.geeksforgeeks.org/zip-in-python/
 
-Mongo aggregation
+#### Mongo aggregation
 https://docs.mongodb.com/manual/aggregation/
 
-Pagination
+#### Pagination
 https://www.youtube.com/watch?v=Lnt6JqtzM7I
 https://www.codementor.io/arpitbhayani/fast-and-efficient-pagination-in-mongodb-9095flbqr
 
