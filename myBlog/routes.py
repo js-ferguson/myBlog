@@ -66,7 +66,7 @@ def save_images(images):
 
 def posts_with_comment_count(page):
     # This pipeline (up to but not including the facet) was provided by user chridam on stackoverflow in respose to a question I posted
-    # The facet came from stack overflow user Alex Blex
+    # The facet came from stack overflow user Alex Blex, links in references.
     pipeline = [
         {"$lookup": {
             "from": "comment",
@@ -141,6 +141,13 @@ def home():
     project = mongo.db.current_project.find_one(
         {'current_project': 'current_project'})
     tags = " ".join(project['tech_tags'])
+
+    if request.method == 'GET':
+        print(project['project_name'])
+        form.title.data = project['project_name']
+        form.description.data = project['desc']
+        tag_str = ' '.join(project['tech_tags'])
+        form.tags.data = tag_str
 
     def posts():
         for post in data:
@@ -272,13 +279,12 @@ def delete_comment(post_id):
 @login_required
 def update_project():
     project = mongo.db.current_project
-    form = EditProject()
+    form = EditProject()    
     tag_list = list(form.tags.data.split(" "))
     new_doc = {
         'project_name': form.title.data, 'desc': form.description.data,
         'tech_tags': tag_list, 'current_project': 'current_project'
     }
-
     project.update({'current_project': 'current_project'}, new_doc)
     return redirect(url_for('home'))
 
