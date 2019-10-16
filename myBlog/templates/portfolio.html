@@ -117,7 +117,6 @@
 
         {% if current_user.is_authenticated and admin_user.admin %}
         <button data-target="del_project{{project._id}}" class="btn-small btn-danger modal-trigger">Delete</button>
-
         <div id="del_project{{project._id}}" class="delete-conf-modal modal">
             <div class="modal-content">
                 <h4>Delete portfolio project</h4>
@@ -129,7 +128,6 @@
                 <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
             </div>
         </div>
-
         {% endif %}
 
         <div class="portfolio-link-icons">
