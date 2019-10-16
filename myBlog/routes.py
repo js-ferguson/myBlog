@@ -354,13 +354,14 @@ def delete_post(post_id):
     return redirect(url_for('home'))
 
 
-@app.route("/portfolio", methods=['GET', 'POST'])
-def portfolio():
+@app.route("/portfolio/", methods=['GET', 'POST'])
+def portfolio(project_id=""):
 
     form = NewPortfolioProject()
     portfolio = mongo.db.portfolio
     projects = portfolio.find()
     image_files = []
+    project_id = request.args.get('project_id')
 
     def sort_portfolio():
         proj = []
@@ -368,6 +369,15 @@ def portfolio():
             proj.append(project)
         proj.reverse()
         return proj
+
+    if portfolio.find_one({'_id': ObjectId(project_id)}):
+        
+        print(project_id)        
+        project = portfolio.find_one({'_id': ObjectId(project_id)})
+        print(project)
+        #form.title.data = project['project_name']
+     
+        #if request.args = project_id:
 
     if request.method == 'POST':
         tag_list = list(form.tags.data.split(" "))
