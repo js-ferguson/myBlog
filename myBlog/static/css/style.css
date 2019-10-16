@@ -322,6 +322,9 @@ body {
 .new-post-heading {
   margin: 100px 0 25px 0;
   width: 100%; }
+  @media (max-width: 576px) {
+    .new-post-heading {
+      margin-top: 50px; } }
 
 .new-post-form {
   width: 100%; }
