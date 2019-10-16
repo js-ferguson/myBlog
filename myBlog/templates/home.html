@@ -7,16 +7,18 @@
             <h4 class="strong-text">Development Blog</h4>
             <strong>James Ferguson - Full-stack developer</strong>
         </div>
+        <!---------------------------------------- Current Project display ---------------------------------------->
         <aside class="z-depth-2">
             <div class="aside-card">
-                <strong>{{ project.project_name }}</strong>
+                <strong>Currently in Development</strong>
+                <h5 class="mt-2">{{ project.project_name }}</h5>
                 <p>{{ project.desc }}</p>
                 <ul>
-                    <li><strong>Tech stack</strong></li>
+                    <li><h5>Tech stack</h5></li>
                     <li>{{ tags }}</li>
                 </ul>
             </div>
-            <!----------------------------------- Edit Current Project Fab -------------------------->
+            <!----------------------------------- Edit Current Project Fab ------------------------------------>
             {% if current_user.is_authenticated and admin_user.admin %}
             <div class="fab-label z-depth-1">
                 <span class="fab-label-text">Edit Project</span>

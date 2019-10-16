@@ -281,6 +281,10 @@ body {
 .modal {
   width: 50%;
   height: 650px; }
+  @media (max-width: 576px) {
+    .modal {
+      width: 100%;
+      overflow: auto; } }
   .modal .modal-content {
     border: none;
     background-color: #404040;
@@ -389,6 +393,10 @@ body {
 .delete-conf-modal {
   width: 50%;
   height: 160px; }
+  @media (max-width: 576px) {
+    .delete-conf-modal {
+      width: 100%;
+      overflow: auto; } }
   .delete-conf-modal .modal-content {
     padding: 15px;
     background-color: #404040; }
@@ -422,6 +430,10 @@ body {
 .delete-post-modal {
   width: 50%;
   height: 160px; }
+  @media (max-width: 576px) {
+    .delete-post-modal {
+      width: 100%;
+      overflow: auto; } }
   .delete-post-modal .modal-content {
     padding: 15px;
     background-color: #404040; }
