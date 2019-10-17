@@ -497,8 +497,7 @@ def reset_request():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = ResetPasswordForm()
-    # 1. finds the user whose email matched
-
+    
     if form.validate_on_submit():
         user = users.find_one({'email': form.email.data})
         send_reset_email(user)
