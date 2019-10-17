@@ -543,6 +543,9 @@ body {
   border-radius: 5px;
   margin-top: 90px;
   margin-bottom: 1rem; }
+  @media (max-width: 576px) {
+    .portfolio-card {
+      margin-top: 50px; } }
   .portfolio-card .btn-danger {
     margin: 15px; }
   .portfolio-card a {
@@ -566,6 +569,9 @@ body {
   max-height: 1200px;
   overflow-y: scroll; }
 
+@media (max-width: 576px) {
+  .form-card {
+    margin-top: 50px; } }
 .form-card .check-row {
   padding: 5px; }
 .form-card .input-field {
