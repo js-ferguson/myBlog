@@ -545,17 +545,28 @@ body {
   margin-bottom: 1rem; }
   @media (max-width: 576px) {
     .portfolio-card {
-      margin-top: 50px; } }
+      margin-top: 50px;
+      text-align: center; } }
   .portfolio-card .btn-danger {
     margin: 15px; }
   .portfolio-card a {
     text-decoration: none; }
   .portfolio-card .portfolio-link-icons {
     margin: 30px 25px 30px 0; }
+    @media (max-width: 576px) {
+      .portfolio-card .portfolio-link-icons {
+        margin-right: 0px;
+        text-align: center;
+        margin-bottom: 10px; } }
     .portfolio-card .portfolio-link-icons .fa {
       margin: 0 15px 15px 15px; }
     .portfolio-card .portfolio-link-icons span {
       margin-bottom: 20px; }
+      @media (max-width: 576px) {
+        .portfolio-card .portfolio-link-icons span {
+          display: inline-block;
+          visibility: hidden;
+          width: 0px; } }
   .portfolio-card .picture-card {
     text-align: center;
     margin: 5px; }
