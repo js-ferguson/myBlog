@@ -15,33 +15,40 @@ from PIL import Image
 from flask_mail import Message
 
 
-posts_per_page = 4
+users = mongo.db.users
+posts = mongo.db.posts
+comment = mongo.db.comment
+portfolio = mongo.db.portfolio
+current_project = mongo.db.current_project
+posts_per_page = 8
 
 
 def admin_user():
-    admin_user = mongo.db.users.find_one(
+    '''Test if the current user is an admin'''
+    admin_user = users.find_one(
         {'$and': [{'username': current_user.get_id()}, {'admin': True}]})
     return admin_user
 
 
 def get_current_users_id():
-    user = mongo.db.users.find_one({'username': current_user.get_id()})
+    user = users.find_one({'username': current_user.get_id()})
     return user['_id']
 
 
 def is_comment_author(user, comment_id):
-    is_author = mongo.db.comment.find_one(
+    is_author = comment.find_one(
         {'$and': [{'_id': ObjectId(comment_id)}, {'user': ObjectId(user)}]})
     if is_author:
         return True
 
 
 def is_sticky():
-    sticky = mongo.db.posts.find_one({"sticky": True})
+    sticky = posts.find_one({"sticky": True})
     return sticky
 
 
 def save_images(images):
+    '''takes a list of images and renames each with a random string. Resizes images to a max of 500x500px before saving'''
     file_filenames = []
     save_paths = []
 
@@ -83,8 +90,8 @@ def posts_with_comment_count(page):
             "data": [{"$skip": (page - 1)*posts_per_page}, {"$limit": posts_per_page}]
         }}
     ]
-    posts = list(mongo.db.posts.aggregate(pipeline))
-    return posts
+    ag_posts = list(posts.aggregate(pipeline))
+    return ag_posts
 
 
 @app.route("/")
@@ -102,7 +109,7 @@ def home():
             return int(math.ceil(page_count))
 
     def create_num_list():
-        #Create a list of page numbers and None values for a forum style page nav
+        '''Create a list of page numbers and None values for forum style page navigation buttons at the bottom of the post feed'''
         num_list = []
 
         for num in range(1, (get_page_count() + 1)):
@@ -138,12 +145,11 @@ def home():
     if page == get_page_count():
         flash("You have reached the last page", "info")
 
-    project = mongo.db.current_project.find_one(
+    project = current_project.find_one(
         {'current_project': 'current_project'})
     tags = " ".join(project['tech_tags'])
 
     if request.method == 'GET':
-        print(project['project_name'])
         form.title.data = project['project_name']
         form.description.data = project['desc']
         tag_str = ' '.join(project['tech_tags'])
@@ -161,13 +167,12 @@ def home():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    form = RegistrationForm()
+
     if current_user.is_authenticated:
         return redirect(url_for('home'))
 
-    form = RegistrationForm()
-
     if form.validate_on_submit():
-        users = mongo.db.users
         hashpass = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
         new_user = {'username': form.username.data,
@@ -175,19 +180,17 @@ def register():
         users.insert(new_user)
         flash('Your account has been created. Log in to continue', 'info')
         return redirect(url_for('login'))
-
     return render_template('register.html', form=form)
 
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    form = LoginForm()
+
     if current_user.is_authenticated:
         return redirect(url_for('home'))
 
-    form = LoginForm()
-
     if form.validate_on_submit():
-        users = mongo.db.users
         user = users.find_one({'email': form.email.data})
 
         if user and bcrypt.check_password_hash(user['password'], form.password.data):
@@ -197,7 +200,6 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
             flash('Login was unsuccessful, wrong email/password', 'danger')
-
     return render_template('login.html', form=form)
 
 
@@ -211,13 +213,12 @@ def logout():
 @login_required
 def new_post():
     form = NewPostForm()
-    return render_template('new_post.html', form=form, posts=mongo.db.posts.find())
+    return render_template('new_post.html', form=form, posts=posts.find())
 
 
 @app.route("/insert_post", methods=['POST'])
 def insert_post():
-    posts = mongo.db.posts
-    author = mongo.db.users.find_one({'username': current_user.get_id()})
+    author = users.find_one({'username': current_user.get_id()})
     post_author = author['_id']
     post_is_sticky = request.form.get('sticky')
     new_doc = {'title': request.form.get('title'),
@@ -227,33 +228,31 @@ def insert_post():
                'date_posted': datetime.utcnow(),
                'images': [],
                'sticky': False}
-
+    # If new post is sticky, we set sticky: False on all previously sticky posts and change the new_doc to be sticky:True
     if post_is_sticky:
-        mongo.db.posts.update_many({"sticky": True}, {"$set":
-                                                      {"sticky": False}
-                                                      }, upsert=True)
+        posts.update_many({"sticky": True}, {"$set":
+                                             {"sticky": False}
+                                             }, upsert=True)
         new_doc['sticky'] = True
-
     try:
         posts.insert_one(new_doc)
+        # removes empty posts that get created under certain conditions
         posts.delete_many({"title": {"$exists": False}})
         flash('Your new post has been successfully created', 'info')
     except:
-        print("Error accessing the database")
-
+        flash("Error accessing the database", "danger")
     return redirect(url_for('home'))
 
 
 @app.route("/post/<post_id>")
 def post(post_id):
     form = NewCommentForm()
-    has_comments = mongo.db.comment.count({'post_id': ObjectId(post_id)})
-    comments = mongo.db.comment.find(
-        {'post_id': ObjectId(post_id)}).sort("_id", -1)
-    post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
+    has_comments = comment.count({'post_id': ObjectId(post_id)})
+    comments = comment.find({'post_id': ObjectId(post_id)}).sort("_id", -1)
+    post = posts.find_one_or_404({'_id': ObjectId(post_id)})
 
     def get_comment_username(user_id):
-        user = mongo.db.users.find_one({'_id': ObjectId(user_id)})
+        user = users.find_one({'_id': ObjectId(user_id)})
         return user['username']
 
     return render_template('view_post.html', post=post, form=form, admin_user=admin_user(),
@@ -264,13 +263,13 @@ def post(post_id):
 @app.route("/post/<post_id>/delete_comment", methods=['GET', 'POST'])
 @login_required
 def delete_comment(post_id):
-    comment = request.args.get('comment_id')
-    query = {'_id': ObjectId(comment)}
+    del_comment = request.args.get('comment_id')
+    query = {'_id': ObjectId(del_comment)}
 
-    if not is_comment_author(get_current_users_id(), comment) and not admin_user():
+    if not is_comment_author(get_current_users_id(), del_comment) and not admin_user():
         flash('You do not have permission to remove this comment', 'info')
     else:
-        mongo.db.comment.delete_one(query)
+        comment.delete_one(query)
         flash('Your comment has been deleted', 'info')
     return redirect(url_for('post', post_id=post_id))
 
@@ -278,27 +277,25 @@ def delete_comment(post_id):
 @app.route("/home/update_project", methods=['POST'])
 @login_required
 def update_project():
-    project = mongo.db.current_project
-    form = EditProject()    
+    form = EditProject()
     tag_list = list(form.tags.data.split(" "))
     new_doc = {
         'project_name': form.title.data, 'desc': form.description.data,
         'tech_tags': tag_list, 'current_project': 'current_project'
     }
-    project.update({'current_project': 'current_project'}, new_doc)
+    current_project.update({'current_project': 'current_project'}, new_doc)
     return redirect(url_for('home'))
 
 
 @app.route("/post/<post_id>", methods=['POST'])
 @login_required
 def insert_comment(post_id):
-    comments = mongo.db.comment
-    author = mongo.db.users.find_one({"username": current_user.get_id()})
+    author = users.find_one({"username": current_user.get_id()})
     new_doc = {'user': author['_id'], 'post_id': ObjectId(post_id), 'title': request.form.get('title'),
                'content': request.form.get('content'),
                'date_posted': datetime.utcnow()
                }
-    comments.insert_one(new_doc)
+    comment.insert_one(new_doc)
     flash('Your comment was successfully posted', 'info')
     return redirect(url_for('post', post_id=post_id))
 
@@ -306,8 +303,8 @@ def insert_comment(post_id):
 @app.route("/post/<post_id>/edit", methods=['GET', 'POST'])
 @login_required
 def edit_post(post_id):
-    post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
-    author = mongo.db.users.find_one({'username': current_user.get_id()})
+    post = posts.find_one_or_404({'_id': ObjectId(post_id)})
+    author = users.find_one({'username': current_user.get_id()})
     form = NewPostForm()
     post_is_sticky = request.form.get('sticky')
 
@@ -321,12 +318,12 @@ def edit_post(post_id):
     elif request.method == 'POST':
         content = request.form.get("content")
         title = request.form.get("title")
-        posts = mongo.db.posts
         update_doc = {"title": title, "content": content, "sticky": False}
+
         if post_is_sticky:
-            mongo.db.posts.update_many({"sticky": True}, {"$set":
-                                                          {"sticky": False}
-                                                          }, upsert=True)
+            posts.update_many({"sticky": True}, {"$set":
+                                                 {"sticky": False}
+                                                 }, upsert=True)
             update_doc["sticky"] = True
 
         posts.find_one_and_update(
@@ -343,7 +340,6 @@ def edit_post(post_id):
 @app.route("/post/<post_id>/delete", methods=['GET', 'POST'])
 @login_required
 def delete_post(post_id):
-    posts = mongo.db.posts
     query = {'_id': ObjectId(post_id)}
 
     if not admin_user():
@@ -356,10 +352,8 @@ def delete_post(post_id):
 
 @app.route("/portfolio", methods=['GET', 'POST'])
 def portfolio():
-
     form = NewPortfolioProject()
-    portfolio = mongo.db.portfolio
-    projects = portfolio.find()
+    projects = mongo.db.portfolio.find()
     image_files = []
 
     def sort_portfolio():
@@ -383,10 +377,9 @@ def portfolio():
             'images': image_files
         }
 
-        portfolio.insert_one(new_doc)
+        mongo.db.portfolio.insert_one(new_doc)
         flash('Your new project has been added to your portfolio', 'info')
         return redirect(url_for('portfolio'))
-
     return render_template('portfolio.html', projects=sort_portfolio(), form=form, admin_user=admin_user(), image_files=image_files)
 
 
@@ -404,7 +397,7 @@ def delete_project():
     for image in port_proj['images']:
         os.remove(app.root_path + '/static/images/project_pics/' + image)
 
-    mongo.db.portfolio.delete_one(query)
+    portfolio.delete_one(query)
     flash('Your project has been deleted', 'info')
     return redirect(url_for('portfolio'))
 
@@ -413,11 +406,9 @@ def delete_project():
 @login_required
 def insert_project():
     form = NewPortfolioProject()
-    portfolio = mongo.db.portfolio
     tag_list = list(form.tags.data.split(" "))
 
     if form.validate_on_submit():
-
         image_files = save_images(form.images.data)
         new_doc = {
             'project_name': form.title.data,
@@ -427,6 +418,7 @@ def insert_project():
             'github_link': form.github_link.data,
             'images': image_files
         }
+
         portfolio.insert_one(new_doc)
         flash('Your new project has been added to your portfolio', 'info')
     return redirect(url_for('portfolio'))
@@ -436,12 +428,12 @@ def insert_project():
 @login_required
 def account():
     form = AccountUpdateForm()
-    users = mongo.db.users
     user = users.find_one({'username': current_user.username})
 
     if request.method == 'GET':
         form.username.data = user['username']
         form.email.data = user['email']
+
         if user['firstname']:
             form.firstname.data = user['firstname']
         else:
@@ -478,7 +470,7 @@ def validate_reset_token(token):
         user_id = s.loads(token)['user_id']
     except:
         return None
-    return mongo.db.users.find_one({'_id': ObjectId(user_id)})
+    return users.find_one({'_id': ObjectId(user_id)})
 
 
 def send_reset_email(user):
@@ -501,7 +493,7 @@ def reset_request():
     # 1. finds the user whose email matched
 
     if form.validate_on_submit():
-        user = mongo.db.users.find_one({'email': form.email.data})
+        user = users.find_one({'email': form.email.data})
         send_reset_email(user)
         flash('Check your email for instructions to reset your password', 'info')
         return redirect(url_for('login'))
@@ -521,7 +513,6 @@ def reset_token(token):
         return redirect(url_for('reset_request'))
     form = NewPasswordForm()
     if form.validate_on_submit():
-        users = mongo.db.users
         hashpass = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
         users.update_one({'_id': user['_id']}, {
