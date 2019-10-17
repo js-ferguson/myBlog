@@ -114,6 +114,9 @@ body {
     @media (min-width: 992px) {
       .blog-frame .left-pane .social-icons {
         width: 100%; } }
+    @media (max-width: 576px) {
+      .blog-frame .left-pane .social-icons {
+        padding-bottom: 10px; } }
     .blog-frame .left-pane .social-icons .media-wrapper {
       width: 40px;
       display: inline-block;
