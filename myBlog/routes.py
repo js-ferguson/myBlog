@@ -175,8 +175,10 @@ def register():
     if form.validate_on_submit():
         hashpass = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
+
         new_user = {'username': form.username.data,
                     'password': hashpass, 'email': form.email.data, 'firstname': '', 'lastname': ''}
+
         users.insert(new_user)
         flash('Your account has been created. Log in to continue', 'info')
         return redirect(url_for('login'))
@@ -228,6 +230,7 @@ def insert_post():
                'date_posted': datetime.utcnow(),
                'images': [],
                'sticky': False}
+
     # If new post is sticky, we set sticky: False on all previously sticky posts and change the new_doc to be sticky:True
     if post_is_sticky:
         posts.update_many({"sticky": True}, {"$set":
@@ -236,6 +239,7 @@ def insert_post():
         new_doc['sticky'] = True
     try:
         posts.insert_one(new_doc)
+
         # removes empty posts that get created under certain conditions
         posts.delete_many({"title": {"$exists": False}})
         flash('Your new post has been successfully created', 'info')
@@ -283,6 +287,7 @@ def update_project():
         'project_name': form.title.data, 'desc': form.description.data,
         'tech_tags': tag_list, 'current_project': 'current_project'
     }
+
     current_project.update({'current_project': 'current_project'}, new_doc)
     return redirect(url_for('home'))
 
@@ -295,6 +300,7 @@ def insert_comment(post_id):
                'content': request.form.get('content'),
                'date_posted': datetime.utcnow()
                }
+
     comment.insert_one(new_doc)
     flash('Your comment was successfully posted', 'info')
     return redirect(url_for('post', post_id=post_id))
@@ -320,6 +326,7 @@ def edit_post(post_id):
         title = request.form.get("title")
         update_doc = {"title": title, "content": content, "sticky": False}
 
+        #If post is edited to be sticky, remove sticky from all other posts and add sticky: True to update_doc
         if post_is_sticky:
             posts.update_many({"sticky": True}, {"$set":
                                                  {"sticky": False}
