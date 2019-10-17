@@ -2,10 +2,10 @@
 {% block content %}
 
 <div class="row form-card z-depth-2">
-
     <form method="POST" action="" class="col s8">
+        <!-- Cross site request forgery token (CSRF token) -->
         {{ form.hidden_tag() }}
-        <!-- //adds cross site request forgery token (CSRF token) -->
+        
         <h4>
             <legend class="Login-heading">Login</legend>
         </h4>
@@ -22,7 +22,6 @@
             {{ form.email() }}
             {% endif %}
         </div>
-
         <div class="input-field col s12">
             {{ form.password.label() }}
             {% if form.password.errors %}
@@ -36,23 +35,18 @@
             {{ form.password() }}
             {% endif %}
         </div>
-
         <div class="check-row">
             {{ form.remember.label(class="switch") }}
             {{ form.remember(class="danger") }}
             <span class="slider round"></span>
         </div>
-
         <div class="input-field col s12">
             {{ form.submit(class="btn btn-custom")}}
         </div>
-
         <small class="text-muted ml-2">
             <a href="{{ url_for('reset_request') }}">Forgot your password?</a>
         </small>
-
     </form>
-
 </div>
 <div class="pt-3 subtext">
     <small class="text-muted">

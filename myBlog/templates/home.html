@@ -7,7 +7,7 @@
             <h4 class="strong-text">Development Blog</h4>
             <strong>James Ferguson - Full-stack developer</strong>
         </div>
-        <!---------------------------------------- Current Project display ---------------------------------------->
+        <!-- Current Project display -->
         <aside class="z-depth-2">
             <div class="aside-card">
                 <strong>Currently in Development</strong>
@@ -18,7 +18,7 @@
                     <li>{{ tags }}</li>
                 </ul>
             </div>
-            <!----------------------------------- Edit Current Project Fab ------------------------------------>
+            <!-- Edit Current Project Fab -->
             {% if current_user.is_authenticated and admin_user.admin %}
             <div class="fab-label z-depth-1">
                 <span class="fab-label-text">Edit Project</span>
@@ -28,14 +28,17 @@
                 <a href="#modal1" class="btn-floating btn-large red z-depth-2 modal-trigger">
                     <i class="large material-icons">mode_edit</i>
                 </a>
-                <!------------------------------- Edit Current Project Modal --------------------------------->
+                <!-- Edit Current Project Modal -->
                 <div id="modal1" class="modal project-modal">
                     <div class="modal-content">
                         <h4>Edit Current Project</h4>
                     </div>
+                    <!-- Update Project Form -->
                     <form method="POST" action="{{url_for('update_project')}}" class="form">
+
+                        <!-- Cross site request forgery token (CSRF token) -->
                         {{ form.hidden_tag() }}
-                        <!-- //adds cross site request forgery token (CSRF token) -->
+                        
                         <div class="row">
                             <div class="input-field col s12">
                                 {{ form.title.label() }}
@@ -81,19 +84,16 @@
                                 {% endif %}
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="input-field col s12">
                                 {{ form.submit(class="btn btn-custom modal-close")}}
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
             {% endif %}
-            <!----------------------------- Social Links --------------------------------->
-
+            <!-- Social Links -->
         </aside>
         <div class="social-icons">
             <div class="media-wrapper">
@@ -115,7 +115,7 @@
     </div>
 
     <div class="col-lg-7 right-frame">
-        <!----------------------------------- Sticky Post ----------------------------->
+        <!-- Sticky Post -->
         {% if is_sticky %}
         <div class="sticky-wrapper">
             <div class="sticky-post z-depth-2">
@@ -130,10 +130,9 @@
                 <pre>{{ is_sticky.content }}</pre>
                 <a class="subtext" href="{{ url_for('post', post_id=is_sticky._id) }}">Continue reading...</a>
             </div>
-
         </div>
         {% endif %}
-        <!-------------------------------------- Post Feed ------------------------------>
+        <!-- Post Feed -->
         <div class="post-wrapper">
             {% for post in posts %}
             {% if not post['sticky'] %}
@@ -152,7 +151,7 @@
             </div>
             {% endif %}
             {% endfor %}
-            <!----------------------------- Post Feed Navigation Links -------------------------->
+            <!-- Post Feed Navigation Links -->
             <div class="row">
                 <div class="post-nav">
                     {% if page == 1 %}
@@ -161,7 +160,6 @@
                     <a class="btn prev " href="{{url_for('home', page=(page - 1)) }}">Prev</a>
                     {% endif %}
                     <a class="btn btn-sm nav-light hide-small" href="{{url_for('home', page=1) }}">1</a>
-
                     {% for item in page_links %}
                     {% if item %}
                     <a class="btn btn-sm nav-light hide-small" href="{{url_for('home', page=item) }}">{{ item }}</a>
@@ -169,18 +167,15 @@
                     ...
                     {% endif %}
                     {% endfor %}
-
                     <a class="btn btn-sm nav-light hide-small" href="{{url_for('home', page=last_page) }}">{{ last_page }}</a>
                     {%  if page == last_page %}
                     <a class="btn next" href="{{url_for('home', page=last_page) }}">Next</a>
                     {% else %}
                     <a class="btn next" href="{{url_for('home', page=(page + 1)) }}">Next</a>
                     {% endif %}
-
-
                 </div>
             </div>
-            <!---------------------------- New Post Fab ----------------------------------->
+            <!-- New Post Fab -->
             {% if current_user.is_authenticated and admin_user.admin %}
             <div class="fab-one-label z-depth-1">
                 <span class="fab-label-text">New Post</span>
@@ -190,16 +185,15 @@
                     <i class="large material-icons">add</i>
                 </a>
             </div>
-
             {% endif %}
-
         </div>
     </div>
-
 </div>
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
 </script>
+
 <script>
     $(document).ready(function ($) {
 

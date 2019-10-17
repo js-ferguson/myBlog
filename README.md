@@ -165,11 +165,13 @@ The layout has been tested for responsive design across all the platforms and sc
 - Desktop Chrome on Windows and Linux
 - Desktop Firefox on Windows and Linux
 
-### Validation and delinting
+### Validation and linting
 
 WC3 HTML validation is not passing due to Materialize.css using a deprecated media type. Otherwise there are just a few warnings about extra hyphens in my comments
 
 CSS Validation returns 31 errors and 782 warnings, all of which are in materialize.css and bootstrap.min.css. There was a single error in my own css, a stray comma. I fixed it.
+
+I am working in VScode and linting occurs every time I save my work. I also ran it manually before submission with no errors.
 
 ## Deployment
 

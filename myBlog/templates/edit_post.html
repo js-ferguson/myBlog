@@ -35,7 +35,6 @@
             </div>
         </div>
         {% if current_user.is_authenticated and admin_user.admin %}
-
         <div class="check-row">
             {{ form.sticky.label(class="switch") }}
             {{ form.sticky(class="danger") }}
@@ -49,9 +48,6 @@
                 <button class="btn btn-danger z-depth-2 modal-trigger" data-target="confirmModal">Delete Post</button>
             </span>
         </div>
-
-
-
         <!-- Delete confirmation modal -->
         <div id="confirmModal" class="modal delete-post-modal">
             <div class="modal-content">
@@ -68,9 +64,11 @@
         {% endif %}
     </form>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
 </script>
+
 <script>
     $(document).ready(function () {
         $('.edit-post-title-label').hide();

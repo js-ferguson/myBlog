@@ -21,13 +21,6 @@
     </div>
     {% endif %}
 </div>
-
-
-<!-- <div>
-    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('edit_post', post_id=post._id) }}">Edit</a>
-
-</div> -->
-
 <ul class="collapsible z-depth-0">
     <li>
         <div class="collapsible-header">
@@ -86,12 +79,10 @@
     <div class="date-small">{{ comment.date_posted.strftime("%d %b %Y") }}</div>
     {% endif %}
     <hr>
-    <h5>{{ comment.title }}</h5>    
-
+    <h5>{{ comment.title }}</h5>
     <p>{{ comment.content }}</p>
     {% if current_user.username == get_comment_username(comment.user) or admin_user %}
     <button data-target="del_comment{{comment._id}}" class="btn-small btn-danger modal-trigger">Delete</button>
-
     <div id="del_comment{{comment._id}}" class="modal delete-conf-modal">
         <div class="modal-content">
             <h4>Delete Comment</h4>
@@ -102,7 +93,6 @@
             <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
         </div>
     </div>
-
     {% endif %}
 </div>
 {% endfor %}
