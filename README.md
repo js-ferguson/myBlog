@@ -2,22 +2,22 @@
 
 noFolio is a personal blog and portfolio
 
-The application is intended to to be used by an individual to chronical their work as a software developer and provide a space to show off their work to other developers and prospective employers. As such it has many features available to the blog owner to make and manage blog posts and upload detailed descriptions of their work, including images. The site also features a comments section, where registered users are able to make comments on blog posts.
+The application is intended to be used by an individual to chronical their work as a software developer and provide a space to show off their work to other developers and prospective employers. As such it has many features available to the blog owner to make and manage blog posts and upload detailed descriptions of their work, including images. The site also features a comments section, where registered users are able to make comments on blog posts.
 
 The live application can be viewed by going to [noFolio](https://nofolio.herokuapp.com/)
 
 
 ## UX
 
-The application will be used primarily by a single user (though there is some scope for adding other users as admins) and most of the apps functionality is hidden to regular users. The UX is designed to be functional, and aims to maintain a focus on content. For these reasons I have tried to keep this fairly minimalistic. Aside from the blog owner, the site will also (hopefully) be used by prospective eployers, so it aims to provide easy access to things an employer might be interested in. Namely an overview of the projects the blog owner has created or been involved in, as well as easy to find links to both github repositories and deployed applications.
+The application will be used primarily by a single user (though there is some scope for adding other users as admins) and most of the apps functionality is hidden to regular users. The UX is designed to be functional, and aims to maintain a focus on content. For these reasons I have tried to keep this fairly minimalistic. Aside from the blog owner, the site will also (hopefully) be used by prospective employers, so it aims to provide easy access to things an employer might be interested in. Namely an overview of the projects the blog owner has created or been involved in, as well as easy to find links to both github repositories and deployed applications.
 
 - Scenario 1 - The blog owner has been working on a difficult coding problem in their latest project. After many cups of coffee and reading many articles and posts on stack exchange, they finally crack the problem. The solution turned out to be simpler than they had expected. For future reference and because others might stumble across the same problem, they decide to write a blog post detailing the problem and how it was solved. They fire up their blog and log in, the controls for adding a new post are overlaid on the normal UI allowing the blog owner to add a new post. They are taken to new post page where they can add a post with a title and optionally mark it as a sticky post. When they finish, they can save the post and it appears either at the top of the post feed, or in the case of a sticky post, at the very top of the landing page. 
 
 - Scenario 2 - The blog owner has decided to begin a new project. It is currently in the conceptual stage and the blog owner would like to add it to their portfolio along with some wireframes. After logging in to their blog, they navigate to the portfolio page, where a button is displayed to add a new portfolio project. Clicking the button launches a modal with form fields for the projects title, a description, hashtags to add technologies used in the project and links for both the github repository and deployed application. They are also able to upload multiple image files (screenshots, wireframes, mockups) in either jpg or png format. Then they click save, the modal is closed and their new project is now visible in their portfolio.
 
-- Scenario 3 - A prospective employer recieves your CV and thinks you sound like a serious candidate for the role. They would like to see some of your previous work to get a feel for the quality of your code. Your CV contains a link to your dev blog, which they follow and find themselves on the noFolio landing page. It's clean, elegant and easy to navigate. After reading the first post in the feed, a post about solving a difficult problem, clearly detailing the solution, they navigate to the portfolio page to check out your work. On the portfolio page they find a neat feed listing previous projects, with the most recent displayed at the top. It looks like an ambitious project, and they are further intrigued. Clicking on the link to the deployed site, they find your work-in-progress deployed on Heroku. Next they hit the link to the projects github repo, and find a well structured application in development, with clean, commented code. They call you immidiately for an interview.
+- Scenario 3 - A prospective employer receives your CV and thinks you sound like a serious candidate for the role. They would like to see some of your previous work to get a feel for the quality of your code. Your CV contains a link to your dev blog, which they follow and find themselves on the noFolio landing page. It's clean, elegant and easy to navigate. After reading the first post in the feed, a post about solving a difficult problem, clearly detailing the solution, they navigate to the portfolio page to check out your work. On the portfolio page they find a neat feed listing previous projects, with the most recent displayed at the top. It looks like an ambitious project, and they are further intrigued. Clicking on the link to the deployed site, they find your work-in-progress deployed on Heroku. Next they hit the link to the projects github repo, and find a well structured application in development, with clean, commented code. They call you immediately for an interview.
 
-- Scenario 4 - A developer is working on a project and hits a stumbling block. A code challenge they have never encountered has presented itself, without an obvious solution. Let the googling begin. They come across a blog post by another developer who seems to have come across the same problem and they find that the solution posed, is exactly what they were looking for. They are greatful for the detailed post and they click the comment button to leave a nice thank you message. They also suggest a donate button so they could make a token contribution for your efforts. You think that is sweet of them since you are an open source developer and it's always nice to be appreciated.
+- Scenario 4 - A developer is working on a project and hits a stumbling block. A code challenge they have never encountered has presented itself, without an obvious solution. Let the googling begin. They come across a blog post by another developer who seems to have come across the same problem and they find that the solution posed, is exactly what they were looking for. They are grateful for the detailed post and they click the comment button to leave a nice thank you message. They also suggest a donate button so they could make a token contribution for your efforts. You think that is sweet of them since you are an open source developer and it's always nice to be appreciated.
 
 
 ### Wireframes
@@ -62,12 +62,12 @@ Even though the finished project is somewhat different in design to the initial 
 
 - Feature 10 - Users are able to update their details on the account management page. This includes adding a first and last name as well as being able to change their username and email address, providing the new ones are unique in the database.
 
-- Feature 11 - Password changes are provided on the login screen via the "Forgot your password?" link. Clicking this allows the user to submit their email address and if there is a matching address in the database they will recieve an email with a link containing an embeded secure token, that takes them to a password reset page.
+- Feature 11 - Password changes are provided on the login screen via the "Forgot your password?" link. Clicking this allows the user to submit their email address and if there is a matching address in the database they will receive an email with a link containing an embedded secure token, that takes them to a password reset page.
 
 
 ### Features Left to Implement
 
-There are many more features that I intend to impliment. I would like to put these in place immediately, but I have a course to finish.
+There are many more features that I intend to implement. I would like to put these in place immediately, but I have a course to finish.
 
 * Make comments editable for the author.
 
@@ -85,7 +85,7 @@ There are many more features that I intend to impliment. I would like to put the
 
 * Upvote and downvotes for comments.
 
-* Add an admin page where admins can make other users admins - not strictly neccessary for a single user blog.
+* Add an admin page where admins can make other users admins - not strictly necessary for a single user blog.
 
 * Allow replies to comments.
 
@@ -97,17 +97,19 @@ There are many more features that I intend to impliment. I would like to put the
 
 * Add tags to posts and be able to search posts or projects by tags
 
+* A Commit message feed in the Currently in Development box, that displays the last commit message for a linked repository
+
 
 ## Technologies used
 
 This project is written almost entirely in Python, using the Flask framework and Jinja2 templating engine. There are also a number of Flask extensions and Python packages used as well, which are detailed in the requirements.txt. Some of the more notable ones include;
 Bcrypt to encrypt user passwords and create random filenames, Flask-Login to manage user logins, Flask-PyMongo to make database calls to MongoDB in python, Flask-WTF and WTForms to handle forms, itsdangerous to serialise password reset tokens from a JSON object, Pillow to handle resizing images, and flask-mail to send password reset emails.
 
-Underpinning the entire project is MongoDB, a document based database which essentilly stores all the content you see on the site. Data for the application is spread across five document collections; comment, current_project, portfolio, posts and users. In some cases, most notably for comment counts and pagination, I have used aggregation to pull data from different collections.
+Underpinning the entire project is MongoDB, a document based database which essentially stores all the content you see on the site. Data for the application is spread across five document collections; comment, current_project, portfolio, posts and users. In some cases, most notably for comment counts and pagination, I have used aggregation to pull data from different collections.
 
 There is some JavaScript used in places, but in all honesty, I did not have a huge need for elaborate JS in this project. The JavaScript I did use is mainly jQuery functions provided by MaterializeCSS for modals, collapsibles and the sidenav. Other than that, there is a bit of JS used to get the current URL to handle highlighting nav links to show which page the user is currently on.
 
-I have also used classes from both MaterializeCSS and Bootstrap. I used MaterializeCSS for nav styling and material style floating action buttons (FABs). While I used boostrap for responsive design and for styling Flasks flash notifications.
+I have also used classes from both MaterializeCSS and Bootstrap. I used MaterializeCSS for nav styling and material style floating action buttons (FABs). While I used Bootstrap for responsive design and for styling Flasks flash notifications.
 
 I used SASS rather than vanilla CSS3. I used SASS in my last project and loved it.
 
@@ -122,9 +124,9 @@ I have performed extensive testing to ensure the application operates as expecte
 - Click comment to reveal the comment textbox. 
 - Type a comment and click "post comment" - Get redirected to the login page with a flash message saying "please log in to access this page".
 - Click "Need an account? Register" link - Takes you to the registration page. 
-- Sign up for new account with a non-unique email and username - error messages are diplayed under those fields informing the user that those are already taken. 
+- Sign up for a new account with a non-unique email and username - error messages are displayed under those fields informing the user that those are already taken. 
 - Sign up for an account with unique credentials and get redirected to the login page with a flashed message "Your account has been created. Log in to continue"
-- Log in as newly created user - redirected to landing page - user name is displaed in the nav next to logout. This link takes you to the account management page where you can update details.
+- Log in as newly created user - redirected to landing page - the user name is displayed in the nav next to logout. This link takes you to the account management page where you can update details.
 - Go to account page and add a first name, last name, new email and username. Redirected to login screen to log in with new credentials.
 - Log in with new creds and new username is now displayed in the nav.
 - Go back to post and click comment, write a new comment and click "post comment". The collapsible is closed and the new comment is displayed with a delete button.
@@ -133,9 +135,9 @@ I have performed extensive testing to ensure the application operates as expecte
 - Go to another post with comments. Notice that there are no delete buttons on comments you didn't author. 
 - Try to manually enter the delete_comment route via the address bar. Get a flash message that "You do not have permission to remove this comment" 
 - Go to portfolio page. Looks nice, nothing to do here as a user.
-- Click Logout - rediected to landing page, with Login now visible where your username was previously displayed.
+- Click Logout - get redirected to landing page, with Login now visible where your username was previously displayed.
 
-- Click login - On the login page enter creds for an admin user and hit login.
+- Click login - On the login page enter username and password for an admin user and hit login.
 - Redirected to landing page with content controls now visible. 
 - Click "Edit Project" FAB. - Launches a blank modal form. Details entered here replace the content of the Current Project blurb.
 - Enter details about a project and click "Save Project". The landing page now displays the new details.
@@ -152,12 +154,12 @@ I have performed extensive testing to ensure the application operates as expecte
 - Click the logout button. Content controls are removed and nav items change from "username" and "logout" to "Login" and "Register".
 - Click login to go to the login page. Click "Forgot your password?". On the reset password page, enter an unregistered email. Redirected to register page with flash message "The email user.email is not associated with an account. Please register first."
 - Click login again. This time enter your registered email address. Redirected to login screen with flashed message "Check your email for instructions to reset your password"
-- Go to email and open "Password reset request" email. Click on reset link. arrive at password reset page.
+- Go to email and open "Password reset request" email. Click on the reset link. arrive at password reset page.
 - Type in miss-matched passwords, error is displayed below the confirm password field "Field must be equal to password".
 - Type matching passwords. Redirected to login page with flashed message "Your password has been updated".
 - Click logout. You are logged out, and redirected to the landing page.
 
-The layout has been tested for responsive design across all the platforms and screen sizes I have immidiate access to, including; 
+The layout has been tested for responsive design across all the platforms and screen sizes I have immediate access to, including; 
 
 - Mobile Chrome on Android and iOS
 - Mobile Safari on iOS
@@ -199,7 +201,7 @@ user@somecoolhostname:~$ git clone https://github.com/js-ferguson/myBlog
 user@somecoolhostname:~$ cd myBlog && Python3 -m venv venv
 ```
 
-4. This will create a virtual environment for you to install the apps dependancies without having to install them system wide. Now lets activate the venv and install the apps requirements.
+4. This will create a virtual environment for you to install the apps dependencies without having to install them system wide. Now lets activate the venv and install the apps requirements.
 
 ```
 user@somecoolhostname:~$ source venv/bin/activate && pip install -r requirements.txt
@@ -252,12 +254,12 @@ I have chosen to use a free SMTP service, [sendgrid](https://sendgrid.com). To c
 
 4. Type a name, noFolio or myBlog into the "My First API Key Name" text field and hit "Create Key". This will be your password and again will be stored in an environment variable along with the username "apikey", so save it for later with you MongoDB connection string and the apps secret key.
 
-We can leave our SMTP config there for the moment. You can come back and verify later, although it is not strictly neccessary.
+We can leave our SMTP config there for the moment. You can come back and verify later, although it is not strictly necessary.
 
 
 ### Environment variables
 
-Rather than expose sensitive data in the source code for the application, like the apps secret key, database login and smtp relay login details, we keep them in environment variable. If you are hosting the project locally on your own machine, you can edit the provided config file. If you are deploying to Heroku or another service, you will need to add them in the configuration of those services. I will cover deployment to Heroku and briefly discuss local deployment.
+Rather than expose sensitive data in the source code for the application, like the apps secret key, database login and smtp relay login details, we keep them in environment variables. If you are hosting the project locally on your own machine, you can edit the provided config file. If you are deploying to Heroku or another service, you will need to add them in the configuration of those services. I will cover deployment to Heroku and briefly discuss local deployment.
 
 #### Local Deployment
 
@@ -327,7 +329,7 @@ user@somecoolhostname:~$ git push heroku master
 
 This project uses [SASS/SCSS](https://sass-lang.com/), a CSS preprocessor that gives you access to some nice features not available with regular CSS . You will need to make sure that it is installed if you intend to make any styling changes. 
 
-If you run windows you can follow instructions to install SASS [here](https://www.impressivewebs.com/sass-on-windows/). Alternatively, you can install Windows Subsystem for Linux (WSL) and follow the rest of the instructions for Linux. Instructions to install WSL can be found [here](https://itsfoss.com/install-bash-on-windows/)
+If you run windows you can follow the instructions to install SASS [here](https://www.impressivewebs.com/sass-on-windows/). Alternatively, you can install Windows Subsystem for Linux (WSL) and follow the rest of the instructions for Linux. Instructions to install WSL can be found [here](https://itsfoss.com/install-bash-on-windows/)
 
 If you are on Mac check out [compass.app](http://compass.kkbox.com/)
 
