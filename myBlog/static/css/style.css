@@ -461,6 +461,8 @@ body {
 
 .collapsible-body {
   border: 0; }
+  .collapsible-body h5 {
+    margin-bottom: 15px; }
 
 .comment-title-label {
   margin-left: 10px; }
@@ -586,9 +588,16 @@ body {
 @media (max-width: 576px) {
   .form-card {
     margin-top: 50px; } }
+.form-card h4 {
+  margin-bottom: 15px; }
 .form-card .check-row {
   padding: 5px; }
 .form-card .input-field {
   padding: 0; }
+
+.account-card h6 {
+  margin-bottom: 35px; }
+.account-card .input-field {
+  margin-bottom: 30px; }
 
 /*# sourceMappingURL=style.css.map */
