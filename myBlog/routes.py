@@ -476,7 +476,7 @@ def delete_project():
     for image in port_proj['images']:
         os.remove(app.root_path + '/static/images/project_pics/' + image)
 
-    portfolio.delete_one(query)
+    mongo.db.portfolio.delete_one(query)
     flash('Your project has been deleted', 'info')
     return redirect(url_for('portfolio'))
 
