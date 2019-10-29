@@ -104,7 +104,7 @@ class NewPortfolioProject(FlaskForm):
         DataRequired(), Length(min=1, max=1000)])
     tags = StringField('#Tags - space separated', validators=[DataRequired()])
     link = StringField('Link to live project')
-    github_link = StringField('Github link', validators=[DataRequired()])
+    github_link = StringField('Github link')
     images = MultipleFileField(
         'Add screenshots/wireframes', validators=[FileAllowed(['png', 'jpg'])])
     submit = SubmitField('Save Project')
