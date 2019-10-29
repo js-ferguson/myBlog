@@ -2,6 +2,9 @@ from myBlog import mongo, login_manager
 
 
 class User:
+    """
+    This User class was inspired by an answer by user Sazzad on StackOverflow. Link in README.
+    """
     def __init__(self, username):
         self.username = username
 

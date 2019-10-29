@@ -8,7 +8,7 @@
     <div class="row">
         <form method="POST" action="" class="col s12">
             <!-- Cross site request forgery token (CSRF token) -->
-            {{ form.hidden_tag() }}            
+            {{ form.hidden_tag() }}
             <div class="input-field col s12">
                 {{ form.username.label() }}
                 {% if form.username.errors %}
