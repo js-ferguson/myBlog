@@ -362,6 +362,8 @@ As far as I am aware, all functionality works as intended. That's not to say tha
 
 There are some articles and documentation as well as some snippets of code that I found that were especially helpful.
 
+First and foremost, I would like to thank Miguel Grinberg whos excellent [Flask Mega-Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world) was an invaluable reference during the course of this milestone project.
+
 
 #### Flask flashes
 - https://getbootstrap.com/docs/4.0/components/alerts/
@@ -378,7 +380,6 @@ There are some articles and documentation as well as some snippets of code that 
 - https://realpython.com/python-modules-packages/
 
 #### Flask_login
-- https://stackoverflow.com/questions/54992412/flask-login-usermixin-class-with-a-mongodb
 - https://boh717.github.io/post/flask-login-and-mongodb/
 - https://flask-login.readthedocs.io/en/latest/
 
@@ -403,3 +404,7 @@ There are some articles and documentation as well as some snippets of code that 
 #### Pagination using facet
 - https://stackoverflow.com/questions/48305624/how-to-use-mongodb-aggregation-for-pagination?rq=1
 - Stackoverflow user Alex Blex
+
+#### User class for flask-login
+- https://stackoverflow.com/questions/54992412/flask-login-usermixin-class-with-a-mongodb
+- Stackoverflow user Sazzad

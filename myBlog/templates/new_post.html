@@ -7,6 +7,8 @@
     </div>
     <div class="new-post-form">
         <form action="{{ url_for('insert_post') }}" method="POST" class="col s12">
+        <!-- adds cross site request forgery token (CSRF token) -->
+            {{ form.hidden_tag() }}
             <div class="form-group">
                 <div class="input-field col s12">
                     {{ form.title.label(class="new-post-title-label") }}

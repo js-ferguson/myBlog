@@ -6,6 +6,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextA
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from myBlog import mongo
 
+
 def get_current_user():
     active_user = mongo.db.users.find_one({'username': current_user.username})
     return active_user
@@ -35,7 +36,6 @@ class RegistrationForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[
                              DataRequired(), Length(min=6, max=20)])
@@ -48,7 +48,7 @@ class NewPostForm(FlaskForm):
     content = TextAreaField('Content', validators=[
                             DataRequired(), Length(min=1, max=1000)])
     submit = SubmitField('Save Post')
-    sticky = BooleanField('Sticky post')   
+    sticky = BooleanField('Sticky post')
 
 
 class AccountUpdateForm(FlaskForm):
@@ -64,7 +64,8 @@ class AccountUpdateForm(FlaskForm):
             users = mongo.db.users
             existing_user = users.find_one({'username': username.data})
             if existing_user:
-                flash(f'The username {username.data} is already taken', 'danger')
+                flash(
+                    f'The username {username.data} is already taken', 'danger')
                 raise ValidationError('That username is already taken.')
 
     def validate_email(self, email):
@@ -77,10 +78,9 @@ class AccountUpdateForm(FlaskForm):
 
 
 class EditProject(FlaskForm):
-
     title = StringField('Title', validators=[DataRequired(), Length(max=50)])
     description = TextAreaField('Description', validators=[
-                            DataRequired(), Length(min=1, max=1000)])
+        DataRequired(), Length(min=1, max=1000)])
     tags = StringField('#Tags - space separated', validators=[DataRequired()])
     submit = SubmitField('Save Project')
 
@@ -98,15 +98,17 @@ class NewCommentForm(FlaskForm):
 
 
 class NewPortfolioProject(FlaskForm):
-    title = StringField('Project Name', validators=[DataRequired(), Length(max=50)])
+    title = StringField('Project Name', validators=[
+                        DataRequired(), Length(max=50)])
     description = TextAreaField('Description', validators=[
-                            DataRequired(), Length(min=1, max=1000)])
+        DataRequired(), Length(min=1, max=1000)])
     tags = StringField('#Tags - space separated', validators=[DataRequired()])
     link = StringField('Link to live project')
     github_link = StringField('Github link', validators=[DataRequired()])
-    images = MultipleFileField('Add screenshots/wireframes', validators=[FileAllowed(['png', 'jpg'])])
+    images = MultipleFileField(
+        'Add screenshots/wireframes', validators=[FileAllowed(['png', 'jpg'])])
+    submit = SubmitField('Save Project')
 
-    submit = SubmitField('Save Project') 
 
 class ResetPasswordForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -116,8 +118,10 @@ class ResetPasswordForm(FlaskForm):
         users = mongo.db.users
         existing_user = users.find_one({'email': email.data})
         if existing_user is None:
-            flash(f'The email {email.data} is not associated with an account. Please register first.', 'info')
-            raise ValidationError('That email is not registered. Make an account first')
+            flash(
+                f'The email {email.data} is not associated with an account. Please register first.', 'info')
+            raise ValidationError(
+                'That email is not registered. Make an account first')
 
 
 class NewPasswordForm(FlaskForm):

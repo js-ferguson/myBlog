@@ -292,7 +292,8 @@ body {
     border: none;
     background-color: #404040;
     color: #fafafa;
-    border-radius: 0; }
+    border-radius: 0;
+    margin-bottom: 10px; }
   .modal #description {
     height: 200px; }
   .modal .form {
@@ -530,6 +531,9 @@ body {
     right: -30px;
     bottom: -130px;
     z-index: 199; }
+    @media (max-width: 576px) {
+      .fab-wrapper #portfolio-fab {
+        bottom: -92px; } }
   .fab-wrapper .portfolio-fab-label {
     background-color: #fdffb6;
     border-radius: 5px;
@@ -541,6 +545,9 @@ body {
     width: 120px;
     bottom: -85px;
     right: 0px; }
+    @media (max-width: 576px) {
+      .fab-wrapper .portfolio-fab-label {
+        bottom: -48px; } }
 
 .portfolio-card {
   padding: 15px;

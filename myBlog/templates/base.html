@@ -35,7 +35,6 @@
                         <a href="{{ url_for('new_post') }}"><span class="">New Post</span></a>
                     </div>
                 </li>
-
                 <li>
                     <div class="divider"></div>
                 </li>
@@ -57,7 +56,6 @@
             </ul>
         </div>
     </nav>
-
     <!-- Flask-flash messages -->
     <div class="container">
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -72,7 +70,7 @@
         {% block content %}{% endblock content %}
     </div>
 
-    <!-- JavaScript at end of body for optimized loading -->
+    <!-- JavaScript -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
@@ -85,18 +83,26 @@
 
     <script src="/static/js/bin/materialize.js"></script>
     <script>
+        /*
+        * Code provided by MaterializeCSS for fixed action buttons, modals, collapsibles and sidenav.
+        */
         $(document).ready(function () {
             $('.fixed-action-btn').floatingActionButton();
             $('.modal').modal();
             $('.collapsible').collapsible();
-            $('.sidenav').sidenav();
+            $('.sidenav').sidenav();                        
+        });
 
+        /*
+        * On document ready match a li elements whose href attribute matches the current url 
+        * and add class nav-active to hilight the current page
+        */
+        $(document).ready(function () {
             let path = window.location.pathname.split("/").pop();
 
             if (path == '') {
                 path = 'index';
             }
-
             let target = $('nav li a[href="' + '/' + path + '"]');
             target.addClass('nav-active');
         });

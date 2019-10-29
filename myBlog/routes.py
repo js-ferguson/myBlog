@@ -24,18 +24,26 @@ posts_per_page = 8
 
 
 def admin_user():
-    '''Test if the current user is an admin'''
+    '''
+    Test if the current user is an admin
+    '''
     admin_user = users.find_one(
         {'$and': [{'username': current_user.get_id()}, {'admin': True}]})
     return admin_user
 
 
 def get_current_users_id():
+    '''
+    Returns the current users id.
+    '''
     user = users.find_one({'username': current_user.get_id()})
     return user['_id']
 
 
 def is_comment_author(user, comment_id):
+    '''
+    Test if the the current user is the author of a comment.
+    '''
     is_author = comment.find_one(
         {'$and': [{'_id': ObjectId(comment_id)}, {'user': ObjectId(user)}]})
     if is_author:
@@ -43,12 +51,17 @@ def is_comment_author(user, comment_id):
 
 
 def is_sticky():
+    '''
+    Test the sticky status of a post.
+    '''
     sticky = posts.find_one({"sticky": True})
     return sticky
 
 
 def save_images(images):
-    '''takes a list of images and renames each with a random string. Resizes images to a max of 500x500px before saving'''
+    '''
+    takes a list of images and renames each with a random string. Resizes images to a max of 500x500px before saving
+    '''
     file_filenames = []
     save_paths = []
 
@@ -72,6 +85,10 @@ def save_images(images):
 
 
 def posts_with_comment_count(page):
+    '''
+    Aggregation pipline that adds a comment count field to a post document.
+    Posts a sorted so the newest is diplayed first and the output is paginated.
+    '''
     # This pipeline (up to but not including the facet) was provided by user chridam on stackoverflow in respose to a question I posted
     # The facet came from stack overflow user Alex Blex, links in references.
     pipeline = [
@@ -98,6 +115,9 @@ def posts_with_comment_count(page):
 @app.route("/home")
 @app.route("/index")
 def home():
+    """
+    Create a view that returns the route for the landing page for /, /home and /index
+    """
     form = EditProject()
     page = request.args.get('page', 1, type=int)
     data = posts_with_comment_count(page)
@@ -109,7 +129,9 @@ def home():
             return int(math.ceil(page_count))
 
     def create_num_list():
-        '''Create a list of page numbers and None values for forum style page navigation buttons at the bottom of the post feed'''
+        '''
+        Create a list of page numbers and None values for forum style page navigation buttons at the bottom of the post feed
+        '''
         num_list = []
 
         for num in range(1, (get_page_count() + 1)):
@@ -167,6 +189,9 @@ def home():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    '''
+    Create a route that returns the registration page, allowing users to register on the site
+    '''
     form = RegistrationForm()
 
     if current_user.is_authenticated:
@@ -175,10 +200,8 @@ def register():
     if form.validate_on_submit():
         hashpass = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
-
         new_user = {'username': form.username.data,
                     'password': hashpass, 'email': form.email.data, 'firstname': '', 'lastname': ''}
-
         users.insert(new_user)
         flash('Your account has been created. Log in to continue', 'info')
         return redirect(url_for('login'))
@@ -187,6 +210,10 @@ def register():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    '''
+    Create a route that returns the login page that allows users to log in, 
+    if they have previously registered an account
+    '''
     form = LoginForm()
 
     if current_user.is_authenticated:
@@ -207,6 +234,9 @@ def login():
 
 @app.route("/logout")
 def logout():
+    '''
+    Log out the user and redirect to the landing page
+    '''
     logout_user()
     return redirect(url_for('home'))
 
@@ -214,12 +244,24 @@ def logout():
 @app.route("/new_post")
 @login_required
 def new_post():
+    '''
+    Returns the new post page to allow a user to make a new post if they are logged in as an admin. 
+    '''
     form = NewPostForm()
+
+    if not admin_user():
+        flash("You do not have permission to make new posts", "info")
+        return redirect(url_for('home'))
     return render_template('new_post.html', form=form, posts=posts.find())
 
 
 @app.route("/insert_post", methods=['POST'])
+@login_required
 def insert_post():
+    '''
+    Create a route that accepts new posts. Posts may optionally be marked as sticky.
+    Must be logged in as an admin.
+    '''
     author = users.find_one({'username': current_user.get_id()})
     post_author = author['_id']
     post_is_sticky = request.form.get('sticky')
@@ -237,19 +279,25 @@ def insert_post():
                                              {"sticky": False}
                                              }, upsert=True)
         new_doc['sticky'] = True
-    try:
-        posts.insert_one(new_doc)
-
-        # removes empty posts that get created under certain conditions
-        posts.delete_many({"title": {"$exists": False}})
-        flash('Your new post has been successfully created', 'info')
-    except:
-        flash("Error accessing the database", "danger")
+    
+    if admin_user():
+        try:
+            posts.insert_one(new_doc)            
+            posts.delete_many({"title": {"$exists": False}}) # removes empty posts that get created under certain conditions
+            flash('Your new post has been successfully created', 'info')
+        except:
+            flash("Error accessing the database", "danger")
+    else:
+        flash("Only admin users may create posts.", "info")
     return redirect(url_for('home'))
 
 
 @app.route("/post/<post_id>")
 def post(post_id):
+    '''
+    Create a route that returns a view of a single blog post. 
+    If the user is an admin, content controls will also be displayed
+    '''
     form = NewCommentForm()
     has_comments = comment.count({'post_id': ObjectId(post_id)})
     comments = comment.find({'post_id': ObjectId(post_id)}).sort("_id", -1)
@@ -267,6 +315,9 @@ def post(post_id):
 @app.route("/post/<post_id>/delete_comment", methods=['GET', 'POST'])
 @login_required
 def delete_comment(post_id):
+    '''
+    Create a route do delete a comment. Must be either the comment author or an admin.
+    '''
     del_comment = request.args.get('comment_id')
     query = {'_id': ObjectId(del_comment)}
 
@@ -281,6 +332,9 @@ def delete_comment(post_id):
 @app.route("/home/update_project", methods=['POST'])
 @login_required
 def update_project():
+    '''
+    Create a route to up update the Currently in Development box on the landing page
+    '''
     form = EditProject()
     tag_list = list(form.tags.data.split(" "))
     new_doc = {
@@ -295,6 +349,9 @@ def update_project():
 @app.route("/post/<post_id>", methods=['POST'])
 @login_required
 def insert_comment(post_id):
+    '''
+    Create a route to allow users to make comments on posts
+    '''
     author = users.find_one({"username": current_user.get_id()})
     new_doc = {'user': author['_id'], 'post_id': ObjectId(post_id), 'title': request.form.get('title'),
                'content': request.form.get('content'),
@@ -309,6 +366,10 @@ def insert_comment(post_id):
 @app.route("/post/<post_id>/edit", methods=['GET', 'POST'])
 @login_required
 def edit_post(post_id):
+    '''
+    Create a route to allow a user to edit a post or change its sticky status. 
+    Must be the author of the post.
+    '''
     post = posts.find_one_or_404({'_id': ObjectId(post_id)})
     author = users.find_one({'username': current_user.get_id()})
     form = NewPostForm()
@@ -347,6 +408,10 @@ def edit_post(post_id):
 @app.route("/post/<post_id>/delete", methods=['GET', 'POST'])
 @login_required
 def delete_post(post_id):
+    '''
+    Create a route to allow a user to delete a post.
+    Must be an admin.
+    '''
     query = {'_id': ObjectId(post_id)}
 
     if not admin_user():
@@ -359,6 +424,10 @@ def delete_post(post_id):
 
 @app.route("/portfolio", methods=['GET', 'POST'])
 def portfolio():
+    '''
+    Create a route that returns the portfolio page and allows users to add a new
+    portfolio item via a modal form.
+    '''
     form = NewPortfolioProject()
     projects = mongo.db.portfolio.find()
     image_files = []
@@ -393,6 +462,9 @@ def portfolio():
 @app.route("/portfolio/delete", methods=['GET', 'POST'])
 @login_required
 def delete_project():
+    '''
+    Create a route that allows an admin user to delete a portfolio item.
+    '''
     project = request.args.get('project_id')
     query = {'_id': ObjectId(project)}
     port_proj = mongo.db.portfolio.find_one(query)
@@ -412,6 +484,9 @@ def delete_project():
 @app.route("/insert_project", methods=['POST'])
 @login_required
 def insert_project():
+    '''
+    Create a route that inserts the new portfolio item to the database.
+    '''
     form = NewPortfolioProject()
     tag_list = list(form.tags.data.split(" "))
 
@@ -434,6 +509,9 @@ def insert_project():
 @app.route("/account", methods=['POST', 'GET'])
 @login_required
 def account():
+    '''
+    Create an account that allows users to access a user profile page and lets them update their user details.
+    '''
     form = AccountUpdateForm()
     user = users.find_one({'username': current_user.username})
 
@@ -465,12 +543,18 @@ def account():
 
 
 def get_reset_token(user, expires_sec=1800):
+    '''
+    Create a time limited password reset token by serialising a tuple with the users user_id 
+    '''
     s = Serialiser(app.config['SECRET_KEY'], expires_sec)
     user_id = str(user['_id'])
     return s.dumps({'user_id': user_id}).decode('utf-8')
 
 
 def validate_reset_token(token):
+    '''
+    Validate the token and return the user with a matching user_id
+    '''
     s = Serialiser(app.config['SECRET_KEY'])
 
     try:
@@ -481,6 +565,9 @@ def validate_reset_token(token):
 
 
 def send_reset_email(user):
+    '''
+    Send an email to the user. Email contains url with an embeded token
+    '''
     token = get_reset_token(user)
     msg = Message('Password reset request', sender=os.environ.get(
         'SENDER_EMAIL'), recipients=[user['email']])
@@ -494,6 +581,9 @@ If you did not request a new password, you can safely ignore this email
 
 @app.route("/reset_password", methods=['POST', 'GET'])
 def reset_request():
+    '''
+    Create a route that returns the new password page, allowing the user to request a password reset
+    '''
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = ResetPasswordForm()
@@ -508,7 +598,10 @@ def reset_request():
 
 @app.route("/reset_password/<token>", methods=['POST', 'GET'])
 def reset_token(token):
-
+    '''
+    Create a route that is accessed when the user clicks the link in the reset password email.
+    Token is passed to the function via a url parameter.
+    '''
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     user = validate_reset_token(token)

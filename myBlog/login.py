@@ -1,5 +1,5 @@
-#from flask_login import current_user, login_user, logout_user, login_required
-from myBlog import mongo, login_manager 
+from myBlog import mongo, login_manager
+
 
 class User:
     def __init__(self, username):
@@ -19,10 +19,6 @@ class User:
 
     def get_id(self):
         return self.username
-
-    #@staticmethod
-    #def check_password(password_hash, password):
-    #    return check_password_hash(password_hash, password)
 
 
 @login_manager.user_loader

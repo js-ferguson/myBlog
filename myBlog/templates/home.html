@@ -24,7 +24,6 @@
                 <span class="fab-label-text">Edit Project</span>
             </div>
             <div class="fixed-action-btn direction-bottom" id="fab-two">
-                <!-- <a href="{{ url_for('new_post') }}" class="btn-floating btn-large red z-depth-2"> -->
                 <a href="#modal1" class="btn-floating btn-large red z-depth-2 modal-trigger">
                     <i class="large material-icons">mode_edit</i>
                 </a>
@@ -35,10 +34,8 @@
                     </div>
                     <!-- Update Project Form -->
                     <form method="POST" action="{{url_for('update_project')}}" class="form">
-
                         <!-- Cross site request forgery token (CSRF token) -->
-                        {{ form.hidden_tag() }}
-                        
+                        {{ form.hidden_tag() }}                        
                         <div class="row">
                             <div class="input-field col s12">
                                 {{ form.title.label() }}
@@ -113,7 +110,6 @@
             </div>
         </div>
     </div>
-
     <div class="col-lg-7 right-frame">
         <!-- Sticky Post -->
         {% if is_sticky %}
@@ -189,23 +185,5 @@
         </div>
     </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-</script>
-
-<script>
-    $(document).ready(function ($) {
-
-        let path = window.location.pathname + location.search.split("/").pop();
-
-        if (path == '') {
-            path = 'page=1';
-        }
-
-        let target = $('.post-nav .nav-light[href="' + path + '"]');
-        target.addClass('post-nav-active');
-    });
-</script>
 
 {% endblock content %}

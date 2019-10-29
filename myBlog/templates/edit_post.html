@@ -4,6 +4,8 @@
 <h3 class="edit-post-heading">Edit Post</h3>
 <div class="row">
     <form action="{{ url_for('edit_post', post_id=post._id) }}" method="POST" class="col s12 edit-post-form">
+        <!-- adds cross site request forgery token (CSRF token) -->
+        {{ form.hidden_tag() }}   
         <div class="form-group">
             <div class="input-field col s12">
                 {{ form.title.label(class="edit-post-title-label") }}
@@ -64,11 +66,7 @@
         {% endif %}
     </form>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-</script>
-
+<!-- JavaScript -->
 <script>
     $(document).ready(function () {
         $('.edit-post-title-label').hide();

@@ -13,8 +13,8 @@
                 <h4>Add Project to Portfolio</h4>
             </div>
             <form method="POST" action="{{url_for('portfolio')}}" enctype="multipart/form-data" class="form">
+                <!-- adds cross site request forgery token (CSRF token) -->
                 {{ form.hidden_tag() }}
-                <!-- //adds cross site request forgery token (CSRF token) -->
                 <div class="row">
                     <div class="input-field col s12">
                         {{ form.title.label() }}
@@ -112,7 +112,6 @@
 {% for project in projects %}
 <div class="portfolio-card z-depth-2">
     <h4><a href="{{ project.link }}" target="_blank">{{ project.project_name }}</a></h4>
-
     {% if current_user.is_authenticated and admin_user.admin %}
     <button data-target="del_project{{project._id}}" class="btn-small btn-danger modal-trigger">Delete</button>
     <div id="del_project{{project._id}}" class="delete-conf-modal modal">
@@ -127,7 +126,6 @@
         </div>
     </div>
     {% endif %}
-
     <div class="portfolio-link-icons">
         <a href="{{ project.github_link }}" target="_blank">            
             <i class="fa fa-github-alt"></i>
