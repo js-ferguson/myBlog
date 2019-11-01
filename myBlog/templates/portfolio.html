@@ -148,7 +148,7 @@
         <div class="picture-card">
             {% if project.images %}
             {% for image in project.images %}
-            <img class="z-depth-2" src="{{ url_for('static', filename='images/project_pics/' + image ) }}">
+            <img class="z-depth-2" src="{{ image }}">
             {% endfor %}
             {% endif %}
         </div>

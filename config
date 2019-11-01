@@ -1,6 +1,6 @@
 ### noFolio configuration file ###
 
-#Put this file in your .config/noFolio directory and source it from either .bashrc or .bash_profile
+# Put this file in your .config/noFolio directory and source it from either .bashrc or .bash_profile
 
 # This is your apps secret key, create this from a random string
 export NOFOLIO_SECRET_KEY=""
@@ -13,7 +13,12 @@ export MONGO_MYBLOG_URI="mongodb+srv://root:YOURPASSWORD@myfirstcluster-y9fbv.mo
 export SENDGRID_PASS=""
 export SENDGRID_USER="apikey"
 
-# This is used for the Flask_mail package. 
-#This is the email address that password that appears in the sender field. Change this to reflect your domain name
+# Cloudinary image hosting. Add your apikey, api secret, cloud name and upload preset
+export NOFOLIO_CLOUDINARY_API_KEY=""
+export NOFOLIO_CLOUDINARY_API_SECRET=""
+export NOFOLIO_CLOUDINARY_CLOUD_NAME=""
+export NOFOLIO_CLOUDINARY_UPLOAD_PRESET=""
 
+# This is used for the Flask_mail package. 
+# This is the email address that password that appears in the sender field. Change this to reflect your domain name
 export SENDER_EMAIL="noreply@noFolio.se"

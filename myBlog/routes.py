@@ -13,6 +13,16 @@ from flask_login import current_user, login_user, logout_user, login_required
 import secrets
 from PIL import Image
 from flask_mail import Message
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+cloudinary.config(
+    cloud_name = os.environ.get('NOFOLIO_CLOUDINARY_CLOUD_NAME'),
+    api_key = os.environ.get('NOFOLIO_CLOUDINARY_API_KEY'),
+    api_secret = os.environ.get('NOFOLIO_CLOUDINARY_API_SECRET'),
+    upload_preset = os.environ.get('NOFOLIO_CLOUDINARY_UPLOAD_PRESET')
+)
 
 
 users = mongo.db.users
@@ -58,36 +68,10 @@ def is_sticky():
     return sticky
 
 
-def save_images(images):
-    '''
-    takes a list of images and renames each with a random string. Resizes images to a max of 500x500px before saving
-    '''
-    file_filenames = []
-    save_paths = []
-
-    for image in images:
-        if image:
-            rand_hex = secrets.token_hex(8)
-            _, f_ext = os.path.splitext(image.filename)
-            file_filenames.append(rand_hex + f_ext)
-
-    for name in file_filenames:
-        save_paths.append(os.path.join(
-            app.root_path, 'static/images/project_pics', name))
-
-    for image, path in zip(images, save_paths):
-        if image:
-            i = Image.open(image)
-            (width, height) = (500, 500)
-            i.thumbnail((width, height))
-            i.save(path)
-    return file_filenames
-
-
 def posts_with_comment_count(page):
     '''
     Aggregation pipline that adds a comment count field to a post document.
-    Posts a sorted so the newest is diplayed first and the output is paginated.
+    Posts are sorted so the newest is diplayed first and the output is paginated.
     '''
     # This pipeline (up to but not including the facet) was provided by user chridam on stackoverflow in respose to a question I posted
     # The facet came from stack overflow user Alex Blex, links in references.
@@ -221,12 +205,12 @@ def login():
 
     if form.validate_on_submit():
         user = users.find_one({'email': form.email.data})
-
         if user and bcrypt.check_password_hash(user['password'], form.password.data):
             user_obj = User(username=user['username'])
             login_user(user_obj, remember=form.remember.data)
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('home'))
+            
         else:
             flash('Login was unsuccessful, wrong email/password', 'danger')
     return render_template('login.html', form=form)
@@ -421,6 +405,36 @@ def delete_post(post_id):
     flash('Your post has been deleted', 'info')
     return redirect(url_for('home'))
 
+def save_images(images):
+    '''
+    takes a list of images and renames each with a random string. 
+    Resizes images to a max of 500x500px and saved temporarily to static/images/project_files.
+    Files are uploaded to cloudinary and their urls are returned as a list. 
+    '''
+    file_filenames = []
+    save_paths = []
+    cloud_file_list = []
+
+    for image in images:
+        if image:
+            rand_hex = secrets.token_hex(8)
+            _, f_ext = os.path.splitext(image.filename)
+            file_filenames.append(rand_hex + f_ext)
+
+    for name in file_filenames:
+        save_paths.append(os.path.join(
+            app.root_path, 'static/images/project_pics', name))
+
+    for image, path in zip(images, save_paths):
+        if image:
+            i = Image.open(image)
+            (width, height) = (500, 500)
+            i.thumbnail((width, height))
+            i.save(path)
+            cloud_image = cloudinary.uploader.unsigned_upload(path, os.environ.get('NOFOLIO_CLOUDINARY_UPLOAD_PRESET'))
+            cloud_file_list.append(cloud_image['url'])                        
+    return cloud_file_list
+
 
 @app.route("/portfolio", methods=['GET', 'POST'])
 def portfolio():
@@ -431,6 +445,7 @@ def portfolio():
     form = NewPortfolioProject()
     projects = mongo.db.portfolio.find()
     image_files = []
+    cloud_saves = []
 
     def sort_portfolio():
         proj = []
@@ -449,9 +464,9 @@ def portfolio():
             'desc': form.description.data,
             'tech_tags': tag_list,
             'link': form.link.data,
-            'github_link': form.github_link.data,
+            'github_link': form.github_link.data,                
             'images': image_files
-        }
+        }    
 
         mongo.db.portfolio.insert_one(new_doc)
         flash('Your new project has been added to your portfolio', 'info')
@@ -464,6 +479,8 @@ def portfolio():
 def delete_project():
     '''
     Create a route that allows an admin user to delete a portfolio item.
+    Also deletes files associated with the project from cloudinary by pulling the public_key from the files url in the db
+    and passing it to the cloudinary destroy method
     '''
     project = request.args.get('project_id')
     query = {'_id': ObjectId(project)}
@@ -473,9 +490,10 @@ def delete_project():
         flash("You do not have permission to remove projects", "info")
         return redirect(url_for('portfolio'))
 
-    for image in port_proj['images']:
-        os.remove(app.root_path + '/static/images/project_pics/' + image)
-
+    for url in port_proj['images']:
+        public_key = url[url.rfind("/")+1:]
+        cloudinary.uploader.destroy(public_key)
+    
     mongo.db.portfolio.delete_one(query)
     flash('Your project has been deleted', 'info')
     return redirect(url_for('portfolio'))
