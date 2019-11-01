@@ -432,7 +432,7 @@ def save_images(images):
             i.thumbnail((width, height))
             i.save(path)
             cloud_image = cloudinary.uploader.unsigned_upload(path, os.environ.get('NOFOLIO_CLOUDINARY_UPLOAD_PRESET'))
-            cloud_file_list.append(cloud_image['url'])                        
+            cloud_file_list.append(cloud_image['secure_url'])                        
     return cloud_file_list
 
 
