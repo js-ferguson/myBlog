@@ -257,6 +257,27 @@ I have chosen to use a free SMTP service, [sendgrid](https://sendgrid.com). To c
 We can leave our SMTP config there for the moment. You can come back and verify later, although it is not strictly necessary.
 
 
+### Configure Cloudinary
+
+Heroku, at least on free dynos, does not allow files to be upladed and saved on the local file system. Therefore, we need a solution for image hosting. I chose Cloudinary based on a recommendation by my mentor.
+
+1. Go to [Cloudinary](https://cloudinary.com/) and create an account.
+
+2. Go to the dashboard. At the top of the page under 'Account Details' take note of your cloud name, API key and API secret.
+
+We also need an upload preset.
+
+3. Select 'Media Library' from the top nav. then click on the settings cog on the right side of the nav and then navigate to 'Upload'.
+
+4. Scroll down the page to 'Upload Presets'.
+
+5. If you enabled it during your account setup, you can now edit your upload preset. If you didn't, you can click "Add upload preset" to add one.
+
+6. Make sure "Use filename or externally defined public ID" and "Unique filename" are set to "on" and leave the rest with default settings.
+
+7. Make a note of your upload preset name. You will need it for your environment variables.
+
+
 ### Environment variables
 
 Rather than expose sensitive data in the source code for the application, like the apps secret key, database login and smtp relay login details, we keep them in environment variables. If you are hosting the project locally on your own machine, you can edit the provided config file. If you are deploying to Heroku or another service, you will need to add them in the configuration of those services. I will cover deployment to Heroku and briefly discuss local deployment.
@@ -282,7 +303,9 @@ user@somecoolhostname:~$ mkdir ~/.config/noFolio && touch ~/.config/noFolio/conf
 
 2. Copy the contents of the config file located in the projects root directory to your new config file.
 
-3. Using the details we saved before, update your config with a secret key, your MongoDB connection string, email server login, and sender email. Sender email will be the email address in the "From" field for password reset tokens.
+3. Using the details we saved before, update your config with a secret key, your MongoDB connection string, email server login, sender email and Cloudinary details. 
+
+Sender email will be the email address in the "From" field for password reset tokens.
 
 4. Add the following lines to your ~/.bash_profile 
 
@@ -305,11 +328,17 @@ Assuming you have an account at Heroku and are logged in, click new and create n
 
 3. Click on settings and then "Reveal Config Vars".
 
-Add these five config vars with the values you saved earlier.
+Add these eight config vars with the values you saved earlier.
 
 NOFOLIO_SECRET_KEY "r4nd0mH3x0f4bUncHof41ph4Num5"
 
 MONGO_MYBLOG_URI "address you got when you set up mongodb"
+
+NOFOLIO_CLOUDINARY_API_KEY "your cloudinary API key"
+
+NOFOLIO_CLOUDINARY_API_SECRET "your cloudinary API secret"
+
+NOFOLIO_CLOUDINARY_API_CLOUD_NAME "cloudinary cloud name"
 
 SENDGRID_USER "email server username"
 
@@ -394,10 +423,13 @@ First and foremost, I would like to thank Miguel Grinberg whos excellent [Flask 
 - https://www.youtube.com/watch?v=Lnt6JqtzM7I
 - https://www.codementor.io/arpitbhayani/fast-and-efficient-pagination-in-mongodb-9095flbqr
 
+#### Cloudinary and Flask
+- https://medium.com/@johndavidsimmons/cloudinary-api-in-flask-14018d84a314
+
 
 ## References
 
-#### Aggeregation pipline
+#### Aggeregation pipeline
 - https://stackoverflow.com/questions/57941559/how-to-get-a-count-of-documents-that-contain-keys-from-another-collection
 - Stackoverflow user Chidram
 
