@@ -10,17 +10,13 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('NOFOLIO_SECRET_KEY')
 app.config["MONGO_URI"] = os.environ.get('MONGO_MYBLOG_URI')
 app.config["MONGO_DBNAME"] = 'myBlog'
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
 mongo = PyMongo(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'danger'
-
-#Set-cookie CSFR options
-#app.config['SESSION_COOKIE_SECURE'] = True
-#app.config['SESSION_COOKIE_HTTPONLY'] = True
-app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
 app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
 app.config['MAIL_PORT'] = 587

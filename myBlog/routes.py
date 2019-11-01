@@ -499,31 +499,6 @@ def delete_project():
     return redirect(url_for('portfolio'))
 
 
-@app.route("/insert_project", methods=['POST'])
-@login_required
-def insert_project():
-    '''
-    Create a route that inserts the new portfolio item to the database.
-    '''
-    form = NewPortfolioProject()
-    tag_list = list(form.tags.data.split(" "))
-
-    if form.validate_on_submit():
-        image_files = save_images(form.images.data)
-        new_doc = {
-            'project_name': form.title.data,
-            'desc': form.description.data,
-            'tech_tags': tag_list,
-            'link': form.link.data,
-            'github_link': form.github_link.data,
-            'images': image_files
-        }
-
-        portfolio.insert_one(new_doc)
-        flash('Your new project has been added to your portfolio', 'info')
-    return redirect(url_for('portfolio'))
-
-
 @app.route("/account", methods=['POST', 'GET'])
 @login_required
 def account():
