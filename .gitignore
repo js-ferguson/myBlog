@@ -2,7 +2,9 @@ env
 __pycache__
 myBlog/__pycache__
 .vscode
-myBlog/static/sass
+myBlog/static/sass/components
+myBlog/static/sass/css
+myBlog/static/sass/materialize.scss
 myBlog/static/css/materialize.css.map
 myBlog/static/.sass-cache
 myBlog/static/css/style.css.map

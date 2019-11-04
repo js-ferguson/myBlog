@@ -58,11 +58,11 @@ Even though the finished project is somewhat different in design to the initial 
 
 - Feature 8 - New projects can be added to the portfolio page using a modal form. This can optionally include wireframes, mockups or screenshots.
 
-- Feature 9 - Uploaded images have their filenames stripped and replaced with a random string to avoid filename collisions. They are also resized before they are saved to reduce storage requirements and page load times.
+- Feature 9 - Uploaded images have their filenames stripped and replaced with a random string to avoid filename collisions. They are also resized before they are saved to reduce storage requirements and page load times. Since Heroku removes uploaded files each time the Dyno is restarted, the images are uploaded to [Cloudinary](https://cloudinary.com/), and their urls are stored in the database.
 
 - Feature 10 - Users are able to update their details on the account management page. This includes adding a first and last name as well as being able to change their username and email address, providing the new ones are unique in the database.
 
-- Feature 11 - Password changes are provided on the login screen via the "Forgot your password?" link. Clicking this allows the user to submit their email address and if there is a matching address in the database they will receive an email with a link containing an embedded secure token, that takes them to a password reset page.
+- Feature 11 - Password changes can be made from the login screen via the "Forgot your password?" link. Clicking this allows the user to submit their email address and if there is a matching address in the database they will receive an email with a link containing an embedded secure token, that takes them to a password reset page.
 
 
 ### Features Left to Implement
@@ -73,7 +73,7 @@ There are many more features that I intend to implement. I would like to put the
 
 * A select to allow the user to change the number of posts per page
 
-* Users can add a profile pics - a default should be provided and displayed with their comments until they upload their own.
+* Have profile pictures for users and display them on comments - a default should be provided until they upload their own.
 
 * Subscribe link to get an email notification about newly published blog posts.
 
@@ -81,7 +81,7 @@ There are many more features that I intend to implement. I would like to put the
 
 * A personal feed for posts-in-progress / personal notes -- perhaps integrated with drafts. 
 
-* Users can mark posts as favourites and see a list of favourite posts in their user page.
+* A favourites list in the user profiles for users to save posts that were helpful or interesting.
 
 * Upvote and downvotes for comments.
 
@@ -93,7 +93,7 @@ There are many more features that I intend to implement. I would like to put the
 
 * Work in progress status for portfolio items.
 
-* ability to edit a portfolio item.
+* Ability to edit a portfolio item.
 
 * Add tags to posts and be able to search posts or projects by tags
 
@@ -103,7 +103,7 @@ There are many more features that I intend to implement. I would like to put the
 ## Technologies used
 
 This project is written almost entirely in Python, using the Flask framework and Jinja2 templating engine. There are also a number of Flask extensions and Python packages used as well, which are detailed in the requirements.txt. Some of the more notable ones include;
-Bcrypt to encrypt user passwords and create random filenames, Flask-Login to manage user logins, Flask-PyMongo to make database calls to MongoDB in python, Flask-WTF and WTForms to handle forms, itsdangerous to serialise password reset tokens from a JSON object, Pillow to handle resizing images, and flask-mail to send password reset emails.
+Bcrypt to encrypt user passwords and create random filenames, Flask-Login to manage user logins, Flask-PyMongo to make database calls to MongoDB in python, Flask-WTF and WTForms to handle forms, itsdangerous to serialise password reset tokens from a JSON object, Pillow to handle resizing images, and flask-mail to send password reset emails. And as a last minute inclusion Cloudinary for image hosting.
 
 Underpinning the entire project is MongoDB, a document based database which essentially stores all the content you see on the site. Data for the application is spread across five document collections; comment, current_project, portfolio, posts and users. In some cases, most notably for comment counts and pagination, I have used aggregation to pull data from different collections.
 
@@ -169,7 +169,7 @@ The layout has been tested for responsive design across all the platforms and sc
 
 ### Validation and linting
 
-WC3 HTML validation is not passing due to Materialize.css using a deprecated media type. Otherwise there are just a few warnings about extra hyphens in my comments
+WC3 HTML validation is not passing due to Materialize.css using a deprecated media type. However, there are no flags for any of my own HTML
 
 CSS Validation returns 31 errors and 782 warnings, all of which are in materialize.css and bootstrap.min.css. There was a single error in my own css, a stray comma. I fixed it.
 
@@ -236,7 +236,7 @@ noFolio uses a MongoDB database provided by [MongoDB Atlas](https://cloud.mongod
 
 2. Next, in the collections view, click on Create Database. Give it a name like noFolio or myBlog and enter a first collection name "users". Click Create.
 
-3. There a four more collections we need for our application. For each of these, click on the + next to your database name to add new collections named; "comment", "posts", "current_project" and "portfolio".
+3. There are four more collections we need for our application. For each of these, click on the + next to your database name to add new collections named; "comment", "posts", "current_project" and "portfolio".
 
 4. Click the connect button and select "Connect Your Application", change the driver to Python and select 3.6 or later. Copy and save the connection string. We will need this later when we configure environment variables.
 
@@ -244,7 +244,7 @@ noFolio uses a MongoDB database provided by [MongoDB Atlas](https://cloud.mongod
 ### Configure an SMTP relay
 
 Next we need to set up an SMTP relay to send mail through.
-I have chosen to use a free SMTP service, [sendgrid](https://sendgrid.com). To condifure sendgrid;
+I have chosen to use a free SMTP service, [sendgrid](https://sendgrid.com). To configure sendgrid;
 
 1. Go to [sendgrid](https://sendgrid.com) and create and account.
 
@@ -265,9 +265,7 @@ Heroku, at least on free dynos, does not allow files to be upladed and saved on 
 
 2. Go to the dashboard. At the top of the page under 'Account Details' take note of your cloud name, API key and API secret.
 
-We also need an upload preset.
-
-3. Select 'Media Library' from the top nav. then click on the settings cog on the right side of the nav and then navigate to 'Upload'.
+3. We also need an upload preset. Select 'Media Library' from the top nav. then click on the settings cog on the right side of the nav and then navigate to 'Upload'.
 
 4. Scroll down the page to 'Upload Presets'.
 
@@ -291,14 +289,14 @@ app.run(debug=True)
 ```
 Then use the development server by running the app and going to localhost:5000.
 
-If you are deploying locally for production, endure debugging either unset or set to False
+If you are deploying locally for production, ensure debugging is either unset or set to False
 
 For deployment on your own server, you can add the environment variables to either your .bachrc or .bash_profile. My preference however, is to keep the environment variables in a separate file and source it from .bash_profile
 
 1. Create a new file named ~/.config/noFolio/config
 
 ```
-user@somecoolhostname:~$ mkdir ~/.config/noFolio && touch ~/.config/noFolio/config
+user@somecoolhostname:~$ mkdir -p ~/.config/noFolio && touch ~/.config/noFolio/config
 ```
 
 2. Copy the contents of the config file located in the projects root directory to your new config file.
@@ -344,7 +342,7 @@ SENDGRID_USER "email server username"
 
 SENDGRID_PASS "email server password" 
 
-SENDER_EMAIL 
+SENDER_EMAIL "somesite@yougotanemail.from"
 
 Sender_email will be the email address in the "From" field for password reset tokens.
 
@@ -356,7 +354,7 @@ user@somecoolhostname:~$ git push heroku master
 
 ### SASS 
 
-This project uses [SASS/SCSS](https://sass-lang.com/), a CSS preprocessor that gives you access to some nice features not available with regular CSS . You will need to make sure that it is installed if you intend to make any styling changes. 
+This project uses [SASS](https://sass-lang.com/), a CSS preprocessor that gives you access to some nice features not available with regular CSS. While I would usually add my style.scss file to my .gitignore, I have included it here so it is accessible for other developers. You will need to install SASS if you intend to make any styling changes. 
 
 If you run windows you can follow the instructions to install SASS [here](https://www.impressivewebs.com/sass-on-windows/). Alternatively, you can install Windows Subsystem for Linux (WSL) and follow the rest of the instructions for Linux. Instructions to install WSL can be found [here](https://itsfoss.com/install-bash-on-windows/)
 
