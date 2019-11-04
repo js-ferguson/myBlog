@@ -12,9 +12,8 @@ $container-width: 85%;
     font-size: 40px;
     color: black;
     &:hover {
-        color:#0077b5;
+        color: #0077b5;
     }
-
 }
 
 #current_username {
@@ -33,7 +32,7 @@ body {
         background-color: #404040;
         color: orange;
     }
-    
+
 }
 
 // ------------------------------------------ Mixins ---------------------------------------- //
@@ -325,26 +324,21 @@ body {
                 @include tablet-landscape {
                     right: -30px;
                 }
-
                 position: absolute;
                 top: -25px;
                 right: -15px;
                 z-index: 2;
             }
             .fab-one-label {
-
                 @include tablet-portrait {
                     right: 13px;
                 }
-
                 @include tablet-landscape {
                     right: 0;
                 }
-
                 @include desktop {
                     right: 0;
                 }
-
                 @include fab-label;
                 height: 45px;
                 width: 105px;
@@ -355,6 +349,7 @@ body {
                 font-size: 10px;
             }
         }
+
         .post-nav {
             margin: auto;
             .btn {
@@ -406,7 +401,7 @@ body {
 .modal {
     @include modal-style;
     height: 650px;
-    @include phone{
+    @include phone {
         width: 100%;
         overflow: auto;
     }
@@ -501,7 +496,7 @@ body {
 }
 
 
-// ----------------------------- View Post ------------------------ //@at-root
+// ----------------------------- View Post ------------------------ //
 
 .post-view {
     @include card-style;
@@ -509,27 +504,33 @@ body {
     position: relative;
     .post-heading {
         padding: 0;
-        height: 60px;
     }
     .post-title {
         margin-top: 0px;
         padding-top: 5px;
         font-weight: 500;
         font-size: 2em;
-        display: inline-block;
+        display: flexbox;
+        height: auto;
     }
     .date {
-        margin-top: 15px;
+        margin-top: 0px;
         padding-top: 5px;
         text-align: right;
-        float: right;
+        float: left;
         font-size: 1em;
+
+        @include tablet-landscape {
+            display: block;
+
+            margin-top: 0;
+        }
     }
-    div hr {
-        margin: 20px 0 15px 0;
+    hr {
+        margin: 40px 0 15px 0;
     }
     .post-content {
-        margin: 35px 0 35px 0;
+        margin: 25px 0 35px 0;
         pre {
             white-space: pre-wrap;
             overflow-x: auto;
@@ -542,7 +543,7 @@ body {
 .delete-conf-modal {
     @include modal-style;
     height: 160px;
-    @include phone{
+    @include phone {
         width: 100%;
         overflow: auto;
     }
@@ -589,7 +590,7 @@ body {
 .delete-post-modal {
     @include modal-style;
     height: 160px;
-    @include phone{
+    @include phone {
         width: 100%;
         overflow: auto;
     }
@@ -668,7 +669,6 @@ body {
         width: 80%;
     }
     h5 {
-
         margin: 15px 0 10px 0;
     }
     h6 {
@@ -742,6 +742,7 @@ body {
         }
         span {
             margin-bottom: 20px;
+
             @include phone {
                 display: inline-block;
                 visibility: hidden;
@@ -752,6 +753,7 @@ body {
     .picture-card {
         text-align: center;
         margin: 5px;
+
         img {
             margin: 25px;
             bottom: 25px;
@@ -793,5 +795,5 @@ body {
     }
     .input-field {
         margin-bottom: 30px;
-    }   
+    }
 }

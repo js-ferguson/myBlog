@@ -373,24 +373,28 @@ body {
   margin-top: 120px;
   position: relative; }
   .post-view .post-heading {
-    padding: 0;
-    height: 60px; }
+    padding: 0; }
   .post-view .post-title {
     margin-top: 0px;
     padding-top: 5px;
     font-weight: 500;
     font-size: 2em;
-    display: inline-block; }
+    display: flexbox;
+    height: auto; }
   .post-view .date {
-    margin-top: 15px;
+    margin-top: 0px;
     padding-top: 5px;
     text-align: right;
-    float: right;
+    float: left;
     font-size: 1em; }
-  .post-view div hr {
-    margin: 20px 0 15px 0; }
+    @media (min-width: 992px) {
+      .post-view .date {
+        display: block;
+        margin-top: 0; } }
+  .post-view hr {
+    margin: 35px 0 15px 0; }
   .post-view .post-content {
-    margin: 35px 0 35px 0; }
+    margin: 25px 0 35px 0; }
     .post-view .post-content pre {
       white-space: pre-wrap;
       overflow-x: auto;
